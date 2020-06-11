@@ -17,7 +17,7 @@ const Navbar = () => {
       <Menu.Item>
         <Button
           as={NavLink}
-          to='/analyse'
+          to='/analyse/create'
           floated='right'
           color='yellow'
           content='Nouvelle analyse'
