@@ -19,6 +19,7 @@ import ListProductionsPage from '../../pages/productions/list/ListProductionsPag
 import CreateProductionPage from '../../pages/productions/create/CreateProductionPage';
 import ReadProductionPage from '../../pages/productions/read/ReadProductionPage';
 import UpdateProductionPage from '../../pages/productions/update/UpdateProductionPage';
+import UpdateAnalysePage from '../../pages/analyses/updateAnalyse/UpdateAnalysePage';
 
 function App() {
   return (
@@ -28,8 +29,12 @@ function App() {
         <Switch>
           <Route exact path='/analyses' component={ListAnalysesPage} />
           <Route exact path='/analyse/create' component={CreateAnalysePage} />
-          <Route path='/analyse/:id' component={ReadAnalysePage} />
-          <Route path='/analyse/:id/update' component={ReadAnalysePage} />
+          <Route exact path='/analyse/:id' component={ReadAnalysePage} />
+          <Route
+            exact
+            path='/analyse/:id/update'
+            component={UpdateAnalysePage}
+          />
           <Route exact path='/fiches' component={ListFichesPage} />
           <Route exact path='/fiche/create' component={CreateFichePage} />
           <Route path='/fiche/:id' component={ReadFichePage} />
