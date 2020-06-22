@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Table, Button } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
+import CreateActiviteComponent from './CreateActiviteComponent';
+
 const ActivitesComponent = ({ activites }) => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
   return (
     <Grid.Column width={10}>
       <h5>Activités</h5>
@@ -31,7 +34,15 @@ const ActivitesComponent = ({ activites }) => {
           )}
         </Table.Body>
       </Table>
-      <Button color='blue'>Ajouter une activité</Button>
+      {isFormOpen ? (
+        <Button onClick={() => setIsFormOpen(false)}>Annuler</Button>
+      ) : (
+        <Button color='blue' onClick={() => setIsFormOpen(true)}>
+          Ajouter une activité
+        </Button>
+      )}
+
+      {isFormOpen && <CreateActiviteComponent />}
     </Grid.Column>
   );
 };

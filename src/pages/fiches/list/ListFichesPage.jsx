@@ -35,8 +35,9 @@ const ListFichesPage = () => {
 
   useEffect(() => {
     async function getFiches() {
+      // axios.get
       // const data = await MyAPI.getAnalyses();
-      // setAnalyses(data)
+      // setFiches(data)
     }
     getFiches();
   }, []);
@@ -63,6 +64,7 @@ const ListFichesPage = () => {
               </Table.Row>
             </Table.Header>
             <Table.Body>
+          
               {fiches.map(({ id, production, libelle, created, modified }) => {
                 return (
                   <Table.Row key={id}>
