@@ -1,12 +1,15 @@
-import React from 'react';
-import { Grid, Table, Button } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Grid, Table, Button, Icon } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
+import CreateVenteComponent from './CreateVenteComponent';
 
 const VentesComponent = ({ ventes }) => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   return (
     <Grid.Column width={16}>
       <h5>Ventes</h5>
-      <Table singleLine>
+      <Table singleLine compact selectable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Libelle</Table.HeaderCell>
@@ -20,6 +23,7 @@ const VentesComponent = ({ ventes }) => {
               Rendement max.
             </Table.HeaderCell>
             <Table.HeaderCell textAlign='center'>Mois</Table.HeaderCell>
+            <Table.HeaderCell textAlign='center'></Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -49,13 +53,26 @@ const VentesComponent = ({ ventes }) => {
                   <Table.Cell textAlign='center'>
                     {mois_relatif} {mois && getMois(mois)}
                   </Table.Cell>
+                  <Table.Cell>
+                    <Button size='mini' icon circular>
+                      <Icon name='trash' />
+                    </Button>
+                  </Table.Cell>
                 </Table.Row>
               );
             }
           )}
         </Table.Body>
       </Table>
-      <Button color='blue'>Ajouter une vente</Button>
+      {isFormOpen ? (
+        <Button onClick={() => setIsFormOpen(false)}>Annuler</Button>
+      ) : (
+        <Button color='blue' onClick={() => setIsFormOpen(true)}>
+          Ajouter une vente
+        </Button>
+      )}
+
+      {isFormOpen && <CreateVenteComponent />}
     </Grid.Column>
   );
 };
