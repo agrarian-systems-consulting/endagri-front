@@ -48,7 +48,7 @@ const ListAnalysesPage = () => {
           <Table singleLine fixed>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Analyse</Table.HeaderCell>
+                <Table.HeaderCell></Table.HeaderCell>
                 <Table.HeaderCell>Auteur</Table.HeaderCell>
                 <Table.HeaderCell>Client</Table.HeaderCell>
                 <Table.HeaderCell>Date de création</Table.HeaderCell>

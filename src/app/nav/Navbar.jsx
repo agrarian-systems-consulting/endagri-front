@@ -6,11 +6,7 @@ const Navbar = () => {
   return (
     <Menu inverted fixed='top'>
       <Menu.Item name='Endagri' header as={NavLink} to='/' exact />
-      <Menu.Item
-        name='Fiches techniques'
-        as={NavLink}
-        to='/fiches-techniques'
-      />
+      <Menu.Item name='Fiches techniques' as={NavLink} to='/fiches' />
       <Menu.Item name='Analyses' as={NavLink} to='/analyses' />
       <Menu.Item name='Marchés' as={NavLink} to='/marches' />
       <Menu.Item name='Productions' as={NavLink} to='/productions' />
