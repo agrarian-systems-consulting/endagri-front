@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, Table } from 'semantic-ui-react';
-
+import { Grid, Table, Button } from 'semantic-ui-react';
+import getMois from '../../../app/utils/getMois';
 const ActivitesComponent = ({ activites }) => {
   return (
     <Grid.Column width={10}>
@@ -20,7 +20,7 @@ const ActivitesComponent = ({ activites }) => {
                 <Table.Row key={id}>
                   <Table.Cell>{libelle_activite}</Table.Cell>
                   <Table.Cell>
-                    {mois_relatif} {mois}
+                    {mois_relatif} {mois && getMois(mois)}
                   </Table.Cell>
                   <Table.Cell>
                     {depenses.reduce((acc, { montant }) => acc + montant, 0)}
@@ -31,6 +31,7 @@ const ActivitesComponent = ({ activites }) => {
           )}
         </Table.Body>
       </Table>
+      <Button color='blue'>Ajouter une activité</Button>
     </Grid.Column>
   );
 };

@@ -72,6 +72,7 @@ const ReadFichePage = () => {
       {
         id: 13,
         id_marche: 24,
+        unite:'t',
         rendement_min: 400,
         rendement: 500,
         rendemet_max: 600,
@@ -80,6 +81,7 @@ const ReadFichePage = () => {
       {
         id: 14,
         id_marche: 24,
+        unite:'t',
         rendement_min: 200,
         rendement: 300,
         rendemet_max: 400,
