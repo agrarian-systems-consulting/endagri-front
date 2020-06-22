@@ -7,10 +7,10 @@ const InformationsPrincipalesComponent = ({ info }) => {
     <Grid.Row>
       <Grid.Column width={10}>
         <Segment.Group>
-          <Segment attached='top' color='violet'>
+          <Segment attached='top' clearing>
             <Header as='h4'>Informations principales</Header>
           </Segment>
-          <Segment attached>
+          <Segment attached clearing>
             <List>
               <List.Item>Client : {info.nom_client}</List.Item>
               <List.Item>
@@ -19,9 +19,14 @@ const InformationsPrincipalesComponent = ({ info }) => {
               <List.Item>Début analyse : {info.date_debut_analyse}</List.Item>
               <List.Item>Fin analyse : {info.date_fin_analyse}</List.Item>
             </List>
-            <Button as={NavLink} to={`/analyse/1/update`}>
-              Modifier
-            </Button>
+
+            <Button
+              as={NavLink}
+              to={`/analyse/1/update`}
+              circular
+              icon='edit'
+              floated='right'
+            />
           </Segment>
         </Segment.Group>
       </Grid.Column>

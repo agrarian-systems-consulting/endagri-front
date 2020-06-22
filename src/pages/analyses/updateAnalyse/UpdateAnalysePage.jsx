@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, Grid, Segment, Breadcrumb } from 'semantic-ui-react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const UpdateAnalysePage = () => {
   return (
@@ -50,6 +50,9 @@ const UpdateAnalysePage = () => {
                   <label>Date de fin d'analyse</label>
                   <input placeholder='date_fin_analyse' />
                 </Form.Field>
+                <Button as={Link} to={`/analyse/1`}>
+                  Annuler
+                </Button>
                 <Button type='submit' color='teal'>
                   Modifier l'analyse
                 </Button>
