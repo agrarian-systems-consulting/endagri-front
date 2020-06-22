@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
-import { Grid, Breadcrumb, Segment, List, Table } from 'semantic-ui-react';
+import {
+  Grid,
+  Breadcrumb,
+  Segment,
+  List,
+  Table,
+  Label,
+} from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import setMonth from 'date-fns/setMonth';
+import VentesComponent from './VentesComponent';
+import ActivitesComponent from './ActivitesComponent';
 
 const ReadFichePage = () => {
   const [fiche, setFiche] = useState({
@@ -62,13 +72,17 @@ const ReadFichePage = () => {
       {
         id: 13,
         id_marche: 24,
-        quantite: 500,
+        rendement_min: 400,
+        rendement: 500,
+        rendemet_max: 600,
         mois_relatif: 5,
       },
       {
         id: 14,
         id_marche: 24,
-        quantite: 300,
+        rendement_min: 200,
+        rendement: 300,
+        rendemet_max: 400,
         mois_relatif: 6,
       },
     ],
@@ -92,14 +106,13 @@ const ReadFichePage = () => {
         <Grid.Column width={16}>
           <Segment.Group>
             <Segment attached='top'>
-              <h5>Détail de la fiche technique</h5>
+              <h5>Détail de la fiche technique {fiche.id}</h5>
             </Segment>
             <Segment attached='bottom'>
               <List>
-                <List.Item>Identifiant : {fiche.id}</List.Item>
-                <List.Item>Libellé : {fiche.libelle_fiche}</List.Item>
+                <List.Item>{fiche.libelle_fiche}</List.Item>
                 <List.Item>
-                  Type de production : {fiche.type_production}
+                  <Label>{fiche.type_production}</Label>
                 </List.Item>
               </List>
             </Segment>
@@ -107,18 +120,10 @@ const ReadFichePage = () => {
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column width={16}>
-          <Segment>
-            <h5>Activités</h5>
-          </Segment>
-          <Table fixed>
-            <Table.Header>
-              <Table.HeaderCell>Libelle</Table.HeaderCell>
-              <Table.HeaderCell>Mois</Table.HeaderCell>
-              <Table.HeaderCell>Dépenses</Table.HeaderCell>
-            </Table.Header>
-          </Table>
-        </Grid.Column>
+        <ActivitesComponent activites={fiche.activites} />
+      </Grid.Row>
+      <Grid.Row>
+        <VentesComponent ventes={fiche.ventes} />
       </Grid.Row>
     </Grid>
   );
