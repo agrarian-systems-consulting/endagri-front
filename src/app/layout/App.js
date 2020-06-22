@@ -20,6 +20,7 @@ import CreateProductionPage from '../../pages/productions/create/CreateProductio
 import ReadProductionPage from '../../pages/productions/read/ReadProductionPage';
 import UpdateProductionPage from '../../pages/productions/update/UpdateProductionPage';
 import UpdateAnalysePage from '../../pages/analyses/updateAnalyse/UpdateAnalysePage';
+import DeleteAnalysePage from '../../pages/analyses/deleteAnalyse/DeleteAnalysePage';
 
 function App() {
   return (
@@ -34,6 +35,11 @@ function App() {
             exact
             path='/analyse/:id/update'
             component={UpdateAnalysePage}
+          />
+          <Route
+            exact
+            path='/analyse/:id/delete'
+            component={DeleteAnalysePage}
           />
           <Route exact path='/fiches' component={ListFichesPage} />
           <Route exact path='/fiche/create' component={CreateFichePage} />

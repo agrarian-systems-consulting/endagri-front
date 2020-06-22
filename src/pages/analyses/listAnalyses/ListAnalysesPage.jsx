@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Breadcrumb, Table, Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const ListAnalysesPage = () => {
   const [analyses, setAnalyses] = useState([
@@ -44,33 +44,43 @@ const ListAnalysesPage = () => {
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Table singleLine>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>#</Table.HeaderCell>
-              <Table.HeaderCell>Auteur</Table.HeaderCell>
-              <Table.HeaderCell>Client</Table.HeaderCell>
-              <Table.HeaderCell>Date de création</Table.HeaderCell>
-              <Table.HeaderCell></Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {analyses.map(({ id, nom_utilisateur, nom_client, created }) => {
-              return (
-                <Table.Row key={id}>
-                  <Table.Cell>{id}</Table.Cell>
-                  <Table.Cell>{nom_utilisateur}</Table.Cell>
-                  <Table.Cell>{nom_client}</Table.Cell>
-                  <Table.Cell>{created}</Table.Cell>
-                  <Table.Cell>
-                    <Link to={`/analyse/${id}`}>Voir</Link>{' '}
-                    <Link to={`/analyse/${id}/update`}>Modifier</Link>
-                  </Table.Cell>
-                </Table.Row>
-              );
-            })}
-          </Table.Body>
-        </Table>
+        <Grid.Column width={16}>
+          <Table singleLine fixed>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Analyse</Table.HeaderCell>
+                <Table.HeaderCell>Auteur</Table.HeaderCell>
+                <Table.HeaderCell>Client</Table.HeaderCell>
+                <Table.HeaderCell>Date de création</Table.HeaderCell>
+                <Table.HeaderCell>Dernière modification</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {analyses.map(
+                ({ id, nom_utilisateur, nom_client, created, modified }) => {
+                  return (
+                    <Table.Row key={id}>
+                      <Table.Cell>
+                        <NavLink to={`/analyse/${id}`}>Analyse {id}</NavLink>
+                      </Table.Cell>
+                      <Table.Cell>{nom_utilisateur}</Table.Cell>
+                      <Table.Cell>{nom_client}</Table.Cell>
+                      <Table.Cell>{created}</Table.Cell>
+                      <Table.Cell>{modified}</Table.Cell>
+                    </Table.Row>
+                  );
+                }
+              )}
+            </Table.Body>
+          </Table>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <Button color='teal' as={NavLink} to='/analyse/create'>
+            Nouvelle analyse
+          </Button>
+        </Grid.Column>
       </Grid.Row>
     </Grid>
   );

@@ -74,14 +74,23 @@ const ReadAnalysePage = () => {
       <Grid.Row>
         <Grid.Column width={16}>
           <Breadcrumb>
-            <Breadcrumb.Section>Analyses</Breadcrumb.Section>
+            <Breadcrumb.Section>
+              <NavLink to='/analyses'>Analyses</NavLink>
+            </Breadcrumb.Section>
             <Breadcrumb.Divider />
-            <Breadcrumb.Section active>Voir</Breadcrumb.Section>
+            <Breadcrumb.Section active>Analyse 1</Breadcrumb.Section>
           </Breadcrumb>
         </Grid.Column>
       </Grid.Row>
       <InformationsPrincipalesComponent info={info} />
       <ProductionsComponent fichesLibres={fichesLibres} />
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <Button color='red' as={NavLink} to='/analyse/1/delete'>
+            Supprimer l'analyse
+          </Button>
+        </Grid.Column>
+      </Grid.Row>
     </Grid>
   );
 };

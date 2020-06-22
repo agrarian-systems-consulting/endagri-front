@@ -7,7 +7,7 @@ const InformationsPrincipalesComponent = ({ info }) => {
     <Grid.Row>
       <Grid.Column width={10}>
         <Segment.Group>
-          <Segment attached='top' inverted color='violet'>
+          <Segment attached='top' color='violet'>
             <Header as='h4'>Informations principales</Header>
           </Segment>
           <Segment attached>
@@ -27,7 +27,7 @@ const InformationsPrincipalesComponent = ({ info }) => {
       </Grid.Column>
       <Grid.Column width={6}>
         <Segment.Group>
-          <Segment attached='top' inverted color='violet'>
+          <Segment color='violet'>
             <Header as='h4'>Métadonnées</Header>
           </Segment>
           <Segment attached>

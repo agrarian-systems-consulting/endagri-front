@@ -5,7 +5,7 @@ const ProductionsComponent = ({ fichesLibres }) => {
     <Grid.Row>
       <Grid.Column>
         <Segment.Group>
-          <Segment inverted color='violet' attached='top'>
+          <Segment attached='top' color='violet'>
             <Header as='h4'>Productions</Header>
           </Segment>
 
