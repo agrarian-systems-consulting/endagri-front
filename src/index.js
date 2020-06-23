@@ -4,6 +4,7 @@ import './index.css';
 import App from './app/layout/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications';
 
 const rootEl = document.getElementById('root');
 
@@ -11,7 +12,9 @@ let render = () => {
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
-        <App />
+        <ToastProvider placement='bottom-right'>
+          <App />
+        </ToastProvider>
       </BrowserRouter>
     </React.StrictMode>,
     rootEl

@@ -11,6 +11,7 @@ import {
 } from 'semantic-ui-react';
 import { NavLink, Link } from 'react-router-dom';
 import update from 'immutability-helper';
+import { useToasts } from 'react-toast-notifications';
 import VentesComponent from './VentesComponent';
 import ActivitesComponent from './ActivitesComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
@@ -94,6 +95,8 @@ const ReadFichePage = () => {
     ],
   });
 
+  const { addToast } = useToasts();
+
   const deleteActivite = async (id_activite) => {
     // TODO LAncer la requête asynchorne à l'API
     // await axios.delete()
@@ -108,6 +111,11 @@ const ReadFichePage = () => {
     });
 
     setFiche(updatedFiche);
+
+    addToast("L'activité a bien été supprimée", {
+      appearance: 'success',
+      autoDismiss: true,
+    });
   };
 
   const deleteVente = async (id_vente) => {
