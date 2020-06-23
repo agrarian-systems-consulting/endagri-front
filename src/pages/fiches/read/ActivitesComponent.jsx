@@ -30,7 +30,7 @@ const ActivitesComponent = ({ activites }) => {
                     {depenses.reduce((acc, { montant }) => acc + montant, 0)}
                   </Table.Cell>
                   <Table.Cell textAlign='center'>
-                    <Button size='mini' icon circular>
+                    <Button size='mini' icon basic circular>
                       <Icon name='trash' />
                     </Button>
                   </Table.Cell>

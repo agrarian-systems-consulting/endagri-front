@@ -54,7 +54,7 @@ const VentesComponent = ({ ventes }) => {
                     {mois_relatif} {mois && getMois(mois)}
                   </Table.Cell>
                   <Table.Cell>
-                    <Button size='mini' icon circular>
+                    <Button size='mini' icon basic circular>
                       <Icon name='trash' />
                     </Button>
                   </Table.Cell>
