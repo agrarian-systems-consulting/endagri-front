@@ -12,7 +12,7 @@ let render = () => {
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
-        <ToastProvider placement='bottom-right'>
+        <ToastProvider placement='bottom-right' autoDismissTimeout={2700}>
           <App />
         </ToastProvider>
       </BrowserRouter>

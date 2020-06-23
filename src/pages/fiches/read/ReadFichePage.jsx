@@ -132,6 +132,11 @@ const ReadFichePage = () => {
     });
 
     setFiche(updatedFiche);
+
+    addToast('La vente a bien été supprimée', {
+      appearance: 'success',
+      autoDismiss: true,
+    });
   };
 
   return (
