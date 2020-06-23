@@ -97,13 +97,28 @@ const ReadFichePage = () => {
   const deleteActivite = async (id_activite) => {
     // TODO LAncer la requête asynchorne à l'API
     // await axios.delete()
-    // If OK
 
     let updatedFiche = update(fiche, {
       activites: {
         $apply: (activites) =>
           activites.filter((activite) => {
             return activite.id !== id_activite;
+          }),
+      },
+    });
+
+    setFiche(updatedFiche);
+  };
+
+  const deleteVente = async (id_vente) => {
+    // TODO LAncer la requête asynchorne à l'API
+    // await axios.delete()
+
+    let updatedFiche = update(fiche, {
+      ventes: {
+        $apply: (ventes) =>
+          ventes.filter((vente) => {
+            return vente.id !== id_vente;
           }),
       },
     });
@@ -137,7 +152,7 @@ const ReadFichePage = () => {
         />
       </Grid.Row>
       <Grid.Row>
-        <VentesComponent ventes={fiche.ventes} />
+        <VentesComponent deleteVente={deleteVente} ventes={fiche.ventes} />
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={16}>

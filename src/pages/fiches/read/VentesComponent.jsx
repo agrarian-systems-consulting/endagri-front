@@ -3,7 +3,7 @@ import { Grid, Table, Button, Icon } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
 import CreateVenteComponent from './CreateVenteComponent';
 
-const VentesComponent = ({ ventes }) => {
+const VentesComponent = ({ ventes, deleteVente }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   return (
@@ -54,7 +54,13 @@ const VentesComponent = ({ ventes }) => {
                     {mois_relatif} {mois && getMois(mois)}
                   </Table.Cell>
                   <Table.Cell>
-                    <Button size='mini' icon basic circular>
+                    <Button
+                      onClick={() => deleteVente(id)}
+                      size='mini'
+                      icon
+                      basic
+                      circular
+                    >
                       <Icon name='trash' />
                     </Button>
                   </Table.Cell>
