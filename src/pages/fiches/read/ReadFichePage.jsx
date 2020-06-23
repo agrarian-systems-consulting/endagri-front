@@ -10,7 +10,7 @@ import {
   Icon,
 } from 'semantic-ui-react';
 import { NavLink, Link } from 'react-router-dom';
-import setMonth from 'date-fns/setMonth';
+import update from 'immutability-helper';
 import VentesComponent from './VentesComponent';
 import ActivitesComponent from './ActivitesComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
@@ -93,6 +93,24 @@ const ReadFichePage = () => {
       },
     ],
   });
+
+  const deleteActivite = async (id_activite) => {
+    // TODO LAncer la requête asynchorne à l'API
+    // await axios.delete()
+    // If OK
+
+    let updatedFiche = update(fiche, {
+      activites: {
+        $apply: (activites) =>
+          activites.filter((activite) => {
+            return activite.id !== id_activite;
+          }),
+      },
+    });
+
+    setFiche(updatedFiche);
+  };
+
   return (
     <Grid>
       <Grid.Row>
@@ -113,7 +131,10 @@ const ReadFichePage = () => {
         <InformationsPrincipalesComponent fiche={fiche} />
       </Grid.Row>
       <Grid.Row>
-        <ActivitesComponent activites={fiche.activites} />
+        <ActivitesComponent
+          deleteActivite={deleteActivite}
+          activites={fiche.activites}
+        />
       </Grid.Row>
       <Grid.Row>
         <VentesComponent ventes={fiche.ventes} />

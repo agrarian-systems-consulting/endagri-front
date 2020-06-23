@@ -3,7 +3,7 @@ import { Grid, Table, Button, Icon } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
 import CreateActiviteComponent from './CreateActiviteComponent';
 
-const ActivitesComponent = ({ activites }) => {
+const ActivitesComponent = ({ activites, deleteActivite }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   return (
     <Grid.Column width={10}>
@@ -30,7 +30,13 @@ const ActivitesComponent = ({ activites }) => {
                     {depenses.reduce((acc, { montant }) => acc + montant, 0)}
                   </Table.Cell>
                   <Table.Cell textAlign='center'>
-                    <Button size='mini' icon basic circular>
+                    <Button
+                      size='mini'
+                      icon
+                      basic
+                      circular
+                      onClick={() => deleteActivite(id)}
+                    >
                       <Icon name='trash' />
                     </Button>
                   </Table.Cell>
