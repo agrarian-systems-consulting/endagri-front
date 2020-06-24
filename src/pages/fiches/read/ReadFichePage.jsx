@@ -21,53 +21,58 @@ const ReadFichePage = () => {
   const [fiche, setFiche] = useState({
     id: 42,
     libelle_fiche: 'Tomates hors-sol en agriculture biologique',
-    production: 'Tomate',
+    libelle_production: 'Tomate',
+    id_production: 24,
     type_production: 'Culture annuelle',
     id_utilisateur: 35,
-    auteur: 'Sami Laouini',
+    ini_debut: 7,
+    ini_fin: 10,
     activites: [
       {
         id: 10,
-        libelle_activite: 'Labour',
+        libelle: 'Labour',
         mois_relatif: -1,
+        mois: null,
         depenses: [
           {
             id: 13,
-            libelle_depense: 'Tracteur',
+            libelle: 'Tracteur',
             montant: 1500,
           },
           {
             id: 14,
-            libelle_depense: "Main d'oeuvre",
+            libelle: "Main d'oeuvre",
             montant: 500,
           },
         ],
       },
       {
         id: 11,
-        libelle_activite: 'Semis',
+        libelle: 'Semis',
         mois_relatif: 0,
+        mois: null,
         depenses: [
           {
             id: 15,
-            libelle_depense: 'Tracteur',
+            libelle: 'Tracteur',
             montant: 500,
           },
           {
             id: 16,
-            libelle_depense: "Main d'oeuvre",
+            libelle: "Main d'oeuvre",
             montant: 500,
           },
         ],
       },
       {
         id: 12,
-        libelle_activite: 'Récolte',
+        libelle: 'Récolte',
         mois_relatif: 5,
+        mois: null,
         depenses: [
           {
             id: 17,
-            libelle_depenses: "Main d'oeuvre",
+            libelle: "Main d'oeuvre",
             montant: 200,
           },
         ],
@@ -80,7 +85,7 @@ const ReadFichePage = () => {
         unite: 't',
         rendement_min: 400,
         rendement: 500,
-        rendemet_max: 600,
+        rendement_max: 600,
         mois_relatif: 5,
       },
       {
@@ -89,7 +94,7 @@ const ReadFichePage = () => {
         unite: 't',
         rendement_min: 200,
         rendement: 300,
-        rendemet_max: 400,
+        rendement_max: 400,
         mois_relatif: 6,
       },
     ],
@@ -98,7 +103,7 @@ const ReadFichePage = () => {
   const { addToast } = useToasts();
 
   const deleteActivite = async (id_activite) => {
-    // TODO LAncer la requête asynchorne à l'API
+    // TODO Lancer la requête asynchorne à l'API
     // await axios.delete()
 
     let updatedFiche = update(fiche, {

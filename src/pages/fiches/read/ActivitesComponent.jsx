@@ -18,32 +18,30 @@ const ActivitesComponent = ({ activites, deleteActivite }) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {activites.map(
-            ({ id, libelle_activite, mois_relatif, mois, depenses }) => {
-              return (
-                <Table.Row key={id}>
-                  <Table.Cell>{libelle_activite}</Table.Cell>
-                  <Table.Cell textAlign='center'>
-                    {mois_relatif} {mois && getMois(mois)}
-                  </Table.Cell>
-                  <Table.Cell textAlign='center'>
-                    {depenses.reduce((acc, { montant }) => acc + montant, 0)}
-                  </Table.Cell>
-                  <Table.Cell textAlign='center'>
-                    <Button
-                      size='mini'
-                      icon
-                      basic
-                      circular
-                      onClick={() => deleteActivite(id)}
-                    >
-                      <Icon name='trash' />
-                    </Button>
-                  </Table.Cell>
-                </Table.Row>
-              );
-            }
-          )}
+          {activites.map(({ id, libelle, mois_relatif, mois, depenses }) => {
+            return (
+              <Table.Row key={id}>
+                <Table.Cell>{libelle}</Table.Cell>
+                <Table.Cell textAlign='center'>
+                  {mois_relatif} {mois && getMois(mois)}
+                </Table.Cell>
+                <Table.Cell textAlign='center'>
+                  {depenses.reduce((acc, { montant }) => acc + montant, 0)}
+                </Table.Cell>
+                <Table.Cell textAlign='center'>
+                  <Button
+                    size='mini'
+                    icon
+                    basic
+                    circular
+                    onClick={() => deleteActivite(id)}
+                  >
+                    <Icon name='trash' />
+                  </Button>
+                </Table.Cell>
+              </Table.Row>
+            );
+          })}
         </Table.Body>
       </Table>
       {isFormOpen ? (
