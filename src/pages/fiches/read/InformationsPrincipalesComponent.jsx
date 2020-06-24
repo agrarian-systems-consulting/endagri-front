@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Segment, List, Label } from 'semantic-ui-react';
+import { Grid, Segment, List, Label, Icon } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
 const InformationsPrincipalesComponent = ({ fiche }) => {
   return (
@@ -10,11 +10,13 @@ const InformationsPrincipalesComponent = ({ fiche }) => {
         </Segment>
         <Segment attached='bottom' clearing>
           <List>
-            <List.Item>{fiche.libelle_fiche}</List.Item>
             <List.Item>
-              <Label>{fiche.type_production}</Label>
+              <Label tag>{fiche.type_production}</Label>
             </List.Item>
+            <List.Item>{fiche.libelle_fiche}</List.Item>
+
             <List.Item>
+              <Icon color='grey' name='calendar check outline' />
               {
                 {
                   'Culture annuelle': 'Semis possible entre ',

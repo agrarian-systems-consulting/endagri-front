@@ -1,0 +1,71 @@
+import React from 'react';
+import { Formik, Field, ErrorMessage } from 'formik';
+import { Form, Segment, Button } from 'semantic-ui-react';
+import SemanticField from '../../../app/utils/forms/SemanticField';
+
+const countryOptions = [
+  { key: '1', value: '1', text: 'Janvier' },
+  { key: '2', value: '2', text: 'Février' },
+  { key: '3', value: '3', text: 'Mars' },
+  { key: '4', value: '4', text: 'Avril' },
+  { key: '5', value: '5', text: 'Mai' },
+  { key: '6', value: '6', text: 'Juin' },
+  { key: '7', value: '7', text: 'Juillet' },
+  { key: '8', value: '8', text: 'Août' },
+  { key: '9', value: '9', text: 'Septembre' },
+  { key: '10', value: '10', text: 'Octobre' },
+  { key: '11', value: '11', text: 'Novembre' },
+  { key: '12', value: '12', text: 'Décembre' },
+];
+
+const TempActiviteForm = () => (
+  <Segment>
+    <Formik
+      initialValues={{ libelle: '', mois: '', mois_relatif: '', depenses: [] }}
+      validate={(values) => {}}
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+          setSubmitting(false);
+        }, 400);
+      }}
+    >
+      {({
+        isSubmitting,
+        /* and other goodies */
+      }) => (
+        <Form>
+          <SemanticField
+            name='libelle'
+            value=''
+            label='Libelle'
+            component={Form.Input}
+          />
+          <SemanticField
+            name='mois_relatif'
+            value=''
+            label='Mois relatif'
+            component={Form.Input}
+          />
+          <SemanticField
+            name='mois'
+            value=''
+            label='Mois calendaire'
+            component={Form.Dropdown}
+            placeholder='Choisir un mois'
+            fluid
+            search
+            selection
+            options={countryOptions}
+          />
+
+          <Button type='submit' color='blue' disabled={isSubmitting}>
+            Ajouter
+          </Button>
+        </Form>
+      )}
+    </Formik>
+  </Segment>
+);
+
+export default TempActiviteForm;
