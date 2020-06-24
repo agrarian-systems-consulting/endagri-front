@@ -105,7 +105,6 @@ const ReadFichePage = () => {
   const deleteActivite = async (id_activite) => {
     // TODO Lancer la requête asynchorne à l'API
     // await axios.delete()
-
     let updatedFiche = update(fiche, {
       activites: {
         $apply: (activites) =>
@@ -118,6 +117,23 @@ const ReadFichePage = () => {
     setFiche(updatedFiche);
 
     addToast("L'activité a bien été supprimée", {
+      appearance: 'success',
+      autoDismiss: true,
+    });
+  };
+
+  const postActivite = async (activite) => {
+    // TODO axios.post
+
+    let updatedFiche = update(fiche, {
+      activites: {
+        $push: [activite],
+      },
+    });
+
+    setFiche(updatedFiche);
+
+    addToast("L'activité a bien été ajoutée", {
       appearance: 'success',
       autoDismiss: true,
     });
@@ -166,6 +182,7 @@ const ReadFichePage = () => {
       <Grid.Row>
         <ActivitesComponent
           deleteActivite={deleteActivite}
+          postActivite={postActivite}
           activites={fiche.activites}
         />
       </Grid.Row>

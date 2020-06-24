@@ -4,7 +4,7 @@ import getMois from '../../../app/utils/getMois';
 import CreateActiviteComponent from './CreateActiviteComponent';
 import TempActiviteForm from './TempActiviteForm';
 
-const ActivitesComponent = ({ activites, deleteActivite }) => {
+const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   return (
     <Grid.Column width={10}>
@@ -53,7 +53,7 @@ const ActivitesComponent = ({ activites, deleteActivite }) => {
         </Button>
       )}
 
-      {isFormOpen && <TempActiviteForm />}
+      {isFormOpen && <TempActiviteForm postActivite={postActivite} />}
     </Grid.Column>
   );
 };

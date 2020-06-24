@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Field, ErrorMessage } from 'formik';
 import { Form, Segment, Button } from 'semantic-ui-react';
+import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 
 const countryOptions = [
@@ -18,54 +19,82 @@ const countryOptions = [
   { key: '12', value: '12', text: 'Décembre' },
 ];
 
-const TempActiviteForm = () => (
-  <Segment>
-    <Formik
-      initialValues={{ libelle: '', mois: '', mois_relatif: '', depenses: [] }}
-      validate={(values) => {}}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      {({
-        isSubmitting,
-        /* and other goodies */
-      }) => (
-        <Form>
-          <SemanticField
-            name='libelle'
-            value=''
-            label='Libelle'
-            component={Form.Input}
-          />
-          <SemanticField
-            name='mois_relatif'
-            value=''
-            label='Mois relatif'
-            component={Form.Input}
-          />
-          <SemanticField
-            name='mois'
-            value=''
-            label='Mois calendaire'
-            component={Form.Dropdown}
-            placeholder='Choisir un mois'
-            fluid
-            search
-            selection
-            options={countryOptions}
-          />
+const TempActiviteForm = ({ postActivite }) => {
+  // Form validation handled with Yup
+  const validationSchema = Yup.object({
+    libelle: Yup.string().required('Le libellé est obligatoire'),
+  });
 
-          <Button type='submit' color='blue' disabled={isSubmitting}>
-            Ajouter
-          </Button>
-        </Form>
-      )}
-    </Formik>
-  </Segment>
-);
+  return (
+    <Segment>
+      <Formik
+        initialValues={{
+          libelle: '',
+          mois: '',
+          mois_relatif: '',
+          depenses: [],
+        }}
+        // Handle form validation
+        validationSchema={validationSchema}
+        // Handle form submit
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          // Ajouter l'activité
+          postActivite(values);
+
+          // Nettoyer le formulaire
+          resetForm();
+
+          // Optionnel : set focus à nouveau sur le formulaire
+        }}
+      >
+        {({
+          values,
+          errors,
+          dirty,
+          isValid,
+          handleSubmit,
+          isSubmitting,
+          /* and other goodies */
+        }) => (
+          <Form onSubmit={handleSubmit}>
+            <SemanticField
+              name='libelle'
+              value=''
+              label='Libelle'
+              component={Form.Input}
+            />
+            <SemanticField
+              name='mois_relatif'
+              value=''
+              label='Mois relatif'
+              component={Form.Input}
+            />
+            <SemanticField
+              name='mois'
+              value=''
+              label='Mois calendaire'
+              component={Form.Dropdown}
+              placeholder='Choisir un mois'
+              fluid
+              search
+              selection
+              options={countryOptions}
+            />
+
+            <Button
+              type='submit'
+              color='blue'
+              disabled={isSubmitting || !isValid || !dirty}
+              loading={isSubmitting}
+            >
+              Ajouter
+            </Button>
+            <pre>values = {JSON.stringify(values, null, 2)}</pre>
+          </Form>
+        )}
+      </Formik>
+    </Segment>
+  );
+};
 
 export default TempActiviteForm;
