@@ -12,7 +12,18 @@ const DeleteMarchePage = () => {
         <Grid.Column width={16}>
           <Segment>
             <p>Cette action est irréversible, si vous cliquez sur supprimer.</p>
-            <Button as={Link} to='/fiches'>
+            <Button
+              onClick={() => {
+                // TODO : Supprimer la fiche
+                // await axios.delete
+                addToast("Le marché n'a pas été supprimé", {
+                  appearance: 'info',
+                  autoDismiss: true,
+                });
+
+                history.goBack();
+              }}
+            >
               Annuler
             </Button>
             <Button

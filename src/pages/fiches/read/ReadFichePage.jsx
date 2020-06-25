@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Breadcrumb, Button } from 'semantic-ui-react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useParams } from 'react-router-dom';
 import update from 'immutability-helper';
 import { useToasts } from 'react-toast-notifications';
 import VentesComponent from './VentesComponent';
@@ -10,8 +10,11 @@ import GrapheComponent from './GrapheComponent';
 import cuid from 'cuid';
 
 const ReadFichePage = () => {
+  let { id } = useParams();
+  const { addToast } = useToasts();
+
   const [fiche, setFiche] = useState({
-    id: 42,
+    id: id,
     libelle_fiche: 'Tomates hors-sol en agriculture biologique',
     libelle_production: 'Tomate',
     id_production: 24,
@@ -91,8 +94,6 @@ const ReadFichePage = () => {
       },
     ],
   });
-
-  const { addToast } = useToasts();
 
   const deleteActivite = async (id_activite) => {
     // TODO Lancer la requête asynchorne à l'API
