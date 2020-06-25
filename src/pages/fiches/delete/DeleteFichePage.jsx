@@ -1,8 +1,11 @@
 import React from 'react';
 import { Grid, Segment, Button } from 'semantic-ui-react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useHistory } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 
 const DeleteFichePage = () => {
+  const { addToast } = useToasts();
+  let history = useHistory();
   return (
     <Grid>
       <Grid.Row>
@@ -15,7 +18,14 @@ const DeleteFichePage = () => {
             <Button
               color='red'
               onClick={() => {
-                alert('Doit supprimer la fiche');
+                // TODO : Supprimer la fiche
+                // await axios.delete
+                addToast('La fiche a bien été supprimée', {
+                  appearance: 'success',
+                  autoDismiss: true,
+                });
+
+                history.push(`/fiches`);
               }}
             >
               Supprimer

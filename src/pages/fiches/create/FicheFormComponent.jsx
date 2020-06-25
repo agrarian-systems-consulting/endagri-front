@@ -7,6 +7,7 @@ import SemanticIntegerField from '../../../app/utils/forms/SemanticIntegerField'
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
 import cuid from 'cuid';
 import { useHistory } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 
 const monthsOptions = [
   { key: '1', value: 1, text: 'Janvier' },
@@ -25,6 +26,7 @@ const monthsOptions = [
 
 const FicheFormComponent = () => {
   let history = useHistory();
+  const { addToast } = useToasts();
   // Faire un get pour récupérer la liste des options en lien avec la production en cours
   const [productionOptions, setProductionOptions] = useState([
     { key: '1', value: 1, text: 'Blé' },
@@ -59,6 +61,11 @@ const FicheFormComponent = () => {
         // Récupérer l'id de la fiche créer
         // res.body.id
         const id = cuid();
+
+        addToast('La fiche a bien été créée', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
 
         // Rediriger vers la page de la fiche
         history.push(`/fiche/${id}`);
@@ -134,7 +141,7 @@ const FicheFormComponent = () => {
           >
             Créer la fiche
           </Button>
-          <pre>values = {JSON.stringify(values, null, 2)}</pre>
+          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
         </Form>
       )}
     </Formik>
