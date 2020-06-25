@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Grid, Breadcrumb, Segment, List, Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import formatMoney from '../../../app/utils/formatMoney';
 
 const ReadMarchePage = () => {
+  let { id } = useParams();
+
   const [marche, setMarche] = useState({
-    id: 1,
+    id: id,
     id_produit: 3,
     libelle_production: 'Bovins laitiers race Tarantaise',
     libelle_produit: 'Lait',
@@ -27,9 +29,10 @@ const ReadMarchePage = () => {
   });
 
   const {
-    id,
     libelle_production,
     libelle_produit,
+    type_vente,
+    localisation,
     unite,
     prix_january,
     prix_february,
@@ -56,18 +59,14 @@ const ReadMarchePage = () => {
               <Link to='/marches'>Marchés</Link>
             </Breadcrumb.Section>
             <Breadcrumb.Divider />
-            <Breadcrumb.Section active>
-              {marche.libelle_production} <Breadcrumb.Divider />
-              {marche.libelle_produit} <Breadcrumb.Divider />
-              {marche.type_vente} <Breadcrumb.Divider />
-              {marche.localisation}
-            </Breadcrumb.Section>
+            <Breadcrumb.Section active>Marché {id}</Breadcrumb.Section>
           </Breadcrumb>
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={10}>
           <Segment>
+            <h5>Faire le graphe</h5>
             <List>
               <List.Item>
                 Prix Janvier : {formatMoney(prix_january)}/{unite}
@@ -111,22 +110,22 @@ const ReadMarchePage = () => {
         <Grid.Column width={6}>
           <Segment.Group>
             <Segment attached='top'>
-              <h5>Informations sur le marché</h5>
+              <h5>Informations sur le marché {id}</h5>
             </Segment>
             <Segment attached='bottom'>
               <List>
-                <List.Item>Production : {marche.libelle_production}</List.Item>
+                <List.Item>Production : {libelle_production}</List.Item>
               </List>
               <List>
-                <List.Item>Produit : {marche.libelle_produit}</List.Item>
+                <List.Item>Produit : {libelle_produit}</List.Item>
               </List>
               <List>
-                <List.Item>Type de vente : {marche.type_vente}</List.Item>
+                <List.Item>Type de vente : {type_vente}</List.Item>
               </List>
               <List>
-                <List.Item>Localisation : {marche.localisation}</List.Item>
+                <List.Item>Localisation : {localisation}</List.Item>
               </List>
-              <Button>Modifier</Button>
+              {/* <Button>Modifier</Button> */}
             </Segment>
           </Segment.Group>
           <Button

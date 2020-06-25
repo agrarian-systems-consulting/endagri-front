@@ -95,6 +95,9 @@ const ReadFichePage = () => {
     ],
   });
 
+  //getFICHE
+  // useEffect avec id
+
   const deleteActivite = async (id_activite) => {
     // TODO Lancer la requête asynchorne à l'API
     // await axios.delete()
