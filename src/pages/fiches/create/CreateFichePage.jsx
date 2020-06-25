@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Grid, Segment, Breadcrumb } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import FicheFormComponent from './FicheFormComponent';
 
 const CreateFichePage = () => {
   return (
@@ -25,34 +26,7 @@ const CreateFichePage = () => {
               <h5>Créer une nouvelle fiche</h5>
             </Segment>
             <Segment attached='bottom'>
-              <Form>
-                <Form.Field>
-                  <label>Production</label>
-                  <input placeholder='id_production' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Libellé</label>
-                  <input placeholder='libelle' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Période de démarrage possible - Début</label>
-                  <input placeholder='ini_debut' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Période de démarrage possible - Fin</label>
-                  <input placeholder='ini_fin' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Commentaire</label>
-                  <input placeholder='commentaire' />
-                </Form.Field>
-                <Button as={NavLink} to='/fiches'>
-                  Annuler
-                </Button>
-                <Button type='submit' color='teal'>
-                  Créer la nouvelle fiche
-                </Button>
-              </Form>
+              <FicheFormComponent />
             </Segment>
           </Segment.Group>
         </Grid.Column>
