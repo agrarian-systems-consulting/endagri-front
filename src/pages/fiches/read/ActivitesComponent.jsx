@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Table, Button, Icon } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
-import CreateActiviteComponent from './CreateActiviteComponent';
-import TempActiviteForm from './TempActiviteForm';
+import ActiviteFormComponent from './ActiviteFormComponent.jsx';
 
 const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -53,7 +52,7 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
         </Button>
       )}
 
-      {isFormOpen && <TempActiviteForm postActivite={postActivite} />}
+      {isFormOpen && <ActiviteFormComponent postActivite={postActivite} />}
     </Grid.Column>
   );
 };

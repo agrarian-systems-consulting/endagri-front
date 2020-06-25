@@ -20,7 +20,7 @@ const countryOptions = [
   { key: '12', value: 12, text: 'Décembre' },
 ];
 
-const TempActiviteForm = ({ postActivite }) => {
+const ActiviteForm = ({ postActivite }) => {
   // Form validation handled with Yup
   const validationSchema = Yup.object({
     libelle: Yup.string().required('Le libellé est obligatoire'),
@@ -39,15 +39,11 @@ const TempActiviteForm = ({ postActivite }) => {
         validationSchema={validationSchema}
         // Handle form submit
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          // Remettre les type:numbre sous forme d'integer
-
           // Ajouter l'activité
           postActivite(values);
 
           // Nettoyer le formulaire
           resetForm();
-
-          // Optionnel : set focus à nouveau sur le formulaire
         }}
       >
         {({
@@ -137,7 +133,7 @@ const TempActiviteForm = ({ postActivite }) => {
             >
               Ajouter
             </Button>
-            <pre>values = {JSON.stringify(values, null, 2)}</pre>
+            {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
           </Form>
         )}
       </Formik>
@@ -145,4 +141,4 @@ const TempActiviteForm = ({ postActivite }) => {
   );
 };
 
-export default TempActiviteForm;
+export default ActiviteForm;
