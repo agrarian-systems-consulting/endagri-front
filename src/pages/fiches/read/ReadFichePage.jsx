@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Grid,
-  Breadcrumb,
-  Segment,
-  List,
-  Table,
-  Label,
-  Button,
-  Icon,
-} from 'semantic-ui-react';
+import { Grid, Breadcrumb, Button } from 'semantic-ui-react';
 import { NavLink, Link } from 'react-router-dom';
 import update from 'immutability-helper';
 import { useToasts } from 'react-toast-notifications';
@@ -16,6 +7,7 @@ import VentesComponent from './VentesComponent';
 import ActivitesComponent from './ActivitesComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
 import GrapheComponent from './GrapheComponent';
+import cuid from 'cuid';
 
 const ReadFichePage = () => {
   const [fiche, setFiche] = useState({
@@ -124,6 +116,11 @@ const ReadFichePage = () => {
 
   const postActivite = async (activite) => {
     // TODO axios.post
+
+    // Récupérer l'id
+
+    // Mockup id temporaire
+    activite.id = cuid();
 
     let updatedFiche = update(fiche, {
       activites: {

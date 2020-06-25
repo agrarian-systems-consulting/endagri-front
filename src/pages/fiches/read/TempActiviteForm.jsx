@@ -1,8 +1,9 @@
 import React from 'react';
-import { Formik, Field, ErrorMessage } from 'formik';
-import { Form, Segment, Button } from 'semantic-ui-react';
+import { Formik, FieldArray } from 'formik';
+import { Form, Segment, Button, Icon, Divider } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
+import SemanticIntegerField from '../../../app/utils/forms/SemanticIntegerField';
 
 const countryOptions = [
   { key: '1', value: '1', text: 'Janvier' },
@@ -26,7 +27,7 @@ const TempActiviteForm = ({ postActivite }) => {
   });
 
   return (
-    <Segment>
+    <Segment clearing>
       <Formik
         initialValues={{
           libelle: '',
@@ -38,6 +39,8 @@ const TempActiviteForm = ({ postActivite }) => {
         validationSchema={validationSchema}
         // Handle form submit
         onSubmit={(values, { setSubmitting, resetForm }) => {
+          // Remettre les type:numbre sous forme d'integer
+
           // Ajouter l'activité
           postActivite(values);
 
@@ -52,6 +55,7 @@ const TempActiviteForm = ({ postActivite }) => {
           errors,
           dirty,
           isValid,
+          handleChange,
           handleSubmit,
           isSubmitting,
           /* and other goodies */
@@ -63,11 +67,12 @@ const TempActiviteForm = ({ postActivite }) => {
               label='Libelle'
               component={Form.Input}
             />
-            <SemanticField
+            <SemanticIntegerField
               name='mois_relatif'
               value=''
               label='Mois relatif'
               component={Form.Input}
+              type='number'
             />
             <SemanticField
               name='mois'
@@ -80,10 +85,53 @@ const TempActiviteForm = ({ postActivite }) => {
               selection
               options={countryOptions}
             />
+            <Form.Field>
+              <label>Dépenses</label>
+            </Form.Field>
+
+            <FieldArray
+              name='depenses'
+              label='Dépenses'
+              render={(arrayHelpers) => (
+                <div>
+                  {values.depenses.map((depense, index) => (
+                    <div key={index}>
+                      <SemanticField
+                        label='Libellé'
+                        name={`depenses.${index}.libelle`}
+                        component={Form.Input}
+                      />
+                      <SemanticIntegerField
+                        label='Montant'
+                        name={`depenses.${index}.montant`}
+                        component={Form.Input}
+                        type='number'
+                      />
+
+                      <Button
+                        size='mini'
+                        icon
+                        basic
+                        circular
+                        onClick={() => arrayHelpers.remove(index)}
+                      >
+                        <Icon name='trash' />
+                      </Button>
+                      <Divider></Divider>
+                    </div>
+                  ))}
+
+                  <Button type='button' onClick={() => arrayHelpers.push('')}>
+                    Ajouter une dépense
+                  </Button>
+                </div>
+              )}
+            />
 
             <Button
               type='submit'
               color='blue'
+              floated='right'
               disabled={isSubmitting || !isValid || !dirty}
               loading={isSubmitting}
             >
