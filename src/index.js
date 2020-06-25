@@ -10,13 +10,11 @@ const rootEl = document.getElementById('root');
 
 let render = () => {
   ReactDOM.render(
-    <React.StrictMode>
-      <BrowserRouter>
-        <ToastProvider placement='bottom-right' autoDismissTimeout={2700}>
-          <App />
-        </ToastProvider>
-      </BrowserRouter>
-    </React.StrictMode>,
+    <BrowserRouter>
+      <ToastProvider placement='bottom-right' autoDismissTimeout={2700}>
+        <App />
+      </ToastProvider>
+    </BrowserRouter>,
     rootEl
   );
 };

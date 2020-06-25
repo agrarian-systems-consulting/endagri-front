@@ -22,6 +22,7 @@ import UpdateProductionPage from '../../pages/productions/update/UpdateProductio
 import UpdateAnalysePage from '../../pages/analyses/updateAnalyse/UpdateAnalysePage';
 import DeleteAnalysePage from '../../pages/analyses/deleteAnalyse/DeleteAnalysePage';
 import DeleteFichePage from '../../pages/fiches/delete/DeleteFichePage';
+import DeleteMarchePage from '../../pages/marches/delete/DeleteMarchePage';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
           <Route exact path='/marche/create' component={CreateMarchePage} />
           <Route exact path='/marche/:id' component={ReadMarchePage} />
           <Route exact path='/marche/:id/update' component={UpdateMarchePage} />
+          <Route exact path='/marche/:id/delete' component={DeleteMarchePage} />
           <Route exact path='/productions' component={ListProductionsPage} />
           <Route
             exact

@@ -129,7 +129,12 @@ const ReadMarchePage = () => {
               <Button>Modifier</Button>
             </Segment>
           </Segment.Group>
-          <Button negative floated='right'>
+          <Button
+            negative
+            floated='right'
+            as={Link}
+            to={`/marche/${id}/delete`}
+          >
             Supprimer
           </Button>
         </Grid.Column>
