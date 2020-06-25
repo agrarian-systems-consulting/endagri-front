@@ -18,34 +18,42 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
             <Table.HeaderCell></Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-        <Table.Body>
-          {activites.map(({ id, libelle, mois_relatif, mois, depenses }) => {
-            return (
-              <Table.Row key={id}>
-                <Table.Cell>{libelle}</Table.Cell>
-                <Table.Cell textAlign='center'>
-                  {mois_relatif} {mois && getMois(mois)}
-                </Table.Cell>
-                <Table.Cell textAlign='center'>
-                  {formatMoney(
-                    depenses.reduce((acc, { montant }) => acc + montant, 0)
-                  )}
-                </Table.Cell>
-                <Table.Cell textAlign='center'>
-                  <Button
-                    size='mini'
-                    icon
-                    basic
-                    circular
-                    onClick={() => deleteActivite(id)}
-                  >
-                    <Icon name='trash' />
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
+        {activites.length === 0 ? (
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Aucune activité pour le moment...</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        ) : (
+          <Table.Body>
+            {activites.map(({ id, libelle, mois_relatif, mois, depenses }) => {
+              return (
+                <Table.Row key={id}>
+                  <Table.Cell>{libelle}</Table.Cell>
+                  <Table.Cell textAlign='center'>
+                    {mois_relatif} {mois && getMois(mois)}
+                  </Table.Cell>
+                  <Table.Cell textAlign='center'>
+                    {formatMoney(
+                      depenses.reduce((acc, { montant }) => acc + montant, 0)
+                    )}
+                  </Table.Cell>
+                  <Table.Cell textAlign='center'>
+                    <Button
+                      size='mini'
+                      icon
+                      basic
+                      circular
+                      onClick={() => deleteActivite(id)}
+                    >
+                      <Icon name='trash' />
+                    </Button>
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
+          </Table.Body>
+        )}
       </Table>
       {isFormOpen ? (
         <Button onClick={() => setIsFormOpen(false)}>Annuler</Button>
