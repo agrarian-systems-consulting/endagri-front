@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, FieldArray } from 'formik';
 import { Form, Segment, Button, Icon, Divider } from 'semantic-ui-react';
 import * as Yup from 'yup';
@@ -21,27 +21,38 @@ const monthsOptions = [
   { key: '12', value: 12, text: 'Décembre' },
 ];
 
-const VenteFormComponent = () => {
+const VenteFormComponent = ({ postVente }) => {
+  // Faire un get pour récupérer la liste des options en lien avec la production en cours
+  const [marketsOptions, setMarketsOptions] = useState([
+    { key: '1', value: 1, text: 'Produit A - Vente au champs - Bizerte' },
+    { key: '2', value: 2, text: 'Produit A - Vente usine - Bizerte' },
+    { key: '3', value: 3, text: 'Produit B - Vente usine - Bizerte' },
+  ]);
+
+  // TODO : Créer un useEffect pour peupler marketsOptions
+
   // Form validation handled with Yup
   const validationSchema = Yup.object({
-    libelle: Yup.string().required('Le libellé est obligatoire'),
-    rendement: Yup.string().required('Le rendement moyen est obligatoire'),
+    id_marche: Yup.number().required('Le produit vendu est obligatoire'),
+    rendement: Yup.number().required('Le rendement moyen est obligatoire'),
   });
   return (
     <Segment clearing>
       <Formik
         initialValues={{
-          libelle: '',
-          mois: '',
-          mois_relatif: '',
-          depenses: [],
+          id_marche: null,
+          mois: null,
+          mois_relatif: null,
+          rendement: null,
+          rendement_min: null,
+          rendement_max: null,
         }}
         // Handle form validation
         validationSchema={validationSchema}
         // Handle form submit
         onSubmit={(values, { setSubmitting, resetForm }) => {
           // Ajouter la vente
-
+          postVente(values);
           // Nettoyer le formulaire
           resetForm();
         }}
@@ -58,10 +69,15 @@ const VenteFormComponent = () => {
         }) => (
           <Form onSubmit={handleSubmit}>
             <SemanticField
-              name='id_marche ?'
+              name='id_marche'
               value=''
-              label='Libelle'
-              component={Form.Input}
+              label='Produit, Lieu et Mode de vente'
+              component={Form.Dropdown}
+              fluid
+              search
+              selection
+              clearable
+              options={marketsOptions}
             />
             <Form.Group widths='equal'>
               <SemanticIntegerField
@@ -99,6 +115,7 @@ const VenteFormComponent = () => {
                 label='Rendement moy.'
                 component={Form.Input}
                 type='number'
+                step={0.01}
               />
               <SemanticFloatField
                 name='rendement_max'
@@ -106,6 +123,7 @@ const VenteFormComponent = () => {
                 label='Rendement max.'
                 component={Form.Input}
                 type='number'
+                step={0.01}
               />
             </Form.Group>
 
@@ -117,9 +135,9 @@ const VenteFormComponent = () => {
               disabled={isSubmitting || !isValid || !dirty}
               loading={isSubmitting}
             >
-              Ajouter l'activité
+              Ajouter la vente
             </Button>
-            <pre>values = {JSON.stringify(values, null, 2)}</pre>
+            {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
           </Form>
         )}
       </Formik>

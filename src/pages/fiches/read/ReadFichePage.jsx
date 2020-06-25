@@ -157,6 +157,28 @@ const ReadFichePage = () => {
     });
   };
 
+  const postVente = async (vente) => {
+    // TODO axios.post
+
+    // Récupérer l'id
+
+    // Mockup id temporaire
+    vente.id = cuid();
+
+    let updatedFiche = update(fiche, {
+      ventes: {
+        $push: [vente],
+      },
+    });
+
+    setFiche(updatedFiche);
+
+    addToast('La vente a bien été ajoutée', {
+      appearance: 'success',
+      autoDismiss: true,
+    });
+  };
+
   return (
     <Grid>
       <Grid.Row>
@@ -184,7 +206,11 @@ const ReadFichePage = () => {
         />
       </Grid.Row>
       <Grid.Row>
-        <VentesComponent deleteVente={deleteVente} ventes={fiche.ventes} />
+        <VentesComponent
+          deleteVente={deleteVente}
+          postVente={postVente}
+          ventes={fiche.ventes}
+        />
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={16}>
