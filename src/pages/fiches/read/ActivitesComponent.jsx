@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Table, Button, Icon } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
 import ActiviteFormComponent from './ActiviteFormComponent.jsx';
+import formatMoney from '../../../app/utils/formatMoney';
 
 const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -26,7 +27,9 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
                   {mois_relatif} {mois && getMois(mois)}
                 </Table.Cell>
                 <Table.Cell textAlign='center'>
-                  {depenses.reduce((acc, { montant }) => acc + montant, 0)}
+                  {formatMoney(
+                    depenses.reduce((acc, { montant }) => acc + montant, 0)
+                  )}
                 </Table.Cell>
                 <Table.Cell textAlign='center'>
                   <Button

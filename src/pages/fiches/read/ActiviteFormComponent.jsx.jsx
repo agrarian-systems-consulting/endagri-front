@@ -79,6 +79,7 @@ const ActiviteForm = ({ postActivite }) => {
               fluid
               search
               selection
+              clearable
               options={countryOptions}
             />
             <Form.Field>
@@ -92,17 +93,19 @@ const ActiviteForm = ({ postActivite }) => {
                 <div>
                   {values.depenses.map((depense, index) => (
                     <div key={index}>
-                      <SemanticField
-                        label='Libellé'
-                        name={`depenses.${index}.libelle`}
-                        component={Form.Input}
-                      />
-                      <SemanticIntegerField
-                        label='Montant'
-                        name={`depenses.${index}.montant`}
-                        component={Form.Input}
-                        type='number'
-                      />
+                      <Form.Group widths='equal'>
+                        <SemanticField
+                          label='Libellé'
+                          name={`depenses.${index}.libelle`}
+                          component={Form.Input}
+                        />
+                        <SemanticIntegerField
+                          label='Montant'
+                          name={`depenses.${index}.montant`}
+                          component={Form.Input}
+                          type='number'
+                        />
+                      </Form.Group>
 
                       <Button
                         size='mini'
@@ -123,7 +126,7 @@ const ActiviteForm = ({ postActivite }) => {
                 </div>
               )}
             />
-
+            <Divider></Divider>
             <Button
               type='submit'
               color='blue'
@@ -131,7 +134,7 @@ const ActiviteForm = ({ postActivite }) => {
               disabled={isSubmitting || !isValid || !dirty}
               loading={isSubmitting}
             >
-              Ajouter
+              Ajouter l'activité
             </Button>
             {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
           </Form>
