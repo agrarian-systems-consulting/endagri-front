@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Table, Button, Icon } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
-import CreateVenteComponent from './CreateVenteComponent';
+import CreateVenteComponent from './VenteFormComponent';
 
 const VentesComponent = ({ ventes, deleteVente }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);

@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticIntegerField from '../../../app/utils/forms/SemanticIntegerField';
 
-const countryOptions = [
+const monthsOptions = [
   { key: '1', value: 1, text: 'Janvier' },
   { key: '2', value: 2, text: 'Février' },
   { key: '3', value: 3, text: 'Mars' },
@@ -80,7 +80,7 @@ const ActiviteForm = ({ postActivite }) => {
               search
               selection
               clearable
-              options={countryOptions}
+              options={monthsOptions}
             />
             <Form.Field>
               <label>Dépenses</label>
