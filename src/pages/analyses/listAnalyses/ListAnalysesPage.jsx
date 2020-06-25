@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Breadcrumb, Table, Button } from 'semantic-ui-react';
 import { Link, NavLink } from 'react-router-dom';
+import { format } from 'date-fns';
 
 const ListAnalysesPage = () => {
   const [analyses, setAnalyses] = useState([
     {
       id: 1,
-      created: '2020-06-09T22:00:00.000Z',
-      modified: '2020-06-09T22:00:00.000Z',
+      created: '2020-06-09',
+      modified: '2020-06-09',
       nom_utilisateur: 'Hugo',
       nom_client: 'Client A',
       montant_tresorerie_initiale: 1500,
@@ -16,13 +17,13 @@ const ListAnalysesPage = () => {
     },
     {
       id: 2,
-      created: '2020-06-09T22:00:00.000Z',
-      modified: '2020-06-09T22:00:00.000Z',
+      created: '2020-06-09',
+      modified: '2020-06-09',
       nom_utilisateur: 'Florian',
       nom_client: 'Client B',
       montant_tresorerie_initiale: 1234,
-      date_debut_analyse: '2020-05-05T22:00:00.000Z',
-      date_fin_analyse: '2021-05-05T22:00:00.000Z',
+      date_debut_analyse: '2020-05-05',
+      date_fin_analyse: '2021-05-05',
     },
   ]);
 
@@ -65,7 +66,7 @@ const ListAnalysesPage = () => {
                       </Table.Cell>
                       <Table.Cell>{nom_utilisateur}</Table.Cell>
                       <Table.Cell>{nom_client}</Table.Cell>
-                      <Table.Cell>{created}</Table.Cell>
+                      <Table.Cell> {created}</Table.Cell>
                       <Table.Cell>{modified}</Table.Cell>
                     </Table.Row>
                   );
