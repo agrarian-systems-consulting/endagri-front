@@ -116,8 +116,8 @@ const ListProductionsPage = () => {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={16}>
-          <Button color='teal' as={NavLink} to='/fiche/create'>
-            Nouvelle fiche
+          <Button color='teal' as={NavLink} to='/production/create'>
+            Nouvelle production
           </Button>
         </Grid.Column>
       </Grid.Row>
