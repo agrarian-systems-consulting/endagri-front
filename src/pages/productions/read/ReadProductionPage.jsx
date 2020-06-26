@@ -96,11 +96,10 @@ const ReadProductionPage = () => {
         <Grid.Column width={8}>
           <Segment.Group>
             <Segment attached='top'>
-              <h5>
-                {production.id} - {production.libelle}{' '}
-              </h5>
+              <h5>{production.libelle} </h5>
             </Segment>
             <Segment attached='bottom'>
+              <h5>Catégorie de production</h5>
               <Label tag>{production.type_production}</Label>
               <h5>Produits</h5>
               {production.produits.length === 0 ? (
@@ -153,7 +152,7 @@ const ReadProductionPage = () => {
                   onClick={() => {
                     setisOpenForm(true);
                   }}
-                  color='blue'
+                  color='teal'
                 >
                   Ajouter un produit
                 </Button>
