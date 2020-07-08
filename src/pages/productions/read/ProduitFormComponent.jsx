@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
-import { Formik, FieldArray } from 'formik';
-import { Form, Segment, Button, Icon, Divider } from 'semantic-ui-react';
+import { Formik } from 'formik';
+import React from 'react';
+import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
-import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
-import cuid from 'cuid';
-import { useHistory } from 'react-router-dom';
-import { useToasts } from 'react-toast-notifications';
-import typeVenteOptions from '../../../app/data/typeVenteOptions';
 
 const ProduitFormComponent = ({ postProduit }) => {
   // Form validation handled with Yup

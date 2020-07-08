@@ -1,26 +1,20 @@
-import React, { Fragment } from 'react';
+import Axios from 'axios';
+import update from 'immutability-helper';
+import React, { Fragment, useEffect, useState } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 import {
-  Grid,
-  Segment,
-  List,
-  Label,
-  Table,
+  Breadcrumb,
   Button,
   Divider,
-  Breadcrumb,
+  Grid,
   Icon,
-  Dimmer,
-  Loader,
+  Label,
   Placeholder,
+  Segment,
+  Table,
 } from 'semantic-ui-react';
-import { useState } from 'react';
-import { useParams, NavLink } from 'react-router-dom';
-import { useToasts } from 'react-toast-notifications';
 import ProduitFormComponent from './ProduitFormComponent';
-import update from 'immutability-helper';
-import { useEffect } from 'react';
-import Axios from 'axios';
-import cuid from 'cuid';
 
 const ReadProductionPage = () => {
   const { id } = useParams();
