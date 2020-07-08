@@ -8,7 +8,7 @@ import {
   Table,
   Icon,
 } from 'semantic-ui-react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, NavLink } from 'react-router-dom';
 import formatMoney from '../../../app/utils/formatMoney';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -62,11 +62,8 @@ const ReadMarchePage = () => {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={10}>
-        
-            <PricesChartComponent marche={marche} />
-        
-
-          <h5>Tableaux des prix</h5>
+          <PricesChartComponent marche={marche} />
+          <h5>Tableaux des prix </h5>
           <Table fixed>
             <Table.Header>
               <Table.HeaderCell>Janvier</Table.HeaderCell>
@@ -187,6 +184,9 @@ const ReadMarchePage = () => {
               </Table.Row>
             </Table.Body>
           </Table>
+          <Button color='blue' as={NavLink} to={`/marche/${id}/update`}>
+            Mettre les prix à jour
+          </Button>
         </Grid.Column>
         <Grid.Column width={6}>
           <Segment.Group>

@@ -14,10 +14,6 @@ import {
 import { Segment } from 'semantic-ui-react';
 
 const PricesChartComponent = ({ marche }) => {
-  // TODO : Make it dynamic to have a clear view at all times
-  const BAR_GAP = 4;
-  const BAR_SIZE = 20;
-
   const chartData = [
     { name: 'J', prix: marche.prix_january || 0 },
     { name: 'F', prix: marche.prix_february || 0 },
