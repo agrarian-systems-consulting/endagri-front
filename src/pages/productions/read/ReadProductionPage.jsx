@@ -20,6 +20,7 @@ import ProduitFormComponent from './ProduitFormComponent';
 import update from 'immutability-helper';
 import { useEffect } from 'react';
 import Axios from 'axios';
+import cuid from 'cuid';
 
 const ReadProductionPage = () => {
   const { id } = useParams();
@@ -58,24 +59,33 @@ const ReadProductionPage = () => {
   const postProduit = (produit) => {
     produit.id_production = id;
 
-    // axios.post
-    let updatedProduction = update(production, {
-      produits: {
-        $push: [produit],
+    Axios.post('http://localhost:3333/produit', produit).then(
+      (res) => {
+        produit.id = res.data.id;
+
+        let updatedProduction = update(production, {
+          produits: {
+            $push: [produit],
+          },
+        });
+
+        setProduction(updatedProduction);
+
+        addToast('Le produit a bien été créé', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
       },
-    });
-
-    setProduction(updatedProduction);
-
-    addToast('Le produit a bien été créé', {
-      appearance: 'success',
-      autoDismiss: true,
-    });
+      (err) => {
+        addToast(err, {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+    );
   };
 
   const deleteProduit = (id_produit) => {
-    // axios.delete
-
     let updatedProduction = update(production, {
       produits: {
         $apply: (produits) =>
@@ -87,10 +97,20 @@ const ReadProductionPage = () => {
 
     setProduction(updatedProduction);
 
-    addToast('Le produit a bien été supprimé', {
-      appearance: 'success',
-      autoDismiss: true,
-    });
+    Axios.delete(`http://localhost:3333/produit/${id_produit}`).then(
+      (res) => {
+        addToast('Le produit a bien été supprimé', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+      },
+      (err) => {
+        addToast(err, {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+    );
   };
 
   return (
