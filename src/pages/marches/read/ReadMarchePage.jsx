@@ -1,37 +1,28 @@
-import React, { useState } from 'react';
-import { Grid, Breadcrumb, Segment, List, Button } from 'semantic-ui-react';
+import React, { useState, Fragment } from 'react';
+import {
+  Grid,
+  Breadcrumb,
+  Segment,
+  List,
+  Button,
+  Table,
+  Icon,
+} from 'semantic-ui-react';
 import { Link, useParams } from 'react-router-dom';
 import formatMoney from '../../../app/utils/formatMoney';
+import { useEffect } from 'react';
+import axios from 'axios';
+import PricesChartComponent from './PricesChartComponent';
 
 const ReadMarchePage = () => {
   let { id } = useParams();
 
-  const [marche, setMarche] = useState({
-    id: id,
-    id_produit: 3,
-    libelle_production: 'Bovins laitiers race Tarantaise',
-    libelle_produit: 'Lait',
-    unite: 'Litre',
-    localisation: 'Bizerte',
-    type_vente: 'Vente usine',
-    prix_january: 100,
-    prix_february: 110,
-    prix_march: 110,
-    prix_april: 120,
-    prix_may: 115,
-    prix_june: 130,
-    prix_july: 135,
-    prix_august: 90,
-    prix_september: 40,
-    prix_october: 40,
-    prix_november: 80,
-    prix_december: 95,
-  });
+  const [marche, setMarche] = useState({});
 
   const {
     libelle_production,
     libelle_produit,
-    type_vente,
+    type_marche,
     localisation,
     unite,
     prix_january,
@@ -48,7 +39,13 @@ const ReadMarchePage = () => {
     prix_december,
   } = marche;
 
-  // TODO useEffect pour peupler marche
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(`http://localhost:3333/marche/${id}`);
+      setMarche(res.data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <Grid>
@@ -65,65 +62,157 @@ const ReadMarchePage = () => {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={10}>
-          <Segment>
-            <h5>Faire le graphe</h5>
-            <List>
-              <List.Item>
-                Prix Janvier : {formatMoney(prix_january)}/{unite}
-              </List.Item>
-              <List.Item>
-                Prix Février : {formatMoney(prix_february)}/{unite}
-              </List.Item>
-              <List.Item>
-                Prix Mars : {formatMoney(prix_march)}/{unite}
-              </List.Item>
-              <List.Item>
-                Prix Avril : {formatMoney(prix_april)}/{unite}
-              </List.Item>
-              <List.Item>
-                Prix Mai : {formatMoney(prix_may)}/{unite}
-              </List.Item>
-              <List.Item>
-                Prix Juin : {formatMoney(prix_june)}/{unite}
-              </List.Item>
-              <List.Item>
-                Prix Juillet : {formatMoney(prix_july)}/{unite}
-              </List.Item>
-              <List.Item>
-                Prix Août : {formatMoney(prix_august)}/{unite}
-              </List.Item>
-              <List.Item>
-                Prix Septembre : {formatMoney(prix_september)}/{unite}
-              </List.Item>
-              <List.Item>
-                Prix Octobre : {formatMoney(prix_october)}/{unite}
-              </List.Item>
-              <List.Item>
-                Prix Novembre : {formatMoney(prix_november)}/{unite}
-              </List.Item>
-              <List.Item>
-                Prix Décembre : {formatMoney(prix_december)}/{unite}
-              </List.Item>
-            </List>
-          </Segment>
+        
+            <PricesChartComponent marche={marche} />
+        
+
+          <h5>Tableaux des prix</h5>
+          <Table fixed>
+            <Table.Header>
+              <Table.HeaderCell>Janvier</Table.HeaderCell>
+              <Table.HeaderCell>Février</Table.HeaderCell>
+              <Table.HeaderCell>Mars</Table.HeaderCell>
+              <Table.HeaderCell>Avril</Table.HeaderCell>
+            </Table.Header>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>
+                  {prix_january && (
+                    <Fragment>
+                      {formatMoney(prix_january)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {prix_february && (
+                    <Fragment>
+                      {formatMoney(prix_february)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {prix_march && (
+                    <Fragment>
+                      {formatMoney(prix_march)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {prix_april && (
+                    <Fragment>
+                      {formatMoney(prix_april)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
+          <Table fixed>
+            <Table.Header>
+              <Table.HeaderCell>Mai</Table.HeaderCell>
+              <Table.HeaderCell>Juin</Table.HeaderCell>
+              <Table.HeaderCell>Juillet</Table.HeaderCell>
+              <Table.HeaderCell>Août</Table.HeaderCell>
+            </Table.Header>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>
+                  {prix_may && (
+                    <Fragment>
+                      {formatMoney(prix_may)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {prix_june && (
+                    <Fragment>
+                      {formatMoney(prix_june)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {prix_july && (
+                    <Fragment>
+                      {formatMoney(prix_july)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {prix_august && (
+                    <Fragment>
+                      {formatMoney(prix_august)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
+          <Table fixed>
+            <Table.Header>
+              <Table.HeaderCell>Septembre</Table.HeaderCell>
+              <Table.HeaderCell>Octobre</Table.HeaderCell>
+              <Table.HeaderCell>Novembre</Table.HeaderCell>
+              <Table.HeaderCell>Décembre</Table.HeaderCell>
+            </Table.Header>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>
+                  {prix_september && (
+                    <Fragment>
+                      {formatMoney(prix_september)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {prix_october && (
+                    <Fragment>
+                      {formatMoney(prix_october)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {prix_november && (
+                    <Fragment>
+                      {formatMoney(prix_november)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {prix_december && (
+                    <Fragment>
+                      {formatMoney(prix_december)}/{unite}
+                    </Fragment>
+                  )}
+                </Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
         </Grid.Column>
         <Grid.Column width={6}>
           <Segment.Group>
             <Segment attached='top'>
-              <h5>Informations sur le marché {id}</h5>
+              <h5>Informations sur le marché</h5>
             </Segment>
             <Segment attached='bottom'>
               <List>
-                <List.Item>Production : {libelle_production}</List.Item>
+                <List.Item>
+                  <Icon name='tag' /> {libelle_production}
+                </List.Item>
               </List>
               <List>
-                <List.Item>Produit : {libelle_produit}</List.Item>
+                <List.Item>
+                  <Icon name='tags' /> {libelle_produit}
+                </List.Item>
               </List>
               <List>
-                <List.Item>Type de vente : {type_vente}</List.Item>
+                <List.Item>
+                  <Icon name='money' /> {type_marche}
+                </List.Item>
               </List>
               <List>
-                <List.Item>Localisation : {localisation}</List.Item>
+                <List.Item>
+                  <Icon name='map marker alternate' /> {localisation}
+                </List.Item>
               </List>
               {/* <Button>Modifier</Button> */}
             </Segment>
