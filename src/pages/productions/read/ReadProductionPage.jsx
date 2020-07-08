@@ -9,17 +9,22 @@ import {
   Divider,
   Breadcrumb,
   Icon,
+  Dimmer,
+  Loader,
+  Placeholder,
 } from 'semantic-ui-react';
 import { useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import ProduitFormComponent from './ProduitFormComponent';
 import update from 'immutability-helper';
+import { useEffect } from 'react';
+import Axios from 'axios';
 
 const ReadProductionPage = () => {
   const { id } = useParams();
   const [isOpenForm, setisOpenForm] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const { addToast } = useToasts();
 
   const [production, setProduction] = useState({
@@ -39,6 +44,16 @@ const ReadProductionPage = () => {
       },
     ],
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await Axios.get(`http://localhost:3333/production/${id}`);
+      setProduction(res.data);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [id]);
 
   const postProduit = (produit) => {
     produit.id_production = id;
@@ -94,78 +109,100 @@ const ReadProductionPage = () => {
       <Grid.Row>
         <Grid.Column width={2}></Grid.Column>
         <Grid.Column width={8}>
-          <Segment.Group>
-            <Segment attached='top'>
-              <h5>{production.libelle} </h5>
-            </Segment>
-            <Segment attached='bottom'>
-              <h5>Catégorie de production</h5>
-              <Label tag>{production.type_production}</Label>
-              <h5>Produits</h5>
-              {production.produits.length === 0 ? (
-                <p>Aucun produit associé pour le moment...</p>
-              ) : (
-                <Table>
-                  <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell>Nom du produit</Table.HeaderCell>
-                      <Table.HeaderCell>Unité</Table.HeaderCell>
-                      <Table.HeaderCell></Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Header>
-                  <Table.Body>
-                    {production.produits &&
-                      production.produits.map((produit) => {
-                        return (
-                          <Table.Row>
-                            <Table.Cell>{produit.libelle}</Table.Cell>
-                            <Table.Cell>{produit.unite}</Table.Cell>
-                            <Table.Cell textAlign='center'>
-                              <Button
-                                size='mini'
-                                icon
-                                basic
-                                circular
-                                onClick={() => {
-                                  deleteProduit(produit.id);
-                                }}
-                              >
-                                <Icon name='trash' />
-                              </Button>
-                            </Table.Cell>
-                          </Table.Row>
-                        );
-                      })}
-                  </Table.Body>
-                </Table>
-              )}
-              {isOpenForm ? (
-                <Button
-                  onClick={() => {
-                    setisOpenForm(false);
-                  }}
-                >
-                  Annuler
-                </Button>
-              ) : (
-                <Button
-                  onClick={() => {
-                    setisOpenForm(true);
-                  }}
-                  color='teal'
-                >
-                  Ajouter un produit
-                </Button>
-              )}
+          {loading ? (
+            <Segment.Group>
+              <Segment attached='top'>
+                <Placeholder>
+                  <Placeholder.Header>
+                    <Placeholder.Line />
+                  </Placeholder.Header>
+                </Placeholder>
+              </Segment>
+              <Segment clearing attached='bottom'>
+                <Placeholder>
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                </Placeholder>
+              </Segment>
+            </Segment.Group>
+          ) : (
+            <Segment.Group>
+              <Segment attached='top'>
+                <h5>{production.libelle} </h5>
+              </Segment>
+              <Segment attached='bottom'>
+                <h5>Catégorie de production</h5>
+                <Label tag>{production.type_production}</Label>
+                <h5>Produits</h5>
+                {production.produits.length === 0 ? (
+                  <p>Aucun produit associé pour le moment...</p>
+                ) : (
+                  <Table>
+                    <Table.Header>
+                      <Table.Row>
+                        <Table.HeaderCell>Nom du produit</Table.HeaderCell>
+                        <Table.HeaderCell>Unité</Table.HeaderCell>
+                        <Table.HeaderCell></Table.HeaderCell>
+                      </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                      {production.produits &&
+                        production.produits.map((produit) => {
+                          return (
+                            <Table.Row key={produit.id}>
+                              <Table.Cell>{produit.libelle}</Table.Cell>
+                              <Table.Cell>{produit.unite}</Table.Cell>
+                              <Table.Cell textAlign='center'>
+                                <Button
+                                  size='mini'
+                                  icon
+                                  basic
+                                  circular
+                                  onClick={() => {
+                                    deleteProduit(produit.id);
+                                  }}
+                                >
+                                  <Icon name='trash' />
+                                </Button>
+                              </Table.Cell>
+                            </Table.Row>
+                          );
+                        })}
+                    </Table.Body>
+                  </Table>
+                )}
+                {isOpenForm ? (
+                  <Button
+                    onClick={() => {
+                      setisOpenForm(false);
+                    }}
+                  >
+                    Annuler
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      setisOpenForm(true);
+                    }}
+                    color='teal'
+                  >
+                    Ajouter un produit
+                  </Button>
+                )}
 
-              {isOpenForm ? (
-                <Fragment>
-                  <Divider />
-                  <ProduitFormComponent postProduit={postProduit} />
-                </Fragment>
-              ) : null}
-            </Segment>
-          </Segment.Group>
+                {isOpenForm ? (
+                  <Fragment>
+                    <Divider />
+                    <ProduitFormComponent postProduit={postProduit} />
+                  </Fragment>
+                ) : null}
+              </Segment>
+            </Segment.Group>
+          )}
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>

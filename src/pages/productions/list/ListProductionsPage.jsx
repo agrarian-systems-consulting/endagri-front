@@ -71,7 +71,11 @@ const ListProductionsPage = () => {
                     </Table.Cell>
                     <Table.Cell>
                       {produits.length > 0 &&
-                        produits.map((p) => <Label basic>{p.libelle}</Label>)}
+                        produits.map((p) => (
+                          <Label basic key={p.id}>
+                            {p.libelle}
+                          </Label>
+                        ))}
                     </Table.Cell>
                   </Table.Row>
                 );
