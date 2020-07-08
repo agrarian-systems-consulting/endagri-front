@@ -1,11 +1,13 @@
 import React from 'react';
 import { Grid, Segment, Button } from 'semantic-ui-react';
-import { NavLink, Link, useHistory } from 'react-router-dom';
+import { NavLink, Link, useHistory, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
+import Axios from 'axios';
 
 const DeleteMarchePage = () => {
   const { addToast } = useToasts();
   let history = useHistory();
+  let { id } = useParams();
   return (
     <Grid>
       <Grid.Row>
@@ -14,8 +16,6 @@ const DeleteMarchePage = () => {
             <p>Cette action est irréversible, si vous cliquez sur supprimer.</p>
             <Button
               onClick={() => {
-                // TODO : Supprimer la fiche
-                // await axios.delete
                 addToast("Le marché n'a pas été supprimé", {
                   appearance: 'info',
                   autoDismiss: true,
@@ -29,14 +29,24 @@ const DeleteMarchePage = () => {
             <Button
               color='red'
               onClick={() => {
-                // TODO : Supprimer la fiche
-                // await axios.delete
-                addToast('Le marché a bien été supprimé', {
-                  appearance: 'success',
-                  autoDismiss: true,
-                });
+                Axios.delete(`http://localhost:3333/marche/${id}`)
+                  .then(() => {
+                    addToast('Le marché a bien été supprimé', {
+                      appearance: 'success',
+                      autoDismiss: true,
+                    });
 
-                history.push(`/marches`);
+                    history.push(`/marches`);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    addToast('Erreur lors de la suppression du marché', {
+                      appearance: 'error',
+                      autoDismiss: true,
+                    });
+
+                    history.push(`/marches`);
+                  });
               }}
             >
               Supprimer
