@@ -1,38 +1,37 @@
-import React, { useState } from 'react';
-import { Formik, FieldArray } from 'formik';
-import { Form, Segment, Button, Icon, Divider } from 'semantic-ui-react';
+import axios from 'axios';
+import { Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
+import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
+import typeVenteOptions from '../../../app/data/typeVenteOptions';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
-import cuid from 'cuid';
-import { useHistory } from 'react-router-dom';
-import { useToasts } from 'react-toast-notifications';
-import typeVenteOptions from '../../../app/data/typeVenteOptions';
 
 const MarcheFormComponent = () => {
   let history = useHistory();
+  let { id } = useParams();
+
   const { addToast } = useToasts();
   // Faire un get pour récupérer la liste des options en lien avec la production en cours
-  const [produits, setProduits] = useState([
-    {
-      id: 1,
-      libelle: 'Paille de blé dur',
-      unite: 'tonne de matière sèche',
-    },
-    {
-      id: 2,
-      libelle: 'Grains de blé dur',
-      unite: 'quintal',
-    },
-  ]);
+  const [produits, setProduits] = useState([]);
 
-  // TODO : Créer un useEffect pour peupler productionOptions
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(`http://localhost:3333/produits`);
+
+      setProduits(res.data);
+    };
+
+    fetchData();
+  }, [id]);
 
   // Form validation handled with Yup
   const validationSchema = Yup.object({
     id_produit: Yup.number().required('Le produit est obligatoire'),
     localisation: Yup.string().required('La localisation est obligatoire'),
-    type_vente: Yup.string().required('Le type de vente est obligatoire'),
+    type_marche: Yup.string().required('Le type de vente est obligatoire'),
   });
 
   // Construit un array d'object pour les options du select (Dropdown)
@@ -53,9 +52,9 @@ const MarcheFormComponent = () => {
   return (
     <Formik
       initialValues={{
-        id_produit: '',
+        id_produit: null,
         localisation: '',
-        type_vente: '',
+        type_marche: '',
         prix_january: null,
         prix_february: null,
         prix_march: null,
@@ -73,20 +72,25 @@ const MarcheFormComponent = () => {
       validationSchema={validationSchema}
       // Handle form submit
       onSubmit={(values, { setSubmitting }) => {
-        // Ajouter le marché
-        // const res = await axios.post
-        // Récupérer l'id de la fiche créer
-        // res.body.id
-        const id = cuid();
+        axios
+          .post(`http://localhost:3333/marche`, values)
+          .then((res) => {
+            console.log(res);
+            addToast('Le marché a bien été créé', {
+              appearance: 'success',
+              autoDismiss: true,
+            });
 
-        addToast('Le marché a bien été créé', {
-          appearance: 'success',
-          autoDismiss: true,
-        });
-
-        // Rediriger vers la page de la fiche
-        history.push(`/marche/${id}`);
-        // Attention : ici il y avait un problème dans le back pour récupérer le contenu d'une fiche qui n'a pas encore d'activités ou de dépenses à revoir
+            // Rediriger vers la page de la fiche
+            history.push(`/marche/${res.data.id}`);
+          })
+          .catch((err) => {
+            console.log(err);
+            addToast('Il y a eu une erreur pendant la création du marché', {
+              appearance: 'success',
+              autoDismiss: true,
+            });
+          });
       }}
     >
       {({
@@ -120,7 +124,7 @@ const MarcheFormComponent = () => {
           />
 
           <SemanticField
-            name='type_vente'
+            name='type_marche'
             value=''
             label='Type de vente'
             component={Form.Dropdown}
@@ -243,7 +247,7 @@ const MarcheFormComponent = () => {
           >
             Créer le marché
           </Button>
-          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
+          <pre>values = {JSON.stringify(values, null, 2)}</pre>
         </Form>
       )}
     </Formik>

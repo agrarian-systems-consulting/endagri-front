@@ -45,7 +45,7 @@ const ReadMarchePage = () => {
       setMarche(res.data);
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <Grid>

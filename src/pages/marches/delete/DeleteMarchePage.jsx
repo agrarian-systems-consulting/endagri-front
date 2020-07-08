@@ -1,8 +1,8 @@
-import React from 'react';
-import { Grid, Segment, Button } from 'semantic-ui-react';
-import { NavLink, Link, useHistory, useParams } from 'react-router-dom';
-import { useToasts } from 'react-toast-notifications';
 import Axios from 'axios';
+import React from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
+import { Button, Grid, Segment } from 'semantic-ui-react';
 
 const DeleteMarchePage = () => {
   const { addToast } = useToasts();

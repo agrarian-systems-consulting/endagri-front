@@ -1,15 +1,13 @@
 import React from 'react';
 import {
-  ComposedChart,
-  Line,
   Bar,
-  XAxis,
-  YAxis,
+  BarChart,
   CartesianGrid,
-  Tooltip,
   Legend,
   ResponsiveContainer,
-  BarChart,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from 'recharts';
 import { Segment } from 'semantic-ui-react';
 

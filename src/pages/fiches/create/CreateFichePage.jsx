@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Form, Grid, Segment, Breadcrumb } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import { Breadcrumb, Grid, Segment } from 'semantic-ui-react';
 import FicheFormComponent from './FicheFormComponent';
 
 const CreateFichePage = () => {

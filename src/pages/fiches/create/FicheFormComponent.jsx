@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { Formik, FieldArray } from 'formik';
-import { Form, Segment, Button, Icon, Divider } from 'semantic-ui-react';
-import * as Yup from 'yup';
-import SemanticField from '../../../app/utils/forms/SemanticField';
-import SemanticIntegerField from '../../../app/utils/forms/SemanticIntegerField';
-import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
 import cuid from 'cuid';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
+import { Button, Form } from 'semantic-ui-react';
+import * as Yup from 'yup';
+import SemanticField from '../../../app/utils/forms/SemanticField';
 
 const monthsOptions = [
   { key: '1', value: 1, text: 'Janvier' },

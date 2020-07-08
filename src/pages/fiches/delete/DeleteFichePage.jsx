@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, Segment, Button } from 'semantic-ui-react';
-import { NavLink, Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
+import { Button, Grid, Segment } from 'semantic-ui-react';
 
 const DeleteFichePage = () => {
   const { addToast } = useToasts();
