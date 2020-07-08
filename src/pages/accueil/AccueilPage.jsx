@@ -1,7 +1,7 @@
 import React from 'react';
 
 const AccueilPage = () => {
-  return <div>AccueilPage</div>;
+  return <div>Accueil Page</div>;
 };
 
 export default AccueilPage;
