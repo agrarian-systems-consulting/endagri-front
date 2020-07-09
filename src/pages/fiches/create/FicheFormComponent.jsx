@@ -6,6 +6,8 @@ import { useToasts } from 'react-toast-notifications';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
+import { useEffect } from 'react';
+import Axios from 'axios';
 
 const monthsOptions = [
   { key: '1', value: 1, text: 'Janvier' },
@@ -25,14 +27,57 @@ const monthsOptions = [
 const FicheFormComponent = () => {
   let history = useHistory();
   const { addToast } = useToasts();
-  // Faire un get pour récupérer la liste des options en lien avec la production en cours
-  const [productionOptions, setProductionOptions] = useState([
-    { key: '1', value: 1, text: 'Blé' },
-    { key: '2', value: 2, text: 'Carotte' },
-    { key: '3', value: 3, text: 'Tomate' },
+  const [productions, setProductions] = useState([
+    {
+      id: 27,
+      libelle: 'Abricots',
+      type_production: 'Culture pérenne',
+      produits: [
+        {
+          libelle: 'Abricots',
+          unite: 'tonne',
+          id: 32,
+        },
+      ],
+    },
+    {
+      id: 1,
+      libelle: 'Ail',
+      type_production: 'Culture annuelle',
+      produits: [
+        {
+          libelle: 'Ail',
+          unite: 'Bottes',
+          id: 463,
+        },
+      ],
+    },
   ]);
 
-  // TODO : Créer un useEffect pour peupler productionOptions
+  useEffect(() => {
+    Axios(`http://localhost:3333/productions`)
+      .then((res) => {
+        setProductions(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Construit un array d'object pour les options du select (Dropdown)
+  const productionsOptions = () => {
+    let options = [];
+
+    productions.forEach((p) => {
+      options.push({
+        key: p.id,
+        value: p.id,
+        text: p.libelle,
+      });
+    });
+
+    return options;
+  };
 
   // Form validation handled with Yup
   const validationSchema = Yup.object({
@@ -41,6 +86,7 @@ const FicheFormComponent = () => {
       'Le libellé (nom) de la fiche est obligatoire'
     ),
   });
+
   return (
     <Formik
       initialValues={{
@@ -49,25 +95,27 @@ const FicheFormComponent = () => {
         commentaire: null,
         ini_debut: null,
         ini_fin: null,
+        id_utilisateur: 1,
       }}
-      // Handle form validation
       validationSchema={validationSchema}
-      // Handle form submit
       onSubmit={(values, { setSubmitting }) => {
-        // Ajouter la fiche
-        // const res = await axios.post
-        // Récupérer l'id de la fiche créer
-        // res.body.id
-        const id = cuid();
+        Axios.post(`http://localhost:3333/fiche`, values)
+          .then((res) => {
+            addToast('La fiche a bien été créée', {
+              appearance: 'success',
+              autoDismiss: true,
+            });
 
-        addToast('La fiche a bien été créée', {
-          appearance: 'success',
-          autoDismiss: true,
-        });
-
-        // Rediriger vers la page de la fiche
-        history.push(`/fiche/${id}`);
-        // Attention : ici il y avait un problème dans le back pour récupérer le contenu d'une fiche qui n'a pas encore d'activités ou de dépenses à revoir
+            history.push(`/fiche/${res.data.id}`);
+          })
+          .catch((err) => {
+            console.log(err);
+            addToast('Erreur lors de la création de la fiche', {
+              appearance: 'error',
+              autoDismiss: true,
+            });
+            history.push(`/fiches`);
+          });
       }}
     >
       {({
@@ -78,19 +126,18 @@ const FicheFormComponent = () => {
         handleChange,
         handleSubmit,
         isSubmitting,
-        /* and other goodies */
       }) => (
         <Form onSubmit={handleSubmit}>
           <SemanticField
             name='id_production'
             value=''
-            label='Produit, Lieu et Mode de vente'
+            label='Production'
             component={Form.Dropdown}
             fluid
             search
             selection
             clearable
-            options={productionOptions}
+            options={productionsOptions()}
           />
           <SemanticField
             name='libelle'
