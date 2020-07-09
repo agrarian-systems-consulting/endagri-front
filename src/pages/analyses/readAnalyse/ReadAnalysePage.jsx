@@ -6,6 +6,7 @@ import {
   List,
   Header,
   Button,
+  Divider,
 } from 'semantic-ui-react';
 import { NavLink, useParams } from 'react-router-dom';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
@@ -50,14 +51,19 @@ const ReadAnalysePage = () => {
         <Fragment>Chargement en cours...</Fragment>
       ) : (
         <Fragment>
-          <pre>{JSON.stringify(analyse)}</pre>
           <InformationsPrincipalesComponent info={analyse['0']} />
-          {/* <ProductionsComponent
-            fichesLibres={analyse.fiches_techniques_libres}
-          /> */}
+          <Divider />
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Header as='h5'>Productions</Header>
+            </Grid.Column>
+          </Grid.Row>
+          <ProductionsComponent
+            fichesLibres={analyse.fiches_techniques_libres[0]}
+          />
         </Fragment>
       )}
-
+      <pre>{JSON.stringify(analyse, true, 2)}</pre>
       <Grid.Row>
         <Grid.Column width={16}>
           <Button color='red' as={NavLink} to={`/analyse/${id}/delete`}>

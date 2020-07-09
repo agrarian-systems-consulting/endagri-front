@@ -1,43 +1,38 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Grid, Segment, List, Header } from 'semantic-ui-react';
 const ProductionsComponent = ({ fichesLibres }) => {
   return (
     <Grid.Row>
-      <Grid.Column>
-        <Segment.Group>
-          <Segment attached='top' color='violet'>
-            <Header as='h4'>Productions</Header>
-          </Segment>
-
-          {fichesLibres &&
-            fichesLibres.map((fiche) => {
-              return (
-                <Segment attached key={fiche.id_fiche_technique_libre}>
-                  <Header as='h4'>Informations principales</Header>
-                  <List>
-                    <List.Item>
-                      Identifiant de la fiche technique associée :
-                      {fiche.id_fiche_technique}
-                    </List.Item>
-                    <List.Item>
-                      Nom de la production (à récupérer,
-                      libelle_fiche_technique)
-                    </List.Item>
-                    <List.Item>
-                      Date de semis ou mise-bas : {fiche.date_ini}
-                    </List.Item>
-                    <List.Item>
-                      Surface ou nombre d'animaux :{' '}
-                      {fiche.coeff_surface_ou_nombre_animaux}
-                    </List.Item>
-                    <List.Item>
-                      Part du travail réalisé par de la main d'oeuvre familiale:{' '}
-                      {fiche.coeff_main_oeuvre_familiale}
-                    </List.Item>
-                  </List>
-                  <Header as='h4'>Ventes</Header>
-                  <List>
-                    {fiche.coeff_ventes.map((vente) => {
+      {fichesLibres &&
+        fichesLibres.map((fiche) => {
+          return (
+            <Grid.Column width={8}>
+              <Segment key={fiche.id_fiche_technique_libre}>
+                <Header as='h5'>Informations principales</Header>
+                <List>
+                  <List.Item>
+                    Identifiant de la fiche technique associée :
+                    {fiche.id_fiche_technique}
+                  </List.Item>
+                  <List.Item>
+                    Nom de la production (à récupérer, libelle_fiche_technique)
+                  </List.Item>
+                  <List.Item>
+                    Date de semis ou mise-bas : {fiche.date_ini}
+                  </List.Item>
+                  <List.Item>
+                    Surface ou nombre d'animaux :{' '}
+                    {fiche.coeff_surface_ou_nombre_animaux}
+                  </List.Item>
+                  <List.Item>
+                    Part du travail réalisé par de la main d'oeuvre familiale:{' '}
+                    {fiche.coeff_main_oeuvre_familiale}
+                  </List.Item>
+                </List>
+                <Header as='h4'>Ventes</Header>
+                <List>
+                  {fiche.coeff_ventes &&
+                    fiche.coeff_ventes.map((vente) => {
                       return (
                         <List.Item>
                           <List>
@@ -61,10 +56,11 @@ const ProductionsComponent = ({ fichesLibres }) => {
                         </List.Item>
                       );
                     })}
-                  </List>
-                  <Header as='h4'>Dépenses</Header>
-                  <List>
-                    {fiche.coeff_depenses.map((depense) => {
+                </List>
+                <Header as='h4'>Dépenses</Header>
+                <List>
+                  {fiche.coeff_depenses &&
+                    fiche.coeff_depenses.map((depense) => {
                       return (
                         <List.Item>
                           <List>
@@ -79,12 +75,11 @@ const ProductionsComponent = ({ fichesLibres }) => {
                         </List.Item>
                       );
                     })}
-                  </List>
-                </Segment>
-              );
-            })}
-        </Segment.Group>
-      </Grid.Column>
+                </List>
+              </Segment>
+            </Grid.Column>
+          );
+        })}
     </Grid.Row>
   );
 };
