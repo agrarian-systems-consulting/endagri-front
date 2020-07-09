@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import {
   Breadcrumb,
   Button,
@@ -36,47 +36,84 @@ const ListProductionsPage = () => {
           <Table singleLine>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell textAlign='center'>
-                  Catégorie
-                </Table.HeaderCell>
-                <Table.HeaderCell textAlign='center'>
+           
+                <Table.HeaderCell >
                   Production
                 </Table.HeaderCell>
                 <Table.HeaderCell>Produits associés</Table.HeaderCell>
-                <Table.HeaderCell></Table.HeaderCell>
+                {/* <Table.HeaderCell></Table.HeaderCell> */}
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {productions.map(({ id, libelle, type_production, produits }) => {
                 return (
                   <Table.Row key={id}>
-                    <Table.Cell textAlign='center'>
+                    <Table.Cell >
                       {
                         {
-                          'Culture annuelle': <Label>{type_production}</Label>,
+                          'Culture annuelle': (
+                            <Button
+                              as={Link}
+                              size='mini'
+                              to={`/production/${id}`}
+                            >
+                              {libelle}
+                            </Button>
+                          ),
                           'Culture pérenne': (
-                            <Label color='blue'>{type_production}</Label>
+                            <Button
+                              as={Link}
+                              size='mini'
+                              to={`/production/${id}`}
+                              color='blue'
+                            >
+                              {libelle}
+                            </Button>
                           ),
                           'Elevage bovin laitier': (
-                            <Label color='orange'>{type_production}</Label>
+                            <Button
+                              as={Link}
+                              size='mini'
+                              to={`/production/${id}`}
+                              color='orange'
+                            >
+                              {libelle}
+                            </Button>
                           ),
                           'Elevage ovin engraisseur': (
-                            <Label color='yellow'>{type_production}</Label>
+                            <Button
+                              as={Link}
+                              size='mini'
+                              to={`/production/${id}`}
+                              color='yellow'
+                            >
+                              {libelle}
+                            </Button>
                           ),
                           'Elevage ovin naisseur-engraisseur': (
-                            <Label color='yellow'>{type_production}</Label>
+                            <Button
+                              as={Link}
+                              size='mini'
+                              to={`/production/${id}`}
+                              color='violet'
+                            >
+                              {libelle}
+                            </Button>
                           ),
                           'Elevage apicole': (
-                            <Label tag color='yellow'>
-                              {type_production}
-                            </Label>
+                            <Button
+                              as={Link}
+                              size='mini'
+                              to={`/production/${id}`}
+                              color='yellow'
+                            >
+                              {libelle}
+                            </Button>
                           ),
                         }[type_production]
                       }
                     </Table.Cell>
-                    <Table.Cell textAlign='center'>
-                      <NavLink to={`/production/${id}`}>{libelle}</NavLink>
-                    </Table.Cell>
+            
                     <Table.Cell>
                       {produits.length > 0 &&
                         produits.map((p) => (
@@ -85,7 +122,7 @@ const ListProductionsPage = () => {
                           </Label>
                         ))}
                     </Table.Cell>
-                    <Table.Cell textAlign='center'>
+                    {/* <Table.Cell textAlign='center'>
                       <Button
                         size='mini'
                         icon
@@ -96,7 +133,7 @@ const ListProductionsPage = () => {
                       >
                         <Icon name='trash' />
                       </Button>
-                    </Table.Cell>
+                    </Table.Cell> */}
                   </Table.Row>
                 );
               })}
