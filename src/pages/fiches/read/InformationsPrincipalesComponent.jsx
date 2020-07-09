@@ -17,26 +17,30 @@ const InformationsPrincipalesComponent = ({ fiche }) => {
           <List.Item>
             <b>Catégorie</b> <Label>{fiche.type_production}</Label>
           </List.Item>
-          </List>
+          {fiche.commentaire && (
+            <List.Item>
+              <b>Commentaire</b> <p>{fiche.commentaire}</p>
+            </List.Item>
+          )}
+        </List>
+        {
           {
-            {
-              'Culture annuelle': (
-                <List.Item>
-                  <Icon color='grey' name='calendar check outline' />
-                  Semis possible entre {getMois(fiche.ini_debut)} et{' '}
-                  {getMois(fiche.ini_fin)}
-                </List.Item>
-              ),
-              'Elevage naisseur': (
-                <List.Item>
-                  <Icon color='grey' name='calendar check outline' />
-                  Mise-bas possible entre {getMois(fiche.ini_debut)} et{' '}
-                  {getMois(fiche.ini_fin)}
-                </List.Item>
-              ),
-            }[fiche.type_production]
-          }
-     
+            'Culture annuelle': (
+              <List.Item>
+                <Icon color='grey' name='calendar check outline' />
+                Semis possible entre {getMois(fiche.ini_debut)} et{' '}
+                {getMois(fiche.ini_fin)}
+              </List.Item>
+            ),
+            'Elevage naisseur': (
+              <List.Item>
+                <Icon color='grey' name='calendar check outline' />
+                Mise-bas possible entre {getMois(fiche.ini_debut)} et{' '}
+                {getMois(fiche.ini_fin)}
+              </List.Item>
+            ),
+          }[fiche.type_production]
+        }
 
         {
           {
