@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Breadcrumb, Button } from 'semantic-ui-react';
-import { NavLink, Link, useParams } from 'react-router-dom';
+import { NavLink, Link, useParams, useHistory } from 'react-router-dom';
 import update from 'immutability-helper';
 import { useToasts } from 'react-toast-notifications';
 import VentesComponent from './VentesComponent';
@@ -8,8 +8,11 @@ import ActivitesComponent from './ActivitesComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
 import GrapheComponent from './GrapheComponent';
 import cuid from 'cuid';
+import { useEffect } from 'react';
+import Axios from 'axios';
 
 const ReadFichePage = () => {
+  let history = useHistory();
   let { id } = useParams();
   const { addToast } = useToasts();
 
@@ -95,8 +98,15 @@ const ReadFichePage = () => {
     ],
   });
 
-  //getFICHE
-  // useEffect avec id
+  useEffect(() => {
+    Axios(`http://localhost:3333/fiche/${id}`)
+      .then((res) => {
+        setFiche(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
 
   const deleteActivite = async (id_activite) => {
     // TODO Lancer la requête asynchorne à l'API
@@ -193,7 +203,7 @@ const ReadFichePage = () => {
             </Breadcrumb.Section>
             <Breadcrumb.Divider />
             <Breadcrumb.Section active>
-              Fiche {fiche.id} - {fiche.libelle_fiche}
+              Fiche {fiche.id} - {fiche.libelle}
             </Breadcrumb.Section>
           </Breadcrumb>
         </Grid.Column>

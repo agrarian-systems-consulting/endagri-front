@@ -34,9 +34,10 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
                     {mois_relatif} {mois && getMois(mois)}
                   </Table.Cell>
                   <Table.Cell textAlign='center'>
-                    {formatMoney(
-                      depenses.reduce((acc, { montant }) => acc + montant, 0)
-                    )}
+                    {depenses &&
+                      formatMoney(
+                        depenses.reduce((acc, { montant }) => acc + montant, 0)
+                      )}
                   </Table.Cell>
                   <Table.Cell textAlign='center'>
                     <Button
