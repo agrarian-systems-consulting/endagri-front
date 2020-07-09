@@ -51,7 +51,7 @@ const ReadAnalysePage = () => {
         <Fragment>Chargement en cours...</Fragment>
       ) : (
         <Fragment>
-          <InformationsPrincipalesComponent info={analyse['0']} />
+          <InformationsPrincipalesComponent info={analyse} />
           <Divider />
           <Grid.Row>
             <Grid.Column width={16}>
@@ -59,8 +59,13 @@ const ReadAnalysePage = () => {
             </Grid.Column>
           </Grid.Row>
           <ProductionsComponent
-            fichesLibres={analyse.fiches_techniques_libres[0]}
+            fichesLibres={analyse.fiches_techniques_libres}
           />
+          <Divider />
+
+          <Grid.Column width={16}>
+            <Header as='h5'>Dépenses libres</Header>
+          </Grid.Column>
         </Fragment>
       )}
       <pre>{JSON.stringify(analyse, true, 2)}</pre>
