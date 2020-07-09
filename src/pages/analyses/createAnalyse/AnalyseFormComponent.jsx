@@ -8,6 +8,8 @@ import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import { useEffect } from 'react';
 import Axios from 'axios';
+import SemanticIntegerField from '../../../app/utils/forms/SemanticIntegerField';
+import { format } from 'date-fns';
 
 const monthsOptions = [
   { key: '1', value: 1, text: 'Janvier' },
@@ -30,10 +32,10 @@ const AnalyseFormComponent = () => {
 
   // Form validation handled with Yup
   const validationSchema = Yup.object({
-    id_production: Yup.number().required('La production est obligatoire'),
-    libelle: Yup.string().required(
-      'Le libellé (nom) de la fiche est obligatoire'
+    nom_utilisateur: Yup.string().required(
+      "Le nom de l'auteur est obligatoire"
     ),
+    nom_client: Yup.string().required("Le nom de l'auteur est obligatoire"),
   });
 
   return (
@@ -42,30 +44,31 @@ const AnalyseFormComponent = () => {
         nom_utilisateur: '',
         nom_client: '',
         montant_tresorerie_initiale: 0,
-        date_debut_analyse: Date.now(),
-        date_fin_analyse: new Date(
-          new Date().setFullYear(new Date().getFullYear() + 1)
+        date_debut_analyse: format(new Date(), 'yyyy-MM-dd'),
+        date_fin_analyse: format(
+          new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+          'yyyy-MM-dd'
         ),
         id_utilisateur: 1,
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        // Axios.post(`http://localhost:3333/fiche`, values)
-        //   .then((res) => {
-        //     addToast('La fiche a bien été créée', {
-        //       appearance: 'success',
-        //       autoDismiss: true,
-        //     });
-        //     history.push(`/fiche/${res.data.id}`);
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //     addToast('Erreur lors de la création de la fiche', {
-        //       appearance: 'error',
-        //       autoDismiss: true,
-        //     });
-        //     history.push(`/fiches`);
-        //   });
+        Axios.post(`http://localhost:3333/analyse`, values)
+          .then((res) => {
+            addToast("L'analyse a bien été créée", {
+              appearance: 'success',
+              autoDismiss: true,
+            });
+            history.push(`/analyse/${res.data.id}`);
+          })
+          .catch((err) => {
+            console.log(err);
+            addToast("Erreur lors de la création de l'analyse", {
+              appearance: 'error',
+              autoDismiss: true,
+            });
+            history.push(`/analyses`);
+          });
       }}
     >
       {({
@@ -79,54 +82,38 @@ const AnalyseFormComponent = () => {
       }) => (
         <Form onSubmit={handleSubmit}>
           <SemanticField
-            name='id_production'
+            name='nom_utilisateur'
             value=''
-            label='Production'
-            component={Form.Dropdown}
-            fluid
-            search
-            selection
-            clearable
-            options={productionsOptions()}
+            label="Nom de l'auteur de l'analyse"
+            component={Form.Input}
           />
           <SemanticField
-            name='libelle'
+            name='nom_client'
             value=''
-            label='Libellé'
+            label='Nom du client'
+            component={Form.Input}
+          />
+          <SemanticIntegerField
+            name='montant_tresorerie_initiale'
+            type='number'
+            value=''
+            label='Montant de trésorerie initiale'
             component={Form.Input}
           />
           <Form.Group widths='equal'>
             <SemanticField
-              name='ini_debut'
+              name='date_debut_analyse'
               value=''
-              label='Période de démarrage possible - Début'
-              component={Form.Dropdown}
-              placeholder='Choisir un mois'
-              fluid
-              search
-              selection
-              clearable
-              options={monthsOptions}
+              label="Date de début d'analyse"
+              component={Form.Input}
             />
             <SemanticField
-              name='ini_fin'
+              name='date_fin_analyse'
               value=''
-              label='Période de démarrage possible - Fin'
-              component={Form.Dropdown}
-              placeholder='Choisir un mois'
-              fluid
-              search
-              selection
-              clearable
-              options={monthsOptions}
+              label="Date de fin d'analyse"
+              component={Form.Input}
             />
           </Form.Group>
-          <SemanticField
-            name='commentaire'
-            value=''
-            label='Commentaire'
-            component={Form.TextArea}
-          />
 
           <Button
             type='submit'
@@ -134,7 +121,7 @@ const AnalyseFormComponent = () => {
             disabled={isSubmitting || !isValid || !dirty}
             loading={isSubmitting}
           >
-            Créer la fiche
+            Créer l'analyse
           </Button>
           {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
         </Form>

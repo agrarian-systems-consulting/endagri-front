@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Grid, Segment, Breadcrumb } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import AnalyseFormComponent from './AnalyseFormComponent';
 
 const CreateAnalysePage = () => {
   return (
@@ -25,7 +26,8 @@ const CreateAnalysePage = () => {
               <h5>Créer une nouvelle analyse</h5>
             </Segment>
             <Segment attached='bottom'>
-              <Form>
+              <AnalyseFormComponent />
+              {/* <Form>
                 <Form.Field>
                   <label>Nom utilisateur</label>
                   <input placeholder='nom_utilisateur' />
@@ -53,7 +55,7 @@ const CreateAnalysePage = () => {
                 <Button type='submit' color='teal'>
                   Créer la nouvelle analyse
                 </Button>
-              </Form>
+              </Form> */}
             </Segment>
           </Segment.Group>
         </Grid.Column>
