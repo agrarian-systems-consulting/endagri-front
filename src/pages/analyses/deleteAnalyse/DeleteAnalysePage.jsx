@@ -1,8 +1,9 @@
 import React from 'react';
 import { Grid, Segment, Button, Breadcrumb } from 'semantic-ui-react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
 const DeleteAnalysePage = () => {
+  let history = useHistory();
   return (
     <Grid>
       <Grid.Row>
@@ -21,17 +22,27 @@ const DeleteAnalysePage = () => {
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column width={16}>
+        <Grid.Column width={5}></Grid.Column>
+        <Grid.Column width={6}>
           <Segment.Group>
             <Segment attached='top'>
-              <h5>Supprimer une analyse</h5>
+              <h5>Supprimer une fiche</h5>
             </Segment>
             <Segment attached='bottom'>
               <p>
                 Cette action est irréversible, l'analyse sera supprimée de façon
                 définitive.
               </p>
-              <Button color='red'>Supprimer</Button>
+              <Button
+                onClick={() => {
+                  history.goBack();
+                }}
+              >
+                Annuler
+              </Button>
+              <Button floated='right' color='red'>
+                Supprimer
+              </Button>
             </Segment>
           </Segment.Group>
         </Grid.Column>

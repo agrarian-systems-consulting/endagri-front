@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Breadcrumb, Button, Grid, Table } from 'semantic-ui-react';
 import Axios from 'axios';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
 
 const ListAnalysesPage = () => {
   const [analyses, setAnalyses] = useState([]);
@@ -36,7 +38,9 @@ const ListAnalysesPage = () => {
                 <Table.HeaderCell></Table.HeaderCell>
                 <Table.HeaderCell>Auteur</Table.HeaderCell>
                 <Table.HeaderCell>Client</Table.HeaderCell>
-                <Table.HeaderCell>Date de création</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>
+                  Date de création
+                </Table.HeaderCell>
                 <Table.HeaderCell>Dernière modification</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -50,7 +54,12 @@ const ListAnalysesPage = () => {
                       </Table.Cell>
                       <Table.Cell>{nom_utilisateur}</Table.Cell>
                       <Table.Cell>{nom_client}</Table.Cell>
-                      <Table.Cell> {created}</Table.Cell>
+                      <Table.Cell textAlign='center'>
+                        {' '}
+                        {format(new Date(created), 'dd MMMM yyyy', {
+                          locale: fr,
+                        })}
+                      </Table.Cell>
                       <Table.Cell>{modified}</Table.Cell>
                     </Table.Row>
                   );

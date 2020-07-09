@@ -44,6 +44,8 @@ const AnalyseFormComponent = () => {
         nom_utilisateur: '',
         nom_client: '',
         montant_tresorerie_initiale: 0,
+        created: format(new Date(), 'yyyy-MM-dd'),
+        modified: null,
         date_debut_analyse: format(new Date(), 'yyyy-MM-dd'),
         date_fin_analyse: format(
           new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
