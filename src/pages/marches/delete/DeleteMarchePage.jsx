@@ -11,47 +11,56 @@ const DeleteMarchePage = () => {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Column width={16}>
-          <Segment>
-            <p>Cette action est irréversible, si vous cliquez sur supprimer.</p>
-            <Button
-              onClick={() => {
-                addToast("Le marché n'a pas été supprimé", {
-                  appearance: 'info',
-                  autoDismiss: true,
-                });
-
-                history.goBack();
-              }}
-            >
-              Annuler
-            </Button>
-            <Button
-              color='red'
-              onClick={() => {
-                Axios.delete(`http://localhost:3333/marche/${id}`)
-                  .then(() => {
-                    addToast('Le marché a bien été supprimé', {
-                      appearance: 'success',
-                      autoDismiss: true,
-                    });
-
-                    history.push(`/marches`);
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                    addToast('Erreur lors de la suppression du marché', {
-                      appearance: 'error',
-                      autoDismiss: true,
-                    });
-
-                    history.push(`/marches`);
+        <Grid.Column width={5}></Grid.Column>
+        <Grid.Column width={6}>
+          <Segment.Group>
+            <Segment attached='top'>
+              <h5>Supprimer un marché</h5>
+            </Segment>
+            <Segment attached='bottom'>
+              <p>
+                Cette action est irréversible, si vous cliquez sur supprimer.
+              </p>
+              <Button
+                onClick={() => {
+                  addToast("Le marché n'a pas été supprimé", {
+                    appearance: 'info',
+                    autoDismiss: true,
                   });
-              }}
-            >
-              Supprimer
-            </Button>
-          </Segment>
+
+                  history.goBack();
+                }}
+              >
+                Annuler
+              </Button>
+              <Button
+                color='red'
+                floated='right'
+                onClick={() => {
+                  Axios.delete(`http://localhost:3333/marche/${id}`)
+                    .then(() => {
+                      addToast('Le marché a bien été supprimé', {
+                        appearance: 'success',
+                        autoDismiss: true,
+                      });
+
+                      history.push(`/marches`);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      addToast('Erreur lors de la suppression du marché', {
+                        appearance: 'error',
+                        autoDismiss: true,
+                      });
+
+                      history.push(`/marches`);
+                    });
+                }}
+              >
+                Supprimer
+              </Button>
+            </Segment>
+          </Segment.Group>
         </Grid.Column>
       </Grid.Row>
     </Grid>

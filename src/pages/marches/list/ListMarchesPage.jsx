@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Breadcrumb, Button, Grid, Table } from 'semantic-ui-react';
+import { Breadcrumb, Button, Grid, Table, Icon } from 'semantic-ui-react';
 
 const ListMarchesPage = () => {
   const [marches, setMarches] = useState();
@@ -33,6 +33,7 @@ const ListMarchesPage = () => {
                 <Table.HeaderCell>Produit</Table.HeaderCell>
                 <Table.HeaderCell>Type de vente</Table.HeaderCell>
                 <Table.HeaderCell>Localisation</Table.HeaderCell>
+                <Table.HeaderCell></Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -55,11 +56,23 @@ const ListMarchesPage = () => {
                         <Table.Cell>{libelle_produit}</Table.Cell>
                         <Table.Cell>{type_marche}</Table.Cell>
                         <Table.Cell>{localisation}</Table.Cell>
+                        <Table.Cell textAlign='center'>
+                          <Button
+                            size='mini'
+                            icon
+                            basic
+                            circular
+                            as={NavLink}
+                            to={`/marche/${id}/delete`}
+                          >
+                            <Icon name='trash' />
+                          </Button>
+                        </Table.Cell>
                       </Table.Row>
                     );
                   }
                 )}
-            </Table.Body> 
+            </Table.Body>
           </Table>
         </Grid.Column>
       </Grid.Row>

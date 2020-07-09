@@ -11,50 +11,60 @@ const DeleteProductionPage = () => {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Column width={16}>
-          <Segment>
-            <p>Cette action est irréversible, si vous cliquez sur supprimer.</p>
-            <Button
-              onClick={() => {
-                addToast(
-                  "La production et ses produits n'ont pas été supprimés",
-                  {
-                    appearance: 'info',
-                    autoDismiss: true,
-                  }
-                );
-
-                history.goBack();
-              }}
-            >
-              Annuler
-            </Button>
-            <Button
-              color='red'
-              onClick={() => {
-                Axios.delete(`http://localhost:3333/production/${id}`)
-                  .then(() => {
-                    addToast('La production a bien été supprimée', {
-                      appearance: 'success',
+        <Grid.Column width={5}></Grid.Column>
+        <Grid.Column width={6}>
+          <Segment.Group>
+            <Segment attached='top'>
+              <h5>Supprimer une production</h5>
+            </Segment>
+            <Segment attached='bottom'>
+              <p>Cette action est irréversible.</p>
+              <Button
+                onClick={() => {
+                  addToast(
+                    "La production et ses produits n'ont pas été supprimés",
+                    {
+                      appearance: 'info',
                       autoDismiss: true,
-                    });
+                    }
+                  );
 
-                    history.push(`/productions`);
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                    addToast('Erreur lors de la suppression de la production', {
-                      appearance: 'error',
-                      autoDismiss: true,
-                    });
+                  history.goBack();
+                }}
+              >
+                Annuler
+              </Button>
+              <Button
+                floated='right'
+                color='red'
+                onClick={() => {
+                  Axios.delete(`http://localhost:3333/production/${id}`)
+                    .then(() => {
+                      addToast('La production a bien été supprimée', {
+                        appearance: 'success',
+                        autoDismiss: true,
+                      });
 
-                    history.push(`/productions`);
-                  });
-              }}
-            >
-              Supprimer
-            </Button>
-          </Segment>
+                      history.push(`/productions`);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      addToast(
+                        'Erreur lors de la suppression de la production',
+                        {
+                          appearance: 'error',
+                          autoDismiss: true,
+                        }
+                      );
+
+                      history.push(`/productions`);
+                    });
+                }}
+              >
+                Supprimer
+              </Button>
+            </Segment>
+          </Segment.Group>
         </Grid.Column>
       </Grid.Row>
     </Grid>
