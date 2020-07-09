@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Grid, Table, Button, Icon } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
 import CreateVenteComponent from './VenteFormComponent';
@@ -13,6 +13,8 @@ const VentesComponent = ({ ventes, deleteVente, postVente }) => {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Libelle</Table.HeaderCell>
+            <Table.HeaderCell textAlign='center'>Mois</Table.HeaderCell>
+
             <Table.HeaderCell textAlign='center'>
               Rendement min.
             </Table.HeaderCell>
@@ -22,7 +24,6 @@ const VentesComponent = ({ ventes, deleteVente, postVente }) => {
             <Table.HeaderCell textAlign='center'>
               Rendement max.
             </Table.HeaderCell>
-            <Table.HeaderCell textAlign='center'>Mois</Table.HeaderCell>
             <Table.HeaderCell textAlign='center'></Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -40,6 +41,9 @@ const VentesComponent = ({ ventes, deleteVente, postVente }) => {
                 ({
                   id,
                   id_marche,
+                  libelle_produit,
+                  type_marche,
+                  localisation,
                   unite,
                   rendement_min,
                   rendement,
@@ -50,20 +54,41 @@ const VentesComponent = ({ ventes, deleteVente, postVente }) => {
                   return (
                     <Table.Row key={id}>
                       <Table.Cell>
-                        {id_marche} Nom du marché Nom produit
-                      </Table.Cell>
-                      <Table.Cell textAlign='center'>
-                        {rendement_min} {rendement_min && unite}
-                      </Table.Cell>
-                      <Table.Cell textAlign='center'>
-                        {rendement} {rendement && unite}
-                      </Table.Cell>
-                      <Table.Cell textAlign='center'>
-                        {rendement_max} {rendement_max && unite}
+                        {id_marche ? (
+                          <Fragment>
+                            {libelle_produit}
+                            {' - '}
+                            {type_marche}
+                            {' - '}
+                            {localisation}
+                          </Fragment>
+                        ) : (
+                          <Fragment>
+                            <p>
+                              Le produit qui était associé à cette fiche
+                              technique semble avoir été supprimé
+                            </p>
+                          </Fragment>
+                        )}
                       </Table.Cell>
                       <Table.Cell textAlign='center'>
                         {mois_relatif} {mois && getMois(mois)}
                       </Table.Cell>
+                      <Table.Cell textAlign='center'>
+                        {rendement_min &&
+                          parseInt(rendement_min, 10).toFixed(2)}{' '}
+                        {rendement_min && unite}
+                      </Table.Cell>
+                      <Table.Cell textAlign='center'>
+                        {rendement && parseInt(rendement, 10).toFixed(2)}{' '}
+                        {rendement && unite}
+                      </Table.Cell>
+                      <Table.Cell textAlign='center'>
+                        {rendement_max &&
+                          parseInt(rendement_max, 10).toFixed(2)}{' '}
+                        {rendement_max && unite}
+                      </Table.Cell>
+
                       <Table.Cell>
                         <Button
                           onClick={() => deleteVente(id)}

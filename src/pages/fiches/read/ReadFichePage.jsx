@@ -21,24 +21,6 @@ const ReadFichePage = () => {
   useEffect(() => {
     Axios(`http://localhost:3333/fiche/${id}`)
       .then((res) => {
-        // Petit workaround pour contourner le problème lié à la réponse envoyée par l'API
-        res.data.activites = res.data.activites.filter((act) => {
-          return act.id !== null;
-        });
-
-        res.data.activites = _.uniqBy(res.data.activites, function (e) {
-          return e.id;
-        });
-
-        // Petit workaround pour contourner le problème lié à la réponse envoyée par l'API
-        res.data.ventes = res.data.ventes.filter((vente) => {
-          return vente.id !== null;
-        });
-
-        res.data.ventes = _.uniqBy(res.data.ventes, function (e) {
-          return e.id;
-        });
-
         setFiche(res.data);
       })
       .catch((err) => {
