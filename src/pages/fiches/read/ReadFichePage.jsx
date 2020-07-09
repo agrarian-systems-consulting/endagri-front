@@ -38,7 +38,6 @@ const ReadFichePage = () => {
       });
   }, [id]);
 
-  // Problème ici
   const deleteActivite = async (id_activite) => {
     Axios.delete(`http://localhost:3333/fiche/${id}/activite/${id_activite}`)
       .then((res) => {
@@ -98,46 +97,58 @@ const ReadFichePage = () => {
   };
 
   const deleteVente = async (id_vente) => {
-    // TODO LAncer la requête asynchorne à l'API
-    // await axios.delete()
+    Axios.delete(`http://localhost:3333/fiche/${id}/vente/${id_vente}`)
+      .then((res) => {
+        addToast('La vente a bien été supprimée', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
 
-    let updatedFiche = update(fiche, {
-      ventes: {
-        $apply: (ventes) =>
-          ventes.filter((vente) => {
-            return vente.id !== id_vente;
-          }),
-      },
-    });
+        let updatedFiche = update(fiche, {
+          ventes: {
+            $apply: (ventes) =>
+              ventes.filter((vente) => {
+                return vente.id !== id_vente;
+              }),
+          },
+        });
 
-    setFiche(updatedFiche);
-
-    addToast('La vente a bien été supprimée', {
-      appearance: 'success',
-      autoDismiss: true,
-    });
+        setFiche(updatedFiche);
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast('Problème lors de la suppression de la vente ', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      });
   };
 
   const postVente = async (vente) => {
-    // TODO axios.post
+    Axios.post(`http://localhost:3333/fiche/${id}/vente`, vente)
+      .then((res) => {
+        addToast('La vente a bien été ajoutée', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
 
-    // Récupérer l'id
+        vente.id = res.data.id;
 
-    // Mockup id temporaire
-    vente.id = cuid();
+        let updatedFiche = update(fiche, {
+          ventes: {
+            $push: [vente],
+          },
+        });
 
-    let updatedFiche = update(fiche, {
-      ventes: {
-        $push: [vente],
-      },
-    });
-
-    setFiche(updatedFiche);
-
-    addToast('La vente a bien été ajoutée', {
-      appearance: 'success',
-      autoDismiss: true,
-    });
+        setFiche(updatedFiche);
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast('Erreur pendant la création de la vente', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      });
   };
 
   return (
