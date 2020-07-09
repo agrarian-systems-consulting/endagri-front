@@ -28,33 +28,44 @@ const ReadFichePage = () => {
       });
   }, [id]);
 
+  // Problème ici
   const deleteActivite = async (id_activite) => {
-    // TODO Lancer la requête asynchorne à l'API
-    // await axios.delete()
-    let updatedFiche = update(fiche, {
-      activites: {
-        $apply: (activites) =>
-          activites.filter((activite) => {
-            return activite.id !== id_activite;
-          }),
-      },
-    });
+    Axios.delete(`http://localhost:3333/activite/${id_activite}`)
+      .then((res) => {
+        addToast("L'activité a bien été supprimée", {
+          appearance: 'success',
+          autoDismiss: true,
+        });
 
-    setFiche(updatedFiche);
+        let updatedFiche = update(fiche, {
+          activites: {
+            $apply: (activites) =>
+              activites.filter((activite) => {
+                return activite.id !== id_activite;
+              }),
+          },
+        });
 
-    addToast("L'activité a bien été supprimée", {
-      appearance: 'success',
-      autoDismiss: true,
-    });
+        setFiche(updatedFiche);
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast(
+          "Problème lors de la suppression de l'activité et de ses dépenses associées",
+          {
+            appearance: 'error',
+            autoDismiss: true,
+          }
+        );
+      });
   };
 
   const postActivite = async (activite) => {
-    // TODO axios.post
-
-    // Récupérer l'id
-
-    // Mockup id temporaire
-    activite.id = cuid();
+    const res = await Axios.post(
+      `http://localhost:3333/fiche/${id}/activite`,
+      activite
+    );
+    activite.id = res.data.id;
 
     let updatedFiche = update(fiche, {
       activites: {
@@ -123,7 +134,7 @@ const ReadFichePage = () => {
             </Breadcrumb.Section>
             <Breadcrumb.Divider />
             <Breadcrumb.Section active>
-              Fiche {fiche.id} - {fiche.libelle_fiche}
+              Fiche {fiche.id} - {fiche.libelle}
             </Breadcrumb.Section>
           </Breadcrumb>
         </Grid.Column>

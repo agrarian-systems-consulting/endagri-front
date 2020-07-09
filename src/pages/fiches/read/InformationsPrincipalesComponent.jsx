@@ -11,7 +11,7 @@ const InformationsPrincipalesComponent = ({ fiche }) => {
         <Segment attached='bottom' clearing>
           <List>
             <List.Item>Fiche {fiche.id}</List.Item>
-            <List.Item>{fiche.libelle_fiche}</List.Item>
+            <List.Item>{fiche.libelle}</List.Item>
             <List.Item>
               <Label>{fiche.type_production}</Label>
             </List.Item>

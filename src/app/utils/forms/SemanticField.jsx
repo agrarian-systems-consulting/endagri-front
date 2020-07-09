@@ -25,7 +25,7 @@ const SemanticField = ({ component, ...fieldProps }) => {
                 value: value || '',
               }),
           ...(component === Form.Dropdown && {
-            value: value || [],
+            value: value || (fieldProps.multiple ? [] : ''),
           }),
 
           ...((submitCount >= 1 || touched[field.name]) && errors[field.name]
