@@ -21,6 +21,16 @@ const ReadFichePage = () => {
   useEffect(() => {
     Axios(`http://localhost:3333/fiche/${id}`)
       .then((res) => {
+        // Petit workaround pour contourner le problème lié à la réponse envoyée par l'API
+        res.data.activites = res.data.activites.filter((act) => {
+          return act.id !== null;
+        });
+
+        // Petit workaround pour contourner le problème lié à la réponse envoyée par l'API
+        res.data.ventes = res.data.ventes.filter((vente) => {
+          return vente.id !== null;
+        });
+
         setFiche(res.data);
       })
       .catch((err) => {
@@ -61,24 +71,30 @@ const ReadFichePage = () => {
   };
 
   const postActivite = async (activite) => {
-    const res = await Axios.post(
-      `http://localhost:3333/fiche/${id}/activite`,
-      activite
-    );
-    activite.id = res.data.id;
+    Axios.post(`http://localhost:3333/fiche/${id}/activite`, activite)
+      .then((res) => {
+        addToast("L'activité a bien été ajoutée", {
+          appearance: 'success',
+          autoDismiss: true,
+        });
 
-    let updatedFiche = update(fiche, {
-      activites: {
-        $push: [activite],
-      },
-    });
+        activite.id = res.data.id;
 
-    setFiche(updatedFiche);
+        let updatedFiche = update(fiche, {
+          activites: {
+            $push: [activite],
+          },
+        });
 
-    addToast("L'activité a bien été ajoutée", {
-      appearance: 'success',
-      autoDismiss: true,
-    });
+        setFiche(updatedFiche);
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast("Erreur pendant la création de l'activité", {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      });
   };
 
   const deleteVente = async (id_vente) => {

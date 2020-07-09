@@ -18,7 +18,7 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
             <Table.HeaderCell></Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-        {!activites ? (
+        {activites && activites.length === 0 ? (
           <Table.Body>
             <Table.Row>
               <Table.Cell>Aucune activité pour le moment...</Table.Cell>
@@ -26,33 +26,37 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
           </Table.Body>
         ) : (
           <Table.Body>
-            {activites.map(({ id, libelle, mois_relatif, mois, depenses }) => {
-              return (
-                <Table.Row key={id}>
-                  <Table.Cell>{libelle}</Table.Cell>
-                  <Table.Cell textAlign='center'>
-                    {mois_relatif} {mois && getMois(mois)}
-                  </Table.Cell>
-                  <Table.Cell textAlign='center'>
-                    {depenses &&
-                      formatMoney(
-                        depenses.reduce((acc, { montant }) => acc + montant, 0)
-                      )}
-                  </Table.Cell>
-                  <Table.Cell textAlign='center'>
-                    <Button
-                      size='mini'
-                      icon
-                      basic
-                      circular
-                      onClick={() => deleteActivite(id)}
-                    >
-                      <Icon name='trash' />
-                    </Button>
-                  </Table.Cell>
-                </Table.Row>
-              );
-            })}
+            {activites &&
+              activites.map(({ id, libelle, mois_relatif, mois, depenses }) => {
+                return (
+                  <Table.Row key={id}>
+                    <Table.Cell>{libelle}</Table.Cell>
+                    <Table.Cell textAlign='center'>
+                      {mois_relatif} {mois && getMois(mois)}
+                    </Table.Cell>
+                    <Table.Cell textAlign='center'>
+                      {depenses &&
+                        formatMoney(
+                          depenses.reduce(
+                            (acc, { montant }) => acc + montant,
+                            0
+                          )
+                        )}
+                    </Table.Cell>
+                    <Table.Cell textAlign='center'>
+                      <Button
+                        size='mini'
+                        icon
+                        basic
+                        circular
+                        onClick={() => deleteActivite(id)}
+                      >
+                        <Icon name='trash' />
+                      </Button>
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              })}
           </Table.Body>
         )}
       </Table>

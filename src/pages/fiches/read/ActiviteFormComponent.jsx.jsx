@@ -18,8 +18,8 @@ const ActiviteForm = ({ postActivite }) => {
       <Formik
         initialValues={{
           libelle: '',
-          mois: '',
-          mois_relatif: '',
+          mois: null,
+          mois_relatif: null,
           depenses: [],
         }}
         // Handle form validation
