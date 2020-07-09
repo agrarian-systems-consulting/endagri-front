@@ -4,28 +4,7 @@ import { Breadcrumb, Button, Grid, Table } from 'semantic-ui-react';
 import Axios from 'axios';
 
 const ListAnalysesPage = () => {
-  const [analyses, setAnalyses] = useState([
-    {
-      id: 1,
-      created: '2020-06-09',
-      modified: '2020-06-09',
-      nom_utilisateur: 'Hugo',
-      nom_client: 'Client A',
-      montant_tresorerie_initiale: 1500,
-      date_debut_analyse: '2019-12-31T23:00:00.000Z',
-      date_fin_analyse: '2020-12-31T23:00:00.000Z',
-    },
-    {
-      id: 2,
-      created: '2020-06-09',
-      modified: '2020-06-09',
-      nom_utilisateur: 'Florian',
-      nom_client: 'Client B',
-      montant_tresorerie_initiale: 1234,
-      date_debut_analyse: '2020-05-05',
-      date_fin_analyse: '2021-05-05',
-    },
-  ]);
+  const [analyses, setAnalyses] = useState([]);
 
   useEffect(() => {
     const fetchData = () => {
