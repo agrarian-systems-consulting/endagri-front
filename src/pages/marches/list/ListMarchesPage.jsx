@@ -17,10 +17,15 @@ const ListMarchesPage = () => {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Column width={16}>
+        <Grid.Column width={12}>
           <Breadcrumb>
             <Breadcrumb.Section active>Marchés</Breadcrumb.Section>
           </Breadcrumb>
+        </Grid.Column>
+        <Grid.Column width={4}>
+          <Button floated='right' color='teal' as={NavLink} to='/marche/create'>
+            Nouveau marché
+          </Button>
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>

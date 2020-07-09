@@ -25,10 +25,15 @@ const ListProductionsPage = () => {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Column width={16}>
+        <Grid.Column width={12}>
           <Breadcrumb>
             <Breadcrumb.Section active>Productions</Breadcrumb.Section>
           </Breadcrumb>
+        </Grid.Column>
+        <Grid.Column width={4}>
+          <Button floated='right' color='teal' as={NavLink} to='/production/create'>
+            Nouvelle production
+          </Button>
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
@@ -36,19 +41,15 @@ const ListProductionsPage = () => {
           <Table singleLine>
             <Table.Header>
               <Table.Row>
-           
-                <Table.HeaderCell >
-                  Production
-                </Table.HeaderCell>
+                <Table.HeaderCell>Production</Table.HeaderCell>
                 <Table.HeaderCell>Produits associés</Table.HeaderCell>
-                {/* <Table.HeaderCell></Table.HeaderCell> */}
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {productions.map(({ id, libelle, type_production, produits }) => {
                 return (
                   <Table.Row key={id}>
-                    <Table.Cell >
+                    <Table.Cell>
                       {
                         {
                           'Culture annuelle': (
@@ -113,7 +114,7 @@ const ListProductionsPage = () => {
                         }[type_production]
                       }
                     </Table.Cell>
-            
+
                     <Table.Cell>
                       {produits.length > 0 &&
                         produits.map((p) => (
@@ -122,18 +123,6 @@ const ListProductionsPage = () => {
                           </Label>
                         ))}
                     </Table.Cell>
-                    {/* <Table.Cell textAlign='center'>
-                      <Button
-                        size='mini'
-                        icon
-                        basic
-                        circular
-                        as={NavLink}
-                        to={`/production/${id}/delete`}
-                      >
-                        <Icon name='trash' />
-                      </Button>
-                    </Table.Cell> */}
                   </Table.Row>
                 );
               })}
