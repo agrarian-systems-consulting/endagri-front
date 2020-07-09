@@ -8,11 +8,16 @@ const InformationsPrincipalesComponent = ({ fiche }) => {
 
       <Segment learing>
         <List>
-          <List.Item>Fiche {fiche.id}</List.Item>
-          <List.Item>{fiche.libelle}</List.Item>
           <List.Item>
-            <Label>{fiche.type_production}</Label>
+            <b>Identifiant</b> Fiche {fiche.id}
           </List.Item>
+          <List.Item>
+            <b>Libellé</b> {fiche.libelle}
+          </List.Item>
+          <List.Item>
+            <b>Catégorie</b> <Label>{fiche.type_production}</Label>
+          </List.Item>
+          </List>
           {
             {
               'Culture annuelle': (
@@ -31,7 +36,18 @@ const InformationsPrincipalesComponent = ({ fiche }) => {
               ),
             }[fiche.type_production]
           }
-        </List>
+     
+
+        {
+          {
+            'Culture annuelle': (
+              <small>Les valeurs sont données pour un hectare</small>
+            ),
+            'Culture pérenne': (
+              <small>Les valeurs sont données pour un hectare</small>
+            ),
+          }[fiche.type_production]
+        }
 
         {/* <Button floated='right' >
               Modifier
