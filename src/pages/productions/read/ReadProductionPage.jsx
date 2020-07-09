@@ -166,25 +166,27 @@ const ReadProductionPage = () => {
                     <Table.Body>
                       {production.produits &&
                         production.produits.map((produit) => {
-                          return (
-                            <Table.Row key={produit.id}>
-                              <Table.Cell>{produit.libelle}</Table.Cell>
-                              <Table.Cell>{produit.unite}</Table.Cell>
-                              <Table.Cell textAlign='center'>
-                                <Button
-                                  size='mini'
-                                  icon
-                                  basic
-                                  circular
-                                  onClick={() => {
-                                    deleteProduit(produit.id);
-                                  }}
-                                >
-                                  <Icon name='trash' />
-                                </Button>
-                              </Table.Cell>
-                            </Table.Row>
-                          );
+                          if (produit.id !== null) {
+                            return (
+                              <Table.Row key={produit.id}>
+                                <Table.Cell>{produit.libelle}</Table.Cell>
+                                <Table.Cell>{produit.unite}</Table.Cell>
+                                <Table.Cell textAlign='center'>
+                                  <Button
+                                    size='mini'
+                                    icon
+                                    basic
+                                    circular
+                                    onClick={() => {
+                                      deleteProduit(produit.id);
+                                    }}
+                                  >
+                                    <Icon name='trash' />
+                                  </Button>
+                                </Table.Cell>
+                              </Table.Row>
+                            );
+                          }
                         })}
                     </Table.Body>
                   </Table>
@@ -218,13 +220,10 @@ const ReadProductionPage = () => {
             </Segment.Group>
           )}
         </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={2}></Grid.Column>
-        <Grid.Column width={8}>
-          {/* <Button negative floated='right'>
+        <Grid.Column width={6}>
+          <Button negative as={NavLink} to={`/production/${id}/delete`}>
             Supprimer cette production
-          </Button> */}
+          </Button>
         </Grid.Column>
       </Grid.Row>
     </Grid>

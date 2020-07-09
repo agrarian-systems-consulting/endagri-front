@@ -1,7 +1,8 @@
-import cuid from 'cuid';
+import Axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
@@ -25,6 +26,8 @@ const typeProductionsOptions = [
 
 const ProductionFormComponent = () => {
   let history = useHistory();
+  const { addToast } = useToasts();
+
   // Form validation handled with Yup
   const validationSchema = Yup.object({
     libelle: Yup.string().required('Le nom du produit est obligatoire'),
@@ -43,12 +46,21 @@ const ProductionFormComponent = () => {
       validationSchema={validationSchema}
       // Handle form submit
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        // axios.post
-
-        //Temporaire
-        const id = cuid();
-
-        history.push(`/production/${id}`);
+        Axios.post(`http://localhost:3333/production`, values)
+          .then((res) => {
+            addToast('La production a bien été créée', {
+              appearance: 'success',
+              autoDismiss: true,
+            });
+            history.push(`/production/${res.data.id}`);
+          })
+          .catch((err) => {
+            console.log(err);
+            addToast('Erreur lors de la cration de la production ', {
+              appearance: 'error',
+              autoDismiss: true,
+            });
+          });
       }}
     >
       {({

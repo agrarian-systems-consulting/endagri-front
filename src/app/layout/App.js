@@ -23,6 +23,7 @@ import UpdateAnalysePage from '../../pages/analyses/updateAnalyse/UpdateAnalyseP
 import DeleteAnalysePage from '../../pages/analyses/deleteAnalyse/DeleteAnalysePage';
 import DeleteFichePage from '../../pages/fiches/delete/DeleteFichePage';
 import DeleteMarchePage from '../../pages/marches/delete/DeleteMarchePage';
+import DeleteProductionPage from '../../pages/productions/delete/DeleteProductionPage';
 
 function App() {
   return (
@@ -64,6 +65,11 @@ function App() {
             exact
             path='/production/:id/update'
             component={UpdateProductionPage}
+          />
+          <Route
+            exact
+            path='/production/:id/delete'
+            component={DeleteProductionPage}
           />
         </Switch>
       </Container>

@@ -1,7 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Breadcrumb, Button, Grid, Label, Table } from 'semantic-ui-react';
+import {
+  Breadcrumb,
+  Button,
+  Grid,
+  Label,
+  Table,
+  Icon,
+} from 'semantic-ui-react';
 
 const ListProductionsPage = () => {
   const [productions, setProductions] = useState([]);
@@ -36,6 +43,7 @@ const ListProductionsPage = () => {
                   Production
                 </Table.HeaderCell>
                 <Table.HeaderCell>Produits associés</Table.HeaderCell>
+                <Table.HeaderCell></Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -76,6 +84,18 @@ const ListProductionsPage = () => {
                             {p.libelle}
                           </Label>
                         ))}
+                    </Table.Cell>
+                    <Table.Cell textAlign='center'>
+                      <Button
+                        size='mini'
+                        icon
+                        basic
+                        circular
+                        as={NavLink}
+                        to={`/production/${id}/delete`}
+                      >
+                        <Icon name='trash' />
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
                 );

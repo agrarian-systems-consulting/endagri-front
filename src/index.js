@@ -5,6 +5,7 @@ import App from './app/layout/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
+import ScrollToTop from './app/nav/ScrollToTop';
 
 const rootEl = document.getElementById('root');
 
@@ -12,6 +13,7 @@ let render = () => {
   ReactDOM.render(
     <BrowserRouter>
       <ToastProvider placement='bottom-right' autoDismissTimeout={2700}>
+        <ScrollToTop />
         <App />
       </ToastProvider>
     </BrowserRouter>,
