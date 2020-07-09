@@ -247,7 +247,7 @@ const MarcheFormComponent = () => {
           >
             Créer le marché
           </Button>
-          <pre>values = {JSON.stringify(values, null, 2)}</pre>
+          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
         </Form>
       )}
     </Formik>

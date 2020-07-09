@@ -122,7 +122,7 @@ const ReadFichePage = () => {
           autoDismiss: true,
         });
 
-        vente.id = res.data.id;
+        vente = res.data;
 
         let updatedFiche = update(fiche, {
           ventes: {
@@ -175,6 +175,7 @@ const ReadFichePage = () => {
           deleteVente={deleteVente}
           postVente={postVente}
           ventes={fiche.ventes}
+          id_production={fiche.id_production}
         />
       </Grid.Row>
       <Grid.Row>

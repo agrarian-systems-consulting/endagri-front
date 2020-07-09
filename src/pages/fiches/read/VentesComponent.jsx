@@ -3,7 +3,7 @@ import { Grid, Table, Button, Icon } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
 import CreateVenteComponent from './VenteFormComponent';
 
-const VentesComponent = ({ ventes, deleteVente, postVente }) => {
+const VentesComponent = ({ ventes, deleteVente, postVente, id_production }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   return (
@@ -115,7 +115,12 @@ const VentesComponent = ({ ventes, deleteVente, postVente }) => {
         </Button>
       )}
 
-      {isFormOpen && <CreateVenteComponent postVente={postVente} />}
+      {isFormOpen && (
+        <CreateVenteComponent
+          postVente={postVente}
+          id_production={id_production}
+        />
+      )}
     </Grid.Column>
   );
 };
