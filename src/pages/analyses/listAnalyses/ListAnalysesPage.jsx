@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Breadcrumb, Button, Grid, Table } from 'semantic-ui-react';
+import Axios from 'axios';
 
 const ListAnalysesPage = () => {
   const [analyses, setAnalyses] = useState([
@@ -27,11 +28,16 @@ const ListAnalysesPage = () => {
   ]);
 
   useEffect(() => {
-    async function getAnalyses() {
-      // const data = await MyAPI.getAnalyses();
-      // setAnalyses(data)
-    }
-    getAnalyses();
+    const fetchData = () => {
+      Axios(`http://localhost:3333/analyses`)
+        .then((res) => {
+          setAnalyses(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchData();
   }, []);
 
   return (
