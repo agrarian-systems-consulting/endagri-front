@@ -1,6 +1,8 @@
 import React from 'react';
 import { Grid, Segment, Header, List, Button } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
 
 const InformationsPrincipalesComponent = ({ info }) => {
   return (
@@ -12,38 +14,63 @@ const InformationsPrincipalesComponent = ({ info }) => {
           </Segment>
           <Segment attached clearing>
             <List>
-              <List.Item>Client : {info.nom_client}</List.Item>
               <List.Item>
-                Trésorerie initiale : {info.montant_tresorerie_initiale}
+                <b>Client </b> {info.nom_client}
               </List.Item>
-              <List.Item>Début analyse : {info.date_debut_analyse}</List.Item>
-              <List.Item>Fin analyse : {info.date_fin_analyse}</List.Item>
+              <List.Item>
+                <b>Trésorerie initiale </b> {info.montant_tresorerie_initiale}
+              </List.Item>
+              <List.Item>
+                <b>Date de début d'analyse </b>
+                {info.date_debut_analyse &&
+                  format(new Date(info.date_debut_analyse), 'dd MMMM yyyy', {
+                    locale: fr,
+                  })}
+              </List.Item>
+              <List.Item>
+                <b>Date de fin d'analyse </b>
+                {info.date_fin_analyse &&
+                  format(new Date(info.date_fin_analyse), 'dd MMMM yyyy', {
+                    locale: fr,
+                  })}
+              </List.Item>
             </List>
-
-            <Button
-              as={NavLink}
-              to={`/analyse/1/update`}
-              circular
-              icon='edit'
-              floated='right'
-            />
           </Segment>
         </Segment.Group>
       </Grid.Column>
       <Grid.Column width={6}>
         <Segment.Group>
-          <Segment color='violet'>
+          <Segment>
             <Header as='h4'>Métadonnées</Header>
           </Segment>
           <Segment attached>
             <List>
-              <List.Item>Identifiant de l'analyse : {info.id}</List.Item>
-              <List.Item>Date de création : {info.created}</List.Item>
-              <List.Item>Dernière modification : {info.modified}</List.Item>
-              <List.Item>Auteur : {info.nom_utilisateur}</List.Item>
+              <List.Item>
+                <b>Identifiant de l'analyse</b> {info.id}
+              </List.Item>
+              <List.Item>
+                <b>Date de création</b>{' '}
+                {info.created &&
+                  format(new Date(info.created), 'dd MMMM yyyy', {
+                    locale: fr,
+                  })}
+              </List.Item>
+              <List.Item>
+                <b>Dernière modification</b>{' '}
+                {info.modified &&
+                  format(new Date(info.modified), 'dd MMMM yyyy', {
+                    locale: fr,
+                  })}
+              </List.Item>
+              <List.Item>
+                <b>Auteur</b> {info.nom_utilisateur}
+              </List.Item>
             </List>
           </Segment>
         </Segment.Group>
+        <Button as={NavLink} to={`/analyse/1/update`} floated='right'>
+          Modifier
+        </Button>
       </Grid.Column>
     </Grid.Row>
   );

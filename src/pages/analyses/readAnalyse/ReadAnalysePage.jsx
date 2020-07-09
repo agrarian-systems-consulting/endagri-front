@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import {
   Grid,
   Breadcrumb,
@@ -7,68 +7,32 @@ import {
   Header,
   Button,
 } from 'semantic-ui-react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
 import ProductionsComponent from './ProductionsComponent';
+import { useEffect } from 'react';
+import Axios from 'axios';
 
 const ReadAnalysePage = () => {
-  const [info, setInfo] = useState({
-    id: 2,
-    created: '2020-06-09T22:00:00.000Z',
-    modified: '2020-06-09T22:00:00.000Z',
-    nom_utilisateur: 'Auteur modifié',
-    nom_client: 'Client modifié',
-    montant_tresorerie_initiale: 1234,
-    date_debut_analyse: '2020-05-05T22:00:00.000Z',
-    date_fin_analyse: '2021-05-05T22:00:00.000Z',
-  });
-  const [fichesLibres, setFichesLibres] = useState([
-    {
-      id_fiche_technique_libre: 3,
-      id_fiche_technique: 2,
-      date_ini: '2020-01-01T00:00:00',
-      coeff_surface_ou_nombre_animaux: 5,
-      coeff_main_oeuvre_familiale: 0.2,
-      coeff_ventes: [
-        {
-          libelle_categorie: null,
-          coeff_autoconsommation: 0,
-          coeff_intraconsommation: 0,
-          coeff_rendement: 1,
-        },
-      ],
-      coeff_depenses: [
-        {
-          libelle_categorie: null,
-          coeff_intraconsommation: 0,
-        },
-      ],
-    },
-    {
-      id_fiche_technique_libre: 4,
-      id_fiche_technique: 4,
-      date_ini: '2020-01-01T00:00:00',
-      coeff_surface_ou_nombre_animaux: 20,
-      coeff_main_oeuvre_familiale: 0.1,
-      coeff_ventes: [
-        {
-          libelle_categorie: null,
-          coeff_autoconsommation: 0,
-          coeff_intraconsommation: 0,
-          coeff_rendement: 1,
-        },
-      ],
-      coeff_depenses: [
-        {
-          libelle_categorie: null,
-          coeff_intraconsommation: 0,
-        },
-      ],
-    },
-  ]);
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [analyse, setAnalyse] = useState();
 
-  // Fetch les données depuis l'API dans un useEffect avec axios
-
+  useEffect(() => {
+    const fetchData = async () => {
+      Axios.get(`http://localhost:3333/analyse/${id}`)
+        .then((res) => {
+          console.log(res.data);
+          setAnalyse(res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    };
+    fetchData();
+  }, [id]);
   return (
     <Grid>
       <Grid.Row>
@@ -82,11 +46,21 @@ const ReadAnalysePage = () => {
           </Breadcrumb>
         </Grid.Column>
       </Grid.Row>
-      <InformationsPrincipalesComponent info={info} />
-      <ProductionsComponent fichesLibres={fichesLibres} />
+      {loading ? (
+        <Fragment>Chargement en cours...</Fragment>
+      ) : (
+        <Fragment>
+          <pre>{JSON.stringify(analyse)}</pre>
+          <InformationsPrincipalesComponent info={analyse['0']} />
+          {/* <ProductionsComponent
+            fichesLibres={analyse.fiches_techniques_libres}
+          /> */}
+        </Fragment>
+      )}
+
       <Grid.Row>
         <Grid.Column width={16}>
-          <Button color='red' as={NavLink} to='/analyse/1/delete'>
+          <Button color='red' as={NavLink} to={`/analyse/${id}/delete`}>
             Supprimer l'analyse
           </Button>
         </Grid.Column>
