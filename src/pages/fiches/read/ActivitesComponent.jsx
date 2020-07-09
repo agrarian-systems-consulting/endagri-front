@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Grid, Table, Button, Icon } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
 import ActiviteFormComponent from './ActiviteFormComponent.jsx';
@@ -7,7 +7,7 @@ import formatMoney from '../../../app/utils/formatMoney';
 const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   return (
-    <Grid.Column width={10}>
+    <Fragment>
       <h5>Activités</h5>
       <Table singleLine compact selectable>
         <Table.Header>
@@ -69,7 +69,7 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
       )}
 
       {isFormOpen && <ActiviteFormComponent postActivite={postActivite} />}
-    </Grid.Column>
+    </Fragment>
   );
 };
 

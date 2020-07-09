@@ -6,10 +6,10 @@ import { useToasts } from 'react-toast-notifications';
 import VentesComponent from './VentesComponent';
 import ActivitesComponent from './ActivitesComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
-import GrapheComponent from './GrapheComponent';
-import cuid from 'cuid';
+
 import { useEffect } from 'react';
 import Axios from 'axios';
+import _ from 'lodash';
 
 const ReadFichePage = () => {
   let history = useHistory();
@@ -26,9 +26,17 @@ const ReadFichePage = () => {
           return act.id !== null;
         });
 
+        res.data.activites = _.uniqBy(res.data.activites, function (e) {
+          return e.id;
+        });
+
         // Petit workaround pour contourner le problème lié à la réponse envoyée par l'API
         res.data.ventes = res.data.ventes.filter((vente) => {
           return vente.id !== null;
+        });
+
+        res.data.ventes = _.uniqBy(res.data.ventes, function (e) {
+          return e.id;
         });
 
         setFiche(res.data);
@@ -166,16 +174,19 @@ const ReadFichePage = () => {
           </Breadcrumb>
         </Grid.Column>
       </Grid.Row>
+
       <Grid.Row>
-        <GrapheComponent />
-        <InformationsPrincipalesComponent fiche={fiche} />
-      </Grid.Row>
-      <Grid.Row>
-        <ActivitesComponent
-          deleteActivite={deleteActivite}
-          postActivite={postActivite}
-          activites={fiche.activites}
-        />
+        <Grid.Column width={10}>
+          <ActivitesComponent
+            deleteActivite={deleteActivite}
+            postActivite={postActivite}
+            activites={fiche.activites}
+          />
+        </Grid.Column>
+
+        <Grid.Column width={6}>
+          <InformationsPrincipalesComponent fiche={fiche} />
+        </Grid.Column>
       </Grid.Row>
       <Grid.Row>
         <VentesComponent
