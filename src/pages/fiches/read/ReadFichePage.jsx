@@ -16,87 +16,7 @@ const ReadFichePage = () => {
   let { id } = useParams();
   const { addToast } = useToasts();
 
-  const [fiche, setFiche] = useState({
-    id: id,
-    libelle_fiche: 'Tomates hors-sol en agriculture biologique',
-    libelle_production: 'Tomate',
-    id_production: 24,
-    type_production: 'Culture annuelle',
-    id_utilisateur: 35,
-    ini_debut: 7,
-    ini_fin: 10,
-    activites: [
-      {
-        id: 10,
-        libelle: 'Labour',
-        mois_relatif: -1,
-        mois: null,
-        depenses: [
-          {
-            id: 13,
-            libelle: 'Tracteur',
-            montant: 1500,
-          },
-          {
-            id: 14,
-            libelle: "Main d'oeuvre",
-            montant: 500,
-          },
-        ],
-      },
-      {
-        id: 11,
-        libelle: 'Semis',
-        mois_relatif: 0,
-        mois: null,
-        depenses: [
-          {
-            id: 15,
-            libelle: 'Tracteur',
-            montant: 500,
-          },
-          {
-            id: 16,
-            libelle: "Main d'oeuvre",
-            montant: 500,
-          },
-        ],
-      },
-      {
-        id: 12,
-        libelle: 'Récolte',
-        mois_relatif: 5,
-        mois: null,
-        depenses: [
-          {
-            id: 17,
-            libelle: "Main d'oeuvre",
-            montant: 200,
-          },
-        ],
-      },
-    ],
-    ventes: [
-      {
-        id: 13,
-        id_marche: 24,
-        unite: 't',
-        rendement_min: 400,
-        rendement: 500,
-        rendement_max: 600,
-        mois_relatif: 5,
-      },
-      {
-        id: 14,
-        id_marche: 24,
-        unite: 't',
-        rendement_min: 200,
-        rendement: 300,
-        rendement_max: 400,
-        mois_relatif: 6,
-      },
-    ],
-  });
+  const [fiche, setFiche] = useState({});
 
   useEffect(() => {
     Axios(`http://localhost:3333/fiche/${id}`)
@@ -203,7 +123,7 @@ const ReadFichePage = () => {
             </Breadcrumb.Section>
             <Breadcrumb.Divider />
             <Breadcrumb.Section active>
-              Fiche {fiche.id} - {fiche.libelle}
+              Fiche {fiche.id} - {fiche.libelle_fiche}
             </Breadcrumb.Section>
           </Breadcrumb>
         </Grid.Column>

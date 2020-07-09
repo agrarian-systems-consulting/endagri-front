@@ -1,10 +1,12 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Grid, Segment } from 'semantic-ui-react';
+import Axios from 'axios';
 
 const DeleteFichePage = () => {
   const { addToast } = useToasts();
+  let { id } = useParams();
   let history = useHistory();
   return (
     <Grid>
@@ -37,14 +39,22 @@ const DeleteFichePage = () => {
                 floated='right'
                 color='red'
                 onClick={() => {
-                  // TODO : Supprimer la fiche
-                  // await axios.delete
-                  addToast('La fiche a bien été supprimée', {
-                    appearance: 'success',
-                    autoDismiss: true,
-                  });
+                  Axios.delete(`http://localhost:3333/fiche/${id}`)
+                    .then((res) => {
+                      addToast('La fiche a bien été supprimée', {
+                        appearance: 'success',
+                        autoDismiss: true,
+                      });
 
-                  history.push(`/fiches`);
+                      history.push(`/fiches`);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      addToast('Problème lors de la suppression de la fiche', {
+                        appearance: 'error',
+                        autoDismiss: true,
+                      });
+                    });
                 }}
               >
                 Supprimer

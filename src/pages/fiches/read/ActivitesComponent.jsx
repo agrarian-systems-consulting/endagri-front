@@ -18,7 +18,7 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
             <Table.HeaderCell></Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-        {activites.length === 0 ? (
+        {!activites ? (
           <Table.Body>
             <Table.Row>
               <Table.Cell>Aucune activité pour le moment...</Table.Cell>

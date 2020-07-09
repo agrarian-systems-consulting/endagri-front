@@ -27,7 +27,7 @@ const VentesComponent = ({ ventes, deleteVente, postVente }) => {
           </Table.Row>
         </Table.Header>
 
-        {ventes.length === 0 ? (
+        {!ventes ? (
           <Table.Body>
             <Table.Row>
               <Table.Cell>Aucune vente pour le moment...</Table.Cell>
