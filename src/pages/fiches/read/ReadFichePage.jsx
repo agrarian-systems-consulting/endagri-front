@@ -40,7 +40,7 @@ const ReadFichePage = () => {
 
   // Problème ici
   const deleteActivite = async (id_activite) => {
-    Axios.delete(`http://localhost:3333/activite/${id_activite}`)
+    Axios.delete(`http://localhost:3333/fiche/${id}/activite/${id_activite}`)
       .then((res) => {
         addToast("L'activité a bien été supprimée", {
           appearance: 'success',
