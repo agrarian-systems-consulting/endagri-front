@@ -1,7 +1,7 @@
 import cuid from 'cuid';
 import { Formik } from 'formik';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
@@ -28,6 +28,7 @@ const monthsOptions = [
 
 const FicheLibreFormComponent = () => {
   let history = useHistory();
+  let { id } = useParams();
   const { addToast } = useToasts();
   const [fichesTechniques, setFichesTechniques] = useState([]);
 
@@ -74,13 +75,15 @@ const FicheLibreFormComponent = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        Axios.post(`http://localhost:3333/analyse`, values)
+        Axios.post(
+          `http://localhost:3333/analyse/${id}/fiche-technique-libre`,
+          values
+        )
           .then((res) => {
-            addToast("L'analyse a bien été créée", {
+            addToast('La fiche a bien été créée', {
               appearance: 'success',
               autoDismiss: true,
             });
-            history.push(`/analyse/${res.data.id}`);
           })
           .catch((err) => {
             console.log(err);
@@ -88,7 +91,6 @@ const FicheLibreFormComponent = () => {
               appearance: 'error',
               autoDismiss: true,
             });
-            history.push(`/analyses`);
           });
       }}
     >
@@ -148,7 +150,7 @@ const FicheLibreFormComponent = () => {
           >
             Créer l'analyse
           </Button>
-          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
+          <pre>values = {JSON.stringify(values, null, 2)}</pre>
         </Form>
       )}
     </Formik>
