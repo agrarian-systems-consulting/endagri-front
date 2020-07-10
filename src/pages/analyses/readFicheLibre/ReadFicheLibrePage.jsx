@@ -14,6 +14,7 @@ import {
   Segment,
   Table,
   Transition,
+  Icon,
 } from 'semantic-ui-react';
 import CoeffDepenseFormComponent from './CoeffDepenseFormComponent';
 
@@ -56,8 +57,8 @@ const ReadFicheLibrePage = () => {
 
   const addCoeffDepense = (coeff_depense) => {
     coeff_depense.id_fiche_technique_libre = id_ftl;
-    Axios.post(`http://localhost:3333/coeff_depense`, coeff_depense).then(
-      (res) => {
+    Axios.post(`http://localhost:3333/coeff_depense`, coeff_depense)
+      .then((res) => {
         addToast('Le coefficient a bien été ajouté', {
           appearance: 'success',
           autoDismiss: true,
@@ -72,8 +73,42 @@ const ReadFicheLibrePage = () => {
         setFicheLibre(updatedFicheLibre);
 
         setIsOpenCoeffDepenseForm(false);
-      }
-    );
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast("Erreur lors de l'ajout du coefficient", {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      });
+  };
+
+  const deleteCoeffDepense = (id) => {
+    Axios.delete(`http://localhost:3333/coeff_depense/${id}`)
+      .then((res) => {
+        addToast('Le coefficient a bien été supprimé', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+
+        let updatedFicheLibre = update(ficheLibre, {
+          coeff_depenses: {
+            $apply: (coeff_depenses) =>
+              coeff_depenses.filter((coeff) => {
+                return coeff.id !== id;
+              }),
+          },
+        });
+
+        setFicheLibre(updatedFicheLibre);
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast('Erreur lors de la suppression du coefficient', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      });
   };
 
   return (
@@ -207,9 +242,10 @@ const ReadFicheLibrePage = () => {
                       <Table.Header>
                         <Table.Row>
                           <Table.HeaderCell>Catégorie</Table.HeaderCell>
-                          <Table.HeaderCell>
+                          <Table.HeaderCell textAlign='center'>
                             Part d'autoproduction
                           </Table.HeaderCell>
+                          <Table.HeaderCell></Table.HeaderCell>
                         </Table.Row>
                       </Table.Header>
                       <Transition.Group as={Table.Body}>
@@ -217,8 +253,22 @@ const ReadFicheLibrePage = () => {
                           return (
                             <Table.Row>
                               <Table.Cell>{coeff.libelle_categorie}</Table.Cell>
-                              <Table.Cell>
-                                {coeff.coeff_intraconsommation}
+                              <Table.Cell textAlign='center'>
+                                {coeff.coeff_intraconsommation * 100} %
+                              </Table.Cell>
+                              <Table.Cell textAlign='center'>
+                                <Button
+                                  onClick={() => {
+                                    deleteCoeffDepense(coeff.id);
+                                  }}
+                                  size='mini'
+                                  icon
+                                  basic
+                                  circular
+                                  floated='right'
+                                >
+                                  <Icon name='trash' />
+                                </Button>
                               </Table.Cell>
                             </Table.Row>
                           );
