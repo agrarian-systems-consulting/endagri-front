@@ -1,18 +1,23 @@
-import Axios from 'axios';
-import { format } from 'date-fns';
 import { Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { useToasts } from 'react-toast-notifications';
+import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
-import categorieDepenseOptions from '../../../app/data/categorieDepenses';
 
-const CoeffDepenseFormComponent = ({ addFicheTechniqueLibre }) => {
+const CoeffDepenseFormComponent = ({ addCoeffDepense }) => {
+  const categorieDepenseOptions = [
+    { key: '3', value: 'Engrais', text: 'Engrais' },
+    { key: '4', value: 'Fumier', text: 'Fumier' },
+    { key: '5', value: 'Paille', text: 'Paille' },
+    { key: '6', value: 'Foin', text: 'Foin' },
+    { key: '7', value: 'Concentrés', text: 'Concentrés' },
+  ];
+
   // Form validation handled with Yup
   const validationSchema = Yup.object({
     libelle_categorie: Yup.string().required('Ce champs est obligatoire'),
+    coeff_intraconsommation: Yup.number().required('Ce champs est obligatoire'),
   });
 
   return (
@@ -23,7 +28,7 @@ const CoeffDepenseFormComponent = ({ addFicheTechniqueLibre }) => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        addFicheTechniqueLibre(values);
+        addCoeffDepense(values);
       }}
     >
       {({
@@ -51,9 +56,11 @@ const CoeffDepenseFormComponent = ({ addFicheTechniqueLibre }) => {
           <SemanticFloatField
             name='coeff_intraconsommation'
             value=''
-            label="Part d'intraconsommation (= part utilisée sur l'exploitation pour d'autres cultures ou élevage"
+            label="Part produite sur l'exploitation"
             component={Form.Input}
             type='number'
+            min='0'
+            max='1'
             step={0.01}
           />
 
@@ -65,7 +72,7 @@ const CoeffDepenseFormComponent = ({ addFicheTechniqueLibre }) => {
           >
             Ajouter
           </Button>
-          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
+          <pre>values = {JSON.stringify(values, null, 2)}</pre>
         </Form>
       )}
     </Formik>

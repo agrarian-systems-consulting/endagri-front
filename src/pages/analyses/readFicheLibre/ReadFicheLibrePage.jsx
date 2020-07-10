@@ -1,23 +1,41 @@
-import React, { useEffect, Fragment } from 'react';
+import Axios from 'axios';
+import update from 'immutability-helper';
+import React, { Fragment, useEffect, useState } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 import {
-  Grid,
   Breadcrumb,
-  Segment,
-  Placeholder,
+  Button,
+  Divider,
+  Grid,
   Label,
   List,
+  Placeholder,
+  Segment,
+  Table,
+  Transition,
 } from 'semantic-ui-react';
-import { NavLink, useParams } from 'react-router-dom';
-import { useState } from 'react';
-import Axios from 'axios';
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
 import CoeffDepenseFormComponent from './CoeffDepenseFormComponent';
 
 const ReadFicheLibrePage = () => {
   const { id, id_ftl } = useParams();
+  const { addToast } = useToasts();
+
   const [loading, setLoading] = useState(true);
   const [ficheLibre, setFicheLibre] = useState({});
+  const [isOpenCoeffDepenseForm, setIsOpenCoeffDepenseForm] = useState(false);
+  const {
+    id_fiche_technique,
+    id_analyse,
+    date_ini,
+    coeff_surface_ou_nombre_animaux,
+    coeff_main_oeuvre_familiale,
+    libelle_fiche_technique,
+    libelle_production,
+    type_production,
+    coeff_depenses,
+    coeff_ventes,
+  } = ficheLibre;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,18 +54,27 @@ const ReadFicheLibrePage = () => {
     fetchData();
   }, [id, id_ftl]);
 
-  const {
-    id_fiche_technique,
-    id_analyse,
-    date_ini,
-    coeff_surface_ou_nombre_animaux,
-    coeff_main_oeuvre_familiale,
-    libelle_fiche_technique,
-    libelle_production,
-    type_production,
-    coeff_depenses,
-    coeff_centes,
-  } = ficheLibre;
+  const addCoeffDepense = (coeff_depense) => {
+    coeff_depense.id_fiche_technique_libre = id_ftl;
+    Axios.post(`http://localhost:3333/coeff_depense`, coeff_depense).then(
+      (res) => {
+        addToast('Le coefficient a bien été ajouté', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+
+        let updatedFicheLibre = update(ficheLibre, {
+          coeff_depenses: {
+            $push: [res.data],
+          },
+        });
+
+        setFicheLibre(updatedFicheLibre);
+
+        setIsOpenCoeffDepenseForm(false);
+      }
+    );
+  };
 
   return (
     <Grid>
@@ -149,34 +176,22 @@ const ReadFicheLibrePage = () => {
                       {
                         'Culture annuelle': (
                           <List.Item>
-                            <b>Date de semis</b>{' '}
-                            {format(new Date(date_ini), 'dd MMMM yyyy', {
-                              locale: fr,
-                            })}{' '}
+                            <b>Date de semis</b> {date_ini}
                           </List.Item>
                         ),
                         'Elevage bovin laitier': (
                           <List.Item>
-                            <b>Date de mise-bas</b>{' '}
-                            {format(new Date(date_ini), 'dd MMMM yyyy', {
-                              locale: fr,
-                            })}
+                            <b>Date de mise-bas</b> {date_ini}
                           </List.Item>
                         ),
                         'Elevage ovin engraisseur': (
                           <List.Item>
-                            <b>Date de mise-bas</b>{' '}
-                            {format(new Date(date_ini), 'dd MMMM yyyy', {
-                              locale: fr,
-                            })}
+                            <b>Date de mise-bas</b> {date_ini}
                           </List.Item>
                         ),
                         'Elevage ovin naisseur-engraisseur': (
                           <List.Item>
-                            <b>Date de mise-bas</b>{' '}
-                            {format(new Date(date_ini), 'dd MMMM yyyy', {
-                              locale: fr,
-                            })}
+                            <b>Date de mise-bas</b> {date_ini}
                           </List.Item>
                         ),
                       }[type_production]
@@ -186,13 +201,68 @@ const ReadFicheLibrePage = () => {
               </Segment.Group>
               <Segment.Group>
                 <Segment>
-                  <CoeffDepenseFormComponent />
+                  <h5>Modulation des dépenses</h5>
+                  {coeff_depenses.length > 0 ? (
+                    <Table fixed>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>Catégorie</Table.HeaderCell>
+                          <Table.HeaderCell>
+                            Part d'autoproduction
+                          </Table.HeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+                      <Transition.Group as={Table.Body}>
+                        {coeff_depenses.map((coeff) => {
+                          return (
+                            <Table.Row>
+                              <Table.Cell>{coeff.libelle_categorie}</Table.Cell>
+                              <Table.Cell>
+                                {coeff.coeff_intraconsommation}
+                              </Table.Cell>
+                            </Table.Row>
+                          );
+                        })}
+                      </Transition.Group>
+                    </Table>
+                  ) : (
+                    <p>
+                      Il n'y a pas encore de coefficients pour moduler les
+                      dépenses
+                    </p>
+                  )}
+
+                  {isOpenCoeffDepenseForm ? (
+                    <Fragment>
+                      <Button
+                        onClick={() => {
+                          setIsOpenCoeffDepenseForm(false);
+                        }}
+                      >
+                        Fermer
+                      </Button>
+                      <Divider></Divider>
+                      <CoeffDepenseFormComponent
+                        addCoeffDepense={addCoeffDepense}
+                      />
+                    </Fragment>
+                  ) : (
+                    <Button
+                      color='teal'
+                      onClick={() => {
+                        setIsOpenCoeffDepenseForm(true);
+                      }}
+                    >
+                      Ajouter
+                    </Button>
+                  )}
                 </Segment>
               </Segment.Group>
             </Fragment>
           )}
         </Grid.Column>
       </Grid.Row>
+      {/* <pre>{JSON.stringify(ficheLibre, true, 2)}</pre> */}
     </Grid>
   );
 };
