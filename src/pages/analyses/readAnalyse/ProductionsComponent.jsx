@@ -9,7 +9,7 @@ import {
   Button,
   Transition,
 } from 'semantic-ui-react';
-const ProductionsComponent = ({ fichesLibres }) => {
+const ProductionsComponent = ({ fichesLibres, deleteFicheTechniqueLibre }) => {
   return (
     <Fragment>
       <Grid.Row>
@@ -27,7 +27,8 @@ const ProductionsComponent = ({ fichesLibres }) => {
                       <List>
                         <List.Item></List.Item>
                         <List.Item>
-                          basé sur la fiche {fiche.id_fiche_technique}{' '}
+                          {fiche.id} basé sur la fiche{' '}
+                          {fiche.id_fiche_technique}{' '}
                         </List.Item>
 
                         <List.Item>
@@ -48,7 +49,9 @@ const ProductionsComponent = ({ fichesLibres }) => {
                         Configurer
                       </Button>
                       <Button
-                        onClick={() => {}}
+                        onClick={() => {
+                          deleteFicheTechniqueLibre(fiche.id);
+                        }}
                         size='mini'
                         icon
                         basic

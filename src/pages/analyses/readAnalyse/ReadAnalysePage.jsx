@@ -47,7 +47,7 @@ const ReadAnalysePage = () => {
       ficheTechniqueLibre
     )
       .then((res) => {
-        addToast('La fiche a bien été créée', {
+        addToast('La production a bien été ajoutée', {
           appearance: 'success',
           autoDismiss: true,
         });
@@ -59,10 +59,42 @@ const ReadAnalysePage = () => {
         });
 
         setAnalyse(updatedAnalyse);
+
+        setIsOpenFicheTechniqueLibreForm(false);
       })
       .catch((err) => {
         console.log(err);
-        addToast("Erreur lors de la création de l'analyse", {
+        addToast('Erreur lors de la création de la production', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      });
+  };
+
+  const deleteFicheTechniqueLibre = (id_ftl) => {
+    Axios.delete(
+      `http://localhost:3333/analyse/${id}/fiche-technique-libre/${id_ftl}`
+    )
+      .then((res) => {
+        addToast('La production a bien été supprimée', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+
+        let updatedAnalyse = update(analyse, {
+          fiches_techniques_libres: {
+            $apply: (fiches_techniques_libres) =>
+              fiches_techniques_libres.filter((ftl) => {
+                return ftl.id !== id_ftl;
+              }),
+          },
+        });
+
+        setAnalyse(updatedAnalyse);
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast('Erreur lors de la suppression de la production', {
           appearance: 'error',
           autoDismiss: true,
         });
@@ -95,6 +127,7 @@ const ReadAnalysePage = () => {
           </Grid.Row>
           <ProductionsComponent
             fichesLibres={analyse.fiches_techniques_libres}
+            deleteFicheTechniqueLibre={deleteFicheTechniqueLibre}
           />
           <Grid.Row>
             <Grid.Column width={16}>
