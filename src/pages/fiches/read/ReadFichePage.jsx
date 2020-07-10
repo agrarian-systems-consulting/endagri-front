@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
-import { Grid, Breadcrumb, Button } from 'semantic-ui-react';
-import { NavLink, Link, useParams, useHistory } from 'react-router-dom';
+import Axios from 'axios';
 import update from 'immutability-helper';
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
-import VentesComponent from './VentesComponent';
+import { Breadcrumb, Button, Grid } from 'semantic-ui-react';
 import ActivitesComponent from './ActivitesComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
-
-import { useEffect } from 'react';
-import Axios from 'axios';
-import _ from 'lodash';
+import VentesComponent from './VentesComponent';
 
 const ReadFichePage = () => {
-  let history = useHistory();
   let { id } = useParams();
   const { addToast } = useToasts();
 

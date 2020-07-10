@@ -1,35 +1,14 @@
-import cuid from 'cuid';
+import Axios from 'axios';
+import { format } from 'date-fns';
 import { Formik } from 'formik';
-import React, { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
-import { useEffect } from 'react';
-import Axios from 'axios';
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
-import { format } from 'date-fns';
 
-const monthsOptions = [
-  { key: '1', value: 1, text: 'Janvier' },
-  { key: '2', value: 2, text: 'Février' },
-  { key: '3', value: 3, text: 'Mars' },
-  { key: '4', value: 4, text: 'Avril' },
-  { key: '5', value: 5, text: 'Mai' },
-  { key: '6', value: 6, text: 'Juin' },
-  { key: '7', value: 7, text: 'Juillet' },
-  { key: '8', value: 8, text: 'Août' },
-  { key: '9', value: 9, text: 'Septembre' },
-  { key: '10', value: 10, text: 'Octobre' },
-  { key: '11', value: 11, text: 'Novembre' },
-  { key: '12', value: 12, text: 'Décembre' },
-];
-
-const FicheLibreFormComponent = () => {
-  let history = useHistory();
-  let { id } = useParams();
-  const { addToast } = useToasts();
+const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
   const [fichesTechniques, setFichesTechniques] = useState([]);
 
   useEffect(() => {
@@ -75,23 +54,7 @@ const FicheLibreFormComponent = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        Axios.post(
-          `http://localhost:3333/analyse/${id}/fiche-technique-libre`,
-          values
-        )
-          .then((res) => {
-            addToast('La fiche a bien été créée', {
-              appearance: 'success',
-              autoDismiss: true,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            addToast("Erreur lors de la création de l'analyse", {
-              appearance: 'error',
-              autoDismiss: true,
-            });
-          });
+        addFicheTechniqueLibre(values);
       }}
     >
       {({

@@ -1,30 +1,13 @@
-import cuid from 'cuid';
+import Axios from 'axios';
+import { format } from 'date-fns';
 import { Formik } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
-import { useEffect } from 'react';
-import Axios from 'axios';
 import SemanticIntegerField from '../../../app/utils/forms/SemanticIntegerField';
-import { format } from 'date-fns';
-
-const monthsOptions = [
-  { key: '1', value: 1, text: 'Janvier' },
-  { key: '2', value: 2, text: 'Février' },
-  { key: '3', value: 3, text: 'Mars' },
-  { key: '4', value: 4, text: 'Avril' },
-  { key: '5', value: 5, text: 'Mai' },
-  { key: '6', value: 6, text: 'Juin' },
-  { key: '7', value: 7, text: 'Juillet' },
-  { key: '8', value: 8, text: 'Août' },
-  { key: '9', value: 9, text: 'Septembre' },
-  { key: '10', value: 10, text: 'Octobre' },
-  { key: '11', value: 11, text: 'Novembre' },
-  { key: '12', value: 12, text: 'Décembre' },
-];
 
 const AnalyseFormComponent = () => {
   let history = useHistory();

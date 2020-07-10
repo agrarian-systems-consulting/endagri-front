@@ -1,14 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import {
-  Breadcrumb,
-  Button,
-  Grid,
-  Label,
-  Table,
-  Icon,
-} from 'semantic-ui-react';
+import { Link, NavLink } from 'react-router-dom';
+import { Breadcrumb, Button, Grid, Label, Table } from 'semantic-ui-react';
 
 const ListProductionsPage = () => {
   const [productions, setProductions] = useState([]);
@@ -31,7 +24,12 @@ const ListProductionsPage = () => {
           </Breadcrumb>
         </Grid.Column>
         <Grid.Column width={4}>
-          <Button floated='right' color='teal' as={NavLink} to='/production/create'>
+          <Button
+            floated='right'
+            color='teal'
+            as={NavLink}
+            to='/production/create'
+          >
             Nouvelle production
           </Button>
         </Grid.Column>

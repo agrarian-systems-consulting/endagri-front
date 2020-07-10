@@ -1,13 +1,11 @@
-import cuid from 'cuid';
+import Axios from 'axios';
 import { Formik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
-import { useEffect } from 'react';
-import Axios from 'axios';
 
 const monthsOptions = [
   { key: '1', value: 1, text: 'Janvier' },

@@ -3,7 +3,6 @@ import {
   Grid,
   Breadcrumb,
   Segment,
-  List,
   Header,
   Button,
   Divider,
@@ -14,9 +13,12 @@ import ProductionsComponent from './ProductionsComponent';
 import { useEffect } from 'react';
 import Axios from 'axios';
 import FicheLibreFormComponent from './FicheLibreFormComponent';
+import { useToasts } from 'react-toast-notifications';
 
 const ReadAnalysePage = () => {
   const { id } = useParams();
+  const { addToast } = useToasts();
+
   const [loading, setLoading] = useState(true);
   const [analyse, setAnalyse] = useState();
 
@@ -24,7 +26,6 @@ const ReadAnalysePage = () => {
     const fetchData = async () => {
       Axios.get(`http://localhost:3333/analyse/${id}`)
         .then((res) => {
-          console.log(res.data);
           setAnalyse(res.data);
           setLoading(false);
         })
@@ -35,6 +36,27 @@ const ReadAnalysePage = () => {
     };
     fetchData();
   }, [id]);
+
+  const addFicheTechniqueLibre = (ficheTechniqueLibre) => {
+    Axios.post(
+      `http://localhost:3333/analyse/${id}/fiche-technique-libre`,
+      ficheTechniqueLibre
+    )
+      .then((res) => {
+        addToast('La fiche a bien été créée', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast("Erreur lors de la création de l'analyse", {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      });
+  };
+
   return (
     <Grid>
       <Grid.Row>
@@ -66,7 +88,9 @@ const ReadAnalysePage = () => {
             <Grid.Column width={16}>
               <Button color='teal'>Ajouter une production</Button>
               <Segment>
-                <FicheLibreFormComponent />
+                <FicheLibreFormComponent
+                  addFicheTechniqueLibre={addFicheTechniqueLibre}
+                />
               </Segment>
             </Grid.Column>
           </Grid.Row>

@@ -1,8 +1,8 @@
-import React, { useState, Fragment } from 'react';
-import { Grid, Table, Button, Icon } from 'semantic-ui-react';
+import React, { Fragment, useState } from 'react';
+import { Button, Icon, Table } from 'semantic-ui-react';
+import formatMoney from '../../../app/utils/formatMoney';
 import getMois from '../../../app/utils/getMois';
 import ActiviteFormComponent from './ActiviteFormComponent.jsx';
-import formatMoney from '../../../app/utils/formatMoney';
 
 const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);

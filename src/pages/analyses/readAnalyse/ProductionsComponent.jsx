@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
-import { Grid, Segment, List, Header, Label, Button } from 'semantic-ui-react';
-import FicheLibreFormComponent from './FicheLibreFormComponent';
+import { Grid, Segment, List, Label } from 'semantic-ui-react';
 const ProductionsComponent = ({ fichesLibres }) => {
   return (
     <Fragment>
@@ -8,7 +7,7 @@ const ProductionsComponent = ({ fichesLibres }) => {
         {fichesLibres &&
           fichesLibres.map((fiche) => {
             return (
-              <Grid.Column width={4} key={fiche.id_fiche_technique_libre}>
+              <Grid.Column width={4} key={fiche.id}>
                 <Segment.Group>
                   <Segment attached='top'>
                     <h5>Nom de la production</h5>
@@ -41,7 +40,7 @@ const ProductionsComponent = ({ fichesLibres }) => {
                       {fiche.coeff_ventes &&
                         fiche.coeff_ventes.map((vente) => {
                           return (
-                            <List.Item>
+                            <List.Item key={vente.id}>
                               <List>
                                 <List.Item>
                                   Produit vendu : {vente.libelle_categorie}
@@ -72,7 +71,7 @@ const ProductionsComponent = ({ fichesLibres }) => {
                       {fiche.coeff_depenses &&
                         fiche.coeff_depenses.map((depense) => {
                           return (
-                            <List.Item>
+                            <List.Item key={depense.id}>
                               <List>
                                 <List.Item>
                                   Catégorie de dépense :
@@ -93,7 +92,6 @@ const ProductionsComponent = ({ fichesLibres }) => {
             );
           })}
       </Grid.Row>
- 
     </Fragment>
   );
 };

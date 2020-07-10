@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Grid, Segment, List, Label, Icon } from 'semantic-ui-react';
+import { Icon, Label, List, Segment } from 'semantic-ui-react';
 import getMois from '../../../app/utils/getMois';
 const InformationsPrincipalesComponent = ({ fiche }) => {
   return (
