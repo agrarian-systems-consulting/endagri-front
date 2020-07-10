@@ -24,23 +24,16 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
       });
   }, [id, id_ftl]);
 
-  const categorieDepenseOptions = [
-    { key: '3', value: 'Engrais', text: 'Engrais' },
-    { key: '4', value: 'Fumier', text: 'Fumier' },
-    { key: '5', value: 'Paille', text: 'Paille' },
-    { key: '6', value: 'Foin', text: 'Foin' },
-    { key: '7', value: 'Concentrés', text: 'Concentrés' },
-  ];
-
   // Construit un array d'object pour les options du select (Dropdown)
   const categoriesProduitsOptions = () => {
     let options = [];
 
     produits.forEach((p) => {
       options.push({
-        key: p.id,
-        value: p.libelle,
-        text: p.libelle,
+        key: p.id_marche,
+        value: p.id_marche,
+        text:
+          p.libelle_produit + ' - ' + p.localisation + ' - ' + p.type_marche,
       });
     });
 
@@ -86,7 +79,7 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
             search
             selection
             clearable
-            options={categorieDepenseOptions}
+            options={categoriesProduitsOptions()}
           />
           <SemanticFloatField
             name='coeff_intraconsommation'

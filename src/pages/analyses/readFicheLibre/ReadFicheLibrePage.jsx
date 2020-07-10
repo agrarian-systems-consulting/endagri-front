@@ -122,6 +122,7 @@ const ReadFicheLibrePage = () => {
           autoDismiss: true,
         });
 
+        console.log(res.data);
         let updatedFicheLibre = update(ficheLibre, {
           coeff_ventes: {
             $push: [res.data],
@@ -189,8 +190,8 @@ const ReadFicheLibrePage = () => {
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column width={4}></Grid.Column>
-        <Grid.Column width={8}>
+        <Grid.Column width={3}></Grid.Column>
+        <Grid.Column width={10}>
           {loading ? (
             <Segment.Group>
               <Segment attached='top'>
@@ -292,9 +293,36 @@ const ReadFicheLibrePage = () => {
                   </List>
                 </Segment>
               </Segment.Group>
+            </Fragment>
+          )}
+
+          {loading ? (
+            <Segment.Group>
+              <Segment attached='top'>
+                <h5>Modulation des dépenses</h5>
+              </Segment>
+              <Segment clearing attached='bottom'>
+                <Placeholder>
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                </Placeholder>
+                <Divider />
+                <Button color='teal' disabled>
+                  Ajouter
+                </Button>
+              </Segment>
+            </Segment.Group>
+          ) : (
+            <Fragment>
               <Segment.Group>
-                <Segment>
+                <Segment attached='top'>
                   <h5>Modulation des dépenses</h5>
+                </Segment>
+                <Segment clearing attached='bottom'>
                   {coeff_depenses.length > 0 ? (
                     <Table fixed>
                       <Table.Header>
@@ -366,11 +394,38 @@ const ReadFicheLibrePage = () => {
                   )}
                 </Segment>
               </Segment.Group>
+            </Fragment>
+          )}
+
+          {loading ? (
+            <Segment.Group>
+              <Segment attached='top'>
+                <h5>Modulation des ventes</h5>
+              </Segment>
+              <Segment clearing attached='bottom'>
+                <Placeholder>
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                  <Placeholder.Line />
+                </Placeholder>
+                <Divider />
+                <Button color='teal' disabled>
+                  Ajouter
+                </Button>
+              </Segment>
+            </Segment.Group>
+          ) : (
+            <Fragment>
               <Segment.Group>
-                <Segment>
+                <Segment attached='top'>
                   <h5>Modulation des ventes</h5>
+                </Segment>
+                <Segment clearing attached='bottom'>
                   {coeff_ventes.length > 0 ? (
-                    <Table fixed>
+                    <Table>
                       <Table.Header>
                         <Table.Row>
                           <Table.HeaderCell>Catégorie</Table.HeaderCell>
@@ -389,8 +444,11 @@ const ReadFicheLibrePage = () => {
                       <Transition.Group as={Table.Body}>
                         {coeff_ventes.map((coeff) => {
                           return (
-                            <Table.Row>
-                              <Table.Cell>{coeff.libelle_categorie}</Table.Cell>
+                            <Table.Row key={coeff.id}>
+                              <Table.Cell>
+                                {coeff.libelle_produit} - {coeff.type_marche} -{' '}
+                                {coeff.localisation}
+                              </Table.Cell>
                               <Table.Cell textAlign='center'>
                                 {coeff.coeff_intraconsommation * 100} %
                               </Table.Cell>
