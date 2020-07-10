@@ -1,19 +1,19 @@
-import React, { useState, Fragment } from 'react';
+import Axios from 'axios';
+import update from 'immutability-helper';
+import React, { Fragment, useEffect, useState } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 import {
-  Grid,
   Breadcrumb,
-  Segment,
-  Header,
   Button,
   Divider,
+  Grid,
+  Header,
+  Segment,
 } from 'semantic-ui-react';
-import { NavLink, useParams } from 'react-router-dom';
+import FicheLibreFormComponent from './FicheLibreFormComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
 import ProductionsComponent from './ProductionsComponent';
-import { useEffect } from 'react';
-import Axios from 'axios';
-import FicheLibreFormComponent from './FicheLibreFormComponent';
-import { useToasts } from 'react-toast-notifications';
 
 const ReadAnalysePage = () => {
   const { id } = useParams();
@@ -47,6 +47,14 @@ const ReadAnalysePage = () => {
           appearance: 'success',
           autoDismiss: true,
         });
+
+        let updatedAnalyse = update(analyse, {
+          fiches_techniques_libres: {
+            $push: [res.data],
+          },
+        });
+
+        setAnalyse(updatedAnalyse);
       })
       .catch((err) => {
         console.log(err);
