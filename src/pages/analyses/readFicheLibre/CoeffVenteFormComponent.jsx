@@ -1,11 +1,29 @@
 import { Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
+import { useEffect } from 'react';
+import Axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const CoeffVenteFormComponent = ({ addCoeffVente }) => {
+  const { id, id_ftl } = useParams();
+  const [produits, setProduits] = useState([]);
+
+  useEffect(() => {
+    Axios(
+      `http://localhost:3333/analyse/${id}/fiche-technique-libre/${id_ftl}/produits`
+    )
+      .then((res) => {
+        setProduits(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id, id_ftl]);
+
   const categorieDepenseOptions = [
     { key: '3', value: 'Engrais', text: 'Engrais' },
     { key: '4', value: 'Fumier', text: 'Fumier' },
@@ -13,6 +31,21 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
     { key: '6', value: 'Foin', text: 'Foin' },
     { key: '7', value: 'Concentrés', text: 'Concentrés' },
   ];
+
+  // Construit un array d'object pour les options du select (Dropdown)
+  const categoriesProduitsOptions = () => {
+    let options = [];
+
+    produits.forEach((p) => {
+      options.push({
+        key: p.id,
+        value: p.libelle,
+        text: p.libelle,
+      });
+    });
+
+    return options;
+  };
 
   // Form validation handled with Yup
   const validationSchema = Yup.object({
@@ -48,7 +81,7 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
             value=''
             label='Produit'
             component={Form.Dropdown}
-            placeholder='Choisir une catégorie'
+            placeholder='Choisir un produit'
             fluid
             search
             selection
