@@ -113,7 +113,7 @@ const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
           >
             Créer l'analyse
           </Button>
-          <pre>values = {JSON.stringify(values, null, 2)}</pre>
+          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
         </Form>
       )}
     </Formik>

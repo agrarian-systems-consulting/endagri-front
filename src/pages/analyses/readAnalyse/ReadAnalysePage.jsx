@@ -130,7 +130,7 @@ const ReadAnalysePage = () => {
             deleteFicheTechniqueLibre={deleteFicheTechniqueLibre}
           />
           <Grid.Row>
-            <Grid.Column width={16}>
+            <Grid.Column width={8}>
               {isOpenFicheTechniqueLibreForm ? (
                 <Fragment>
                   <Button

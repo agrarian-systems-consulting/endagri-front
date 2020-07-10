@@ -10,7 +10,9 @@ import {
 } from 'semantic-ui-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { NavLink, useParams } from 'react-router-dom';
 const ProductionsComponent = ({ fichesLibres, deleteFicheTechniqueLibre }) => {
+  const { id } = useParams();
   return (
     <Fragment>
       <Grid.Row>
@@ -45,7 +47,12 @@ const ProductionsComponent = ({ fichesLibres, deleteFicheTechniqueLibre }) => {
                       </List>
                     </Card.Content>
                     <Card.Content extra>
-                      <Button size='mini' color='blue'>
+                      <Button
+                        as={NavLink}
+                        to={`/analyse/${id}/fiche-technique-libre/${fiche.id}`}
+                        size='mini'
+                        color='blue'
+                      >
                         Configurer
                       </Button>
                       <Button

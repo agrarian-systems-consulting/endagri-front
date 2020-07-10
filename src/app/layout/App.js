@@ -24,6 +24,7 @@ import DeleteAnalysePage from '../../pages/analyses/deleteAnalyse/DeleteAnalyseP
 import DeleteFichePage from '../../pages/fiches/delete/DeleteFichePage';
 import DeleteMarchePage from '../../pages/marches/delete/DeleteMarchePage';
 import DeleteProductionPage from '../../pages/productions/delete/DeleteProductionPage';
+import ReadFicheLibrePage from '../../pages/analyses/readFicheLibre/ReadFicheLibrePage';
 
 function App() {
   return (
@@ -34,6 +35,11 @@ function App() {
           <Route exact path='/analyses' component={ListAnalysesPage} />
           <Route exact path='/analyse/create' component={CreateAnalysePage} />
           <Route exact path='/analyse/:id' component={ReadAnalysePage} />
+          <Route
+            exact
+            path='/analyse/:id/fiche-technique-libre/:id_ftl'
+            component={ReadFicheLibrePage}
+          />
           <Route
             exact
             path='/analyse/:id/update'
