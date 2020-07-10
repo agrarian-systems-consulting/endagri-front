@@ -10,6 +10,7 @@ import {
   Grid,
   Header,
   Segment,
+  Icon,
 } from 'semantic-ui-react';
 import FicheLibreFormComponent from './FicheLibreFormComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
@@ -162,13 +163,30 @@ const ReadAnalysePage = () => {
 
           <Grid.Column width={16}>
             <Header as='h5'>Dépenses libres</Header>
+            <p>A faire</p>
           </Grid.Column>
         </Fragment>
       )}
       {/* <pre>{JSON.stringify(analyse, true, 2)}</pre> */}
       <Grid.Row>
         <Grid.Column width={16}>
-          <Button color='red' as={NavLink} to={`/analyse/${id}/delete`}>
+          <Divider />
+          <Button
+            as={NavLink}
+            color='blue'
+            size='large'
+            icon
+            to={`/analyse/${id}/delete`}
+          >
+            <Icon name='arrow right' /> Analyser les flux de trésorerie
+          </Button>
+          <Divider />
+          <Button
+            color='red'
+            floated='right'
+            as={NavLink}
+            to={`/analyse/${id}/delete`}
+          >
             Supprimer l'analyse
           </Button>
         </Grid.Column>
