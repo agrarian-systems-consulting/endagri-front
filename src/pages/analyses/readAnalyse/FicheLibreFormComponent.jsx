@@ -58,10 +58,9 @@ const FicheLibreFormComponent = () => {
 
   // Form validation handled with Yup
   const validationSchema = Yup.object({
-    nom_utilisateur: Yup.string().required(
-      "Le nom de l'auteur est obligatoire"
+    coeff_surface_ou_nombre_animaux: Yup.number().required(
+      'Ce champs est obligatoire'
     ),
-    nom_client: Yup.string().required("Le nom de l'auteur est obligatoire"),
   });
 
   return (
@@ -70,25 +69,27 @@ const FicheLibreFormComponent = () => {
         date_ini: format(new Date(), 'yyyy-MM-dd'),
         coeff_surface_ou_nombre_animaux: 1,
         coeff_main_oeuvre_familiale: 0,
+        coeff_ventes: [],
+        coeff_depenses: [],
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        // Axios.post(`http://localhost:3333/analyse`, values)
-        //   .then((res) => {
-        //     addToast("L'analyse a bien été créée", {
-        //       appearance: 'success',
-        //       autoDismiss: true,
-        //     });
-        //     history.push(`/analyse/${res.data.id}`);
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //     addToast("Erreur lors de la création de l'analyse", {
-        //       appearance: 'error',
-        //       autoDismiss: true,
-        //     });
-        //     history.push(`/analyses`);
-        //   });
+        Axios.post(`http://localhost:3333/analyse`, values)
+          .then((res) => {
+            addToast("L'analyse a bien été créée", {
+              appearance: 'success',
+              autoDismiss: true,
+            });
+            history.push(`/analyse/${res.data.id}`);
+          })
+          .catch((err) => {
+            console.log(err);
+            addToast("Erreur lors de la création de l'analyse", {
+              appearance: 'error',
+              autoDismiss: true,
+            });
+            history.push(`/analyses`);
+          });
       }}
     >
       {({
@@ -132,6 +133,8 @@ const FicheLibreFormComponent = () => {
             name='coeff_main_oeuvre_familiale'
             type='number'
             step={0.01}
+            min='0'
+            max='1'
             value=''
             label="Part de main d'oeuvre familiale"
             component={Form.Input}
