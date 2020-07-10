@@ -174,13 +174,12 @@ const ReadAnalysePage = () => {
           <Button
             as={NavLink}
             color='blue'
-            size='large'
             icon
-            to={`/analyse/${id}/delete`}
+            to={`/analyse/${id}/flux_mois_reels_par_fiches_libres`}
           >
-            <Icon name='arrow right' /> Analyser les flux de trésorerie
+            <Icon name='file alternate' /> Analyser les flux de trésorerie
           </Button>
-          <Divider />
+
           <Button
             color='red'
             floated='right'
