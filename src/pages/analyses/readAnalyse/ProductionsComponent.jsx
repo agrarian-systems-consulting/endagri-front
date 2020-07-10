@@ -8,6 +8,8 @@ import {
   Button,
   Transition,
 } from 'semantic-ui-react';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
 const ProductionsComponent = ({ fichesLibres, deleteFicheTechniqueLibre }) => {
   return (
     <Fragment>
@@ -35,7 +37,10 @@ const ProductionsComponent = ({ fichesLibres, deleteFicheTechniqueLibre }) => {
                           {fiche.coeff_main_oeuvre_familiale * 100} %
                         </List.Item>
                         <List.Item>
-                          <b>Date de semis :</b> {fiche.date_ini}
+                          <b>Date de semis :</b>{' '}
+                          {format(new Date(fiche.date_ini), 'dd MMMM yyyy', {
+                            locale: fr,
+                          })}
                         </List.Item>
                       </List>
                     </Card.Content>
