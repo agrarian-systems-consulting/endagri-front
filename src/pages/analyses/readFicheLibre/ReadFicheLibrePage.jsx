@@ -17,6 +17,7 @@ import {
   Icon,
 } from 'semantic-ui-react';
 import CoeffDepenseFormComponent from './CoeffDepenseFormComponent';
+import CoeffVenteFormComponent from './CoeffVenteFormComponent';
 
 const ReadFicheLibrePage = () => {
   const { id, id_ftl } = useParams();
@@ -25,6 +26,7 @@ const ReadFicheLibrePage = () => {
   const [loading, setLoading] = useState(true);
   const [ficheLibre, setFicheLibre] = useState({});
   const [isOpenCoeffDepenseForm, setIsOpenCoeffDepenseForm] = useState(false);
+  const [isOpenCoeffVenteForm, setIsOpenCoeffVenteForm] = useState(false);
   const {
     id_fiche_technique,
     id_analyse,
@@ -95,6 +97,62 @@ const ReadFicheLibrePage = () => {
           coeff_depenses: {
             $apply: (coeff_depenses) =>
               coeff_depenses.filter((coeff) => {
+                return coeff.id !== id;
+              }),
+          },
+        });
+
+        setFicheLibre(updatedFicheLibre);
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast('Erreur lors de la suppression du coefficient', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      });
+  };
+
+  const addCoeffVente = (coeff_vente) => {
+    coeff_vente.id_fiche_technique_libre = id_ftl;
+    Axios.post(`http://localhost:3333/coeff_vente`, coeff_vente)
+      .then((res) => {
+        addToast('Le coefficient a bien été ajouté', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+
+        let updatedFicheLibre = update(ficheLibre, {
+          coeff_ventes: {
+            $push: [res.data],
+          },
+        });
+
+        setFicheLibre(updatedFicheLibre);
+
+        setIsOpenCoeffDepenseForm(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast("Erreur lors de l'ajout du coefficient", {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      });
+  };
+
+  const deleteCoeffVente = (id) => {
+    Axios.delete(`http://localhost:3333/coeff_vente/${id}`)
+      .then((res) => {
+        addToast('Le coefficient a bien été supprimé', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+
+        let updatedFicheLibre = update(ficheLibre, {
+          coeff_ventes: {
+            $apply: (coeff_ventes) =>
+              coeff_ventes.filter((coeff) => {
                 return coeff.id !== id;
               }),
           },
@@ -301,6 +359,90 @@ const ReadFicheLibrePage = () => {
                       color='teal'
                       onClick={() => {
                         setIsOpenCoeffDepenseForm(true);
+                      }}
+                    >
+                      Ajouter
+                    </Button>
+                  )}
+                </Segment>
+              </Segment.Group>
+              <Segment.Group>
+                <Segment>
+                  <h5>Modulation des ventes</h5>
+                  {coeff_ventes.length > 0 ? (
+                    <Table fixed>
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>Catégorie</Table.HeaderCell>
+                          <Table.HeaderCell textAlign='center'>
+                            Part utilisée sur l'exploitation
+                          </Table.HeaderCell>
+                          <Table.HeaderCell textAlign='center'>
+                            Part autoconsommée
+                          </Table.HeaderCell>
+                          <Table.HeaderCell textAlign='center'>
+                            Coefficient rendement
+                          </Table.HeaderCell>
+                          <Table.HeaderCell></Table.HeaderCell>
+                        </Table.Row>
+                      </Table.Header>
+                      <Transition.Group as={Table.Body}>
+                        {coeff_ventes.map((coeff) => {
+                          return (
+                            <Table.Row>
+                              <Table.Cell>{coeff.libelle_categorie}</Table.Cell>
+                              <Table.Cell textAlign='center'>
+                                {coeff.coeff_intraconsommation * 100} %
+                              </Table.Cell>
+                              <Table.Cell textAlign='center'>
+                                {coeff.coeff_autoconsommation * 100} %
+                              </Table.Cell>
+                              <Table.Cell textAlign='center'>
+                                {coeff.coeff_rendement * 100} % du rdt. moyen
+                              </Table.Cell>
+                              <Table.Cell textAlign='center'>
+                                <Button
+                                  onClick={() => {
+                                    deleteCoeffVente(coeff.id);
+                                  }}
+                                  size='mini'
+                                  icon
+                                  basic
+                                  circular
+                                  floated='right'
+                                >
+                                  <Icon name='trash' />
+                                </Button>
+                              </Table.Cell>
+                            </Table.Row>
+                          );
+                        })}
+                      </Transition.Group>
+                    </Table>
+                  ) : (
+                    <p>
+                      Il n'y a pas encore de coefficients pour moduler les
+                      ventes
+                    </p>
+                  )}
+
+                  {isOpenCoeffVenteForm ? (
+                    <Fragment>
+                      <Button
+                        onClick={() => {
+                          setIsOpenCoeffVenteForm(false);
+                        }}
+                      >
+                        Fermer
+                      </Button>
+                      <Divider></Divider>
+                      <CoeffVenteFormComponent addCoeffVente={addCoeffVente} />
+                    </Fragment>
+                  ) : (
+                    <Button
+                      color='teal'
+                      onClick={() => {
+                        setIsOpenCoeffVenteForm(true);
                       }}
                     >
                       Ajouter

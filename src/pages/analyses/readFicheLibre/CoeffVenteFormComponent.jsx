@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
 
-const CoeffDepenseFormComponent = ({ addCoeffDepense }) => {
+const CoeffVenteFormComponent = ({ addCoeffVente }) => {
   const categorieDepenseOptions = [
     { key: '3', value: 'Engrais', text: 'Engrais' },
     { key: '4', value: 'Fumier', text: 'Fumier' },
@@ -25,10 +25,12 @@ const CoeffDepenseFormComponent = ({ addCoeffDepense }) => {
       initialValues={{
         libelle_categorie: '',
         coeff_intraconsommation: 0,
+        coeff_autoconsommation: 0,
+        coeff_rendement: 1,
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        addCoeffDepense(values);
+        addCoeffVente(values);
       }}
     >
       {({
@@ -44,7 +46,7 @@ const CoeffDepenseFormComponent = ({ addCoeffDepense }) => {
           <SemanticField
             name='libelle_categorie'
             value=''
-            label='Catégorie de dépense'
+            label='Produit'
             component={Form.Dropdown}
             placeholder='Choisir une catégorie'
             fluid
@@ -56,11 +58,31 @@ const CoeffDepenseFormComponent = ({ addCoeffDepense }) => {
           <SemanticFloatField
             name='coeff_intraconsommation'
             value=''
-            label="Part produite sur l'exploitation"
+            label="Part utilisée sur l'exploitation (pour d'autres cultures ou élevages)"
             component={Form.Input}
             type='number'
             min='0'
             max='1'
+            step={0.01}
+          />
+          <SemanticFloatField
+            name='coeff_autoconsommation'
+            value=''
+            label='Part autoconsommée'
+            component={Form.Input}
+            type='number'
+            min='0'
+            max='1'
+            step={0.01}
+          />
+          <SemanticFloatField
+            name='coeff_rendement'
+            value=''
+            label='Rendement par rapport au rendement moyen'
+            component={Form.Input}
+            type='number'
+            min='0.5'
+            max='1.5'
             step={0.01}
           />
 
@@ -72,11 +94,11 @@ const CoeffDepenseFormComponent = ({ addCoeffDepense }) => {
           >
             Ajouter
           </Button>
-          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
+          <pre>values = {JSON.stringify(values, null, 2)}</pre>
         </Form>
       )}
     </Formik>
   );
 };
 
-export default CoeffDepenseFormComponent;
+export default CoeffVenteFormComponent;
