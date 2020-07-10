@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Grid, Segment, List, Header, Label, Button } from 'semantic-ui-react';
+import FicheLibreFormComponent from './FicheLibreFormComponent';
 const ProductionsComponent = ({ fichesLibres }) => {
   return (
     <Fragment>
@@ -92,11 +93,7 @@ const ProductionsComponent = ({ fichesLibres }) => {
             );
           })}
       </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <Button color='teal'>Ajouter une production</Button>
-        </Grid.Column>
-      </Grid.Row>
+ 
     </Fragment>
   );
 };

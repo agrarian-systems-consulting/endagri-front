@@ -27,35 +27,6 @@ const CreateAnalysePage = () => {
             </Segment>
             <Segment attached='bottom'>
               <AnalyseFormComponent />
-              {/* <Form>
-                <Form.Field>
-                  <label>Nom utilisateur</label>
-                  <input placeholder='nom_utilisateur' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Nom client</label>
-                  <input placeholder='nom_client' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Montant de trésorerie initiale</label>
-                  <input placeholder='montant_tresorerie_initiale' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Date de début d'analyse</label>
-                  <input placeholder='date_debut_analyse' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Date de fin d'analyse</label>
-                  <input placeholder='date_fin_analyse' />
-                </Form.Field>
-
-                <Button as={NavLink} to='/analyses'>
-                  Annuler
-                </Button>
-                <Button type='submit' color='teal'>
-                  Créer la nouvelle analyse
-                </Button>
-              </Form> */}
             </Segment>
           </Segment.Group>
         </Grid.Column>

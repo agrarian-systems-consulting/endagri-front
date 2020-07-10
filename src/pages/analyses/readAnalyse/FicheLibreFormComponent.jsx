@@ -8,6 +8,8 @@ import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import { useEffect } from 'react';
 import Axios from 'axios';
+import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
+import { format } from 'date-fns';
 
 const monthsOptions = [
   { key: '1', value: 1, text: 'Janvier' },
@@ -24,15 +26,15 @@ const monthsOptions = [
   { key: '12', value: 12, text: 'Décembre' },
 ];
 
-const FicheFormComponent = () => {
+const FicheLibreFormComponent = () => {
   let history = useHistory();
   const { addToast } = useToasts();
-  const [productions, setProductions] = useState([]);
+  const [fichesTechniques, setFichesTechniques] = useState([]);
 
   useEffect(() => {
-    Axios(`http://localhost:3333/productions`)
+    Axios(`http://localhost:3333/fiches`)
       .then((res) => {
-        setProductions(res.data);
+        setFichesTechniques(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -40,10 +42,10 @@ const FicheFormComponent = () => {
   }, []);
 
   // Construit un array d'object pour les options du select (Dropdown)
-  const productionsOptions = () => {
+  const fichesTechniquesOptions = () => {
     let options = [];
 
-    productions.forEach((p) => {
+    fichesTechniques.forEach((p) => {
       options.push({
         key: p.id,
         value: p.id,
@@ -56,41 +58,37 @@ const FicheFormComponent = () => {
 
   // Form validation handled with Yup
   const validationSchema = Yup.object({
-    id_production: Yup.number().required('La production est obligatoire'),
-    libelle: Yup.string().required(
-      'Le libellé (nom) de la fiche est obligatoire'
+    nom_utilisateur: Yup.string().required(
+      "Le nom de l'auteur est obligatoire"
     ),
+    nom_client: Yup.string().required("Le nom de l'auteur est obligatoire"),
   });
 
   return (
     <Formik
       initialValues={{
-        id_production: null,
-        libelle: null,
-        commentaire: null,
-        ini_debut: null,
-        ini_fin: null,
-        id_utilisateur: 1,
+        date_ini: format(new Date(), 'yyyy-MM-dd'),
+        coeff_surface_ou_nombre_animaux: 1,
+        coeff_main_oeuvre_familiale: 0,
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        Axios.post(`http://localhost:3333/fiche`, values)
-          .then((res) => {
-            addToast('La fiche a bien été créée', {
-              appearance: 'success',
-              autoDismiss: true,
-            });
-
-            history.push(`/fiche/${res.data.id}`);
-          })
-          .catch((err) => {
-            console.log(err);
-            addToast('Erreur lors de la création de la fiche', {
-              appearance: 'error',
-              autoDismiss: true,
-            });
-            history.push(`/fiches`);
-          });
+        // Axios.post(`http://localhost:3333/analyse`, values)
+        //   .then((res) => {
+        //     addToast("L'analyse a bien été créée", {
+        //       appearance: 'success',
+        //       autoDismiss: true,
+        //     });
+        //     history.push(`/analyse/${res.data.id}`);
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //     addToast("Erreur lors de la création de l'analyse", {
+        //       appearance: 'error',
+        //       autoDismiss: true,
+        //     });
+        //     history.push(`/analyses`);
+        //   });
       }}
     >
       {({
@@ -104,53 +102,39 @@ const FicheFormComponent = () => {
       }) => (
         <Form onSubmit={handleSubmit}>
           <SemanticField
-            name='id_production'
+            name='id_fiche_technique'
             value=''
-            label='Production'
+            label='Fiche technique de la production'
             component={Form.Dropdown}
+            placeholder='Choisir une fiche'
             fluid
             search
             selection
             clearable
-            options={productionsOptions()}
+            options={fichesTechniquesOptions()}
+          />
+          <SemanticFloatField
+            name='coeff_surface_ou_nombre_animaux'
+            value=''
+            label="Surface en hectares ou nombre d'animaux"
+            component={Form.Input}
+            type='number'
+            step={0.01}
           />
           <SemanticField
-            name='libelle'
+            name='date_ini'
             value=''
-            label='Libellé'
+            label='Date de semis ou mise bas'
             component={Form.Input}
           />
-          <Form.Group widths='equal'>
-            <SemanticField
-              name='ini_debut'
-              value=''
-              label='Période de démarrage possible - Début'
-              component={Form.Dropdown}
-              placeholder='Choisir un mois'
-              fluid
-              search
-              selection
-              clearable
-              options={monthsOptions}
-            />
-            <SemanticField
-              name='ini_fin'
-              value=''
-              label='Période de démarrage possible - Fin'
-              component={Form.Dropdown}
-              placeholder='Choisir un mois'
-              fluid
-              search
-              selection
-              clearable
-              options={monthsOptions}
-            />
-          </Form.Group>
-          <SemanticField
-            name='commentaire'
+
+          <SemanticFloatField
+            name='coeff_main_oeuvre_familiale'
+            type='number'
+            step={0.01}
             value=''
-            label='Commentaire'
-            component={Form.TextArea}
+            label="Part de main d'oeuvre familiale"
+            component={Form.Input}
           />
 
           <Button
@@ -159,7 +143,7 @@ const FicheFormComponent = () => {
             disabled={isSubmitting || !isValid || !dirty}
             loading={isSubmitting}
           >
-            Créer la fiche
+            Créer l'analyse
           </Button>
           {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
         </Form>
@@ -168,4 +152,4 @@ const FicheFormComponent = () => {
   );
 };
 
-export default FicheFormComponent;
+export default FicheLibreFormComponent;

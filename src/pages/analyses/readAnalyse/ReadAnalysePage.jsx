@@ -13,6 +13,7 @@ import InformationsPrincipalesComponent from './InformationsPrincipalesComponent
 import ProductionsComponent from './ProductionsComponent';
 import { useEffect } from 'react';
 import Axios from 'axios';
+import FicheLibreFormComponent from './FicheLibreFormComponent';
 
 const ReadAnalysePage = () => {
   const { id } = useParams();
@@ -61,6 +62,14 @@ const ReadAnalysePage = () => {
           <ProductionsComponent
             fichesLibres={analyse.fiches_techniques_libres}
           />
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Button color='teal'>Ajouter une production</Button>
+              <Segment>
+                <FicheLibreFormComponent />
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
           <Divider />
 
           <Grid.Column width={16}>
