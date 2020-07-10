@@ -7,13 +7,14 @@ import {
   Card,
   Icon,
   Button,
+  Transition,
 } from 'semantic-ui-react';
 const ProductionsComponent = ({ fichesLibres }) => {
   return (
     <Fragment>
       <Grid.Row>
         <Grid.Column width={16}>
-          <Card.Group>
+          <Transition.Group as={Card.Group}>
             {fichesLibres &&
               fichesLibres.map((fiche) => {
                 return (
@@ -60,7 +61,7 @@ const ProductionsComponent = ({ fichesLibres }) => {
                   </Card>
                 );
               })}
-          </Card.Group>
+          </Transition.Group>
         </Grid.Column>
       </Grid.Row>
     </Fragment>

@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Button, Icon, Table } from 'semantic-ui-react';
+import { Button, Icon, Table, Transition } from 'semantic-ui-react';
 import formatMoney from '../../../app/utils/formatMoney';
 import getMois from '../../../app/utils/getMois';
 import ActiviteFormComponent from './ActiviteFormComponent.jsx';
@@ -19,13 +19,13 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
           </Table.Row>
         </Table.Header>
         {activites && activites.length === 0 ? (
-          <Table.Body>
+          <Transition.Group as={Table.Body}>
             <Table.Row>
               <Table.Cell>Aucune activité pour le moment...</Table.Cell>
             </Table.Row>
-          </Table.Body>
+          </Transition.Group>
         ) : (
-          <Table.Body>
+          <Transition.Group as={Table.Body}>
             {activites &&
               activites.map(({ id, libelle, mois_relatif, mois, depenses }) => {
                 return (
@@ -57,7 +57,7 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
                   </Table.Row>
                 );
               })}
-          </Table.Body>
+          </Transition.Group>
         )}
       </Table>
       {isFormOpen ? (

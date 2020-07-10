@@ -21,6 +21,10 @@ const ReadAnalysePage = () => {
 
   const [loading, setLoading] = useState(true);
   const [analyse, setAnalyse] = useState();
+  const [
+    isOpenFicheTechniqueLibreForm,
+    setIsOpenFicheTechniqueLibreForm,
+  ] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,12 +98,31 @@ const ReadAnalysePage = () => {
           />
           <Grid.Row>
             <Grid.Column width={16}>
-              <Button color='teal'>Ajouter une production</Button>
-              <Segment>
-                <FicheLibreFormComponent
-                  addFicheTechniqueLibre={addFicheTechniqueLibre}
-                />
-              </Segment>
+              {isOpenFicheTechniqueLibreForm ? (
+                <Fragment>
+                  <Button
+                    onClick={() => {
+                      setIsOpenFicheTechniqueLibreForm(false);
+                    }}
+                  >
+                    Fermer{' '}
+                  </Button>
+                  <Segment>
+                    <FicheLibreFormComponent
+                      addFicheTechniqueLibre={addFicheTechniqueLibre}
+                    />
+                  </Segment>
+                </Fragment>
+              ) : (
+                <Button
+                  color='teal'
+                  onClick={() => {
+                    setIsOpenFicheTechniqueLibreForm(true);
+                  }}
+                >
+                  Ajouter une production
+                </Button>
+              )}
             </Grid.Column>
           </Grid.Row>
           <Divider />
@@ -109,7 +132,7 @@ const ReadAnalysePage = () => {
           </Grid.Column>
         </Fragment>
       )}
-      <pre>{JSON.stringify(analyse, true, 2)}</pre>
+      {/* <pre>{JSON.stringify(analyse, true, 2)}</pre> */}
       <Grid.Row>
         <Grid.Column width={16}>
           <Button color='red' as={NavLink} to={`/analyse/${id}/delete`}>
