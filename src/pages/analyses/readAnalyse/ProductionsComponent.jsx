@@ -28,24 +28,14 @@ const ProductionsComponent = ({ fichesLibres, deleteFicheTechniqueLibre }) => {
                       </h5>{' '}
                     </Card.Content>
                     <Card.Content>
-                      <Label>Catégorie</Label>
+                      <Label>{fiche.type_production}</Label>
                       <List>
-                        <List.Item></List.Item>
                         <List.Item>
-                          {fiche.id} basé sur la fiche{' '}
-                          {fiche.id_fiche_technique}{' '}
-                        </List.Item>
-
-                        <List.Item>
-                          Surface ou nombre d'animaux :{' '}
-                          {fiche.coeff_surface_ou_nombre_animaux}
+                          <b>Part de main d'oeuvre familiale :</b>{' '}
+                          {fiche.coeff_main_oeuvre_familiale * 100} %
                         </List.Item>
                         <List.Item>
-                          Part du travail réalisé par de la main d'oeuvre
-                          familiale: {fiche.coeff_main_oeuvre_familiale}
-                        </List.Item>
-                        <List.Item>
-                          Date de semis ou mise-bas : {fiche.date_ini}
+                          <b>Date de semis :</b> {fiche.date_ini}
                         </List.Item>
                       </List>
                     </Card.Content>
