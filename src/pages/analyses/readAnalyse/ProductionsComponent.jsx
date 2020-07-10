@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import {
   Grid,
-  Segment,
   List,
   Label,
   Card,
@@ -20,7 +19,13 @@ const ProductionsComponent = ({ fichesLibres, deleteFicheTechniqueLibre }) => {
                 return (
                   <Card key={fiche.id}>
                     <Card.Content>
-                      <h5>{fiche.id_fiche_technique}</h5>{' '}
+                      <h5>
+                        {fiche.libelle_fiche_technique} (
+                        {new Intl.NumberFormat().format(
+                          fiche.coeff_surface_ou_nombre_animaux
+                        )}{' '}
+                        ha)
+                      </h5>{' '}
                     </Card.Content>
                     <Card.Content>
                       <Label>Catégorie</Label>
