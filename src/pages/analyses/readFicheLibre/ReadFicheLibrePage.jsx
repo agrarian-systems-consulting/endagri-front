@@ -43,7 +43,7 @@ const ReadFicheLibrePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       Axios(
-        `http://localhost:3333/analyse/${id}/fiche-technique-libre/${id_ftl}`
+        `https://endagriapi.geomatick.com/analyse/${id}/fiche-technique-libre/${id_ftl}`
       )
         .then((res) => {
           console.log(res.data);
@@ -59,7 +59,7 @@ const ReadFicheLibrePage = () => {
 
   const addCoeffDepense = (coeff_depense) => {
     coeff_depense.id_fiche_technique_libre = id_ftl;
-    Axios.post(`http://localhost:3333/coeff_depense`, coeff_depense)
+    Axios.post(`https://endagriapi.geomatick.com/coeff_depense`, coeff_depense)
       .then((res) => {
         addToast('Le coefficient a bien été ajouté', {
           appearance: 'success',
@@ -86,7 +86,7 @@ const ReadFicheLibrePage = () => {
   };
 
   const deleteCoeffDepense = (id) => {
-    Axios.delete(`http://localhost:3333/coeff_depense/${id}`)
+    Axios.delete(`https://endagriapi.geomatick.com/coeff_depense/${id}`)
       .then((res) => {
         addToast('Le coefficient a bien été supprimé', {
           appearance: 'success',
@@ -115,7 +115,7 @@ const ReadFicheLibrePage = () => {
 
   const addCoeffVente = (coeff_vente) => {
     coeff_vente.id_fiche_technique_libre = id_ftl;
-    Axios.post(`http://localhost:3333/coeff_vente`, coeff_vente)
+    Axios.post(`https://endagriapi.geomatick.com/coeff_vente`, coeff_vente)
       .then((res) => {
         addToast('Le coefficient a bien été ajouté', {
           appearance: 'success',
@@ -143,7 +143,7 @@ const ReadFicheLibrePage = () => {
   };
 
   const deleteCoeffVente = (id) => {
-    Axios.delete(`http://localhost:3333/coeff_vente/${id}`)
+    Axios.delete(`https://endagriapi.geomatick.com/coeff_vente/${id}`)
       .then((res) => {
         addToast('Le coefficient a bien été supprimé', {
           appearance: 'success',

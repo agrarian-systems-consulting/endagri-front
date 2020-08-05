@@ -29,7 +29,7 @@ const ReadAnalysePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      Axios.get(`http://localhost:3333/analyse/${id}`)
+      Axios.get(`https://endagriapi.geomatick.com/analyse/${id}`)
         .then((res) => {
           setAnalyse(res.data);
           setLoading(false);
@@ -44,7 +44,7 @@ const ReadAnalysePage = () => {
 
   const addFicheTechniqueLibre = (ficheTechniqueLibre) => {
     Axios.post(
-      `http://localhost:3333/analyse/${id}/fiche-technique-libre`,
+      `https://endagriapi.geomatick.com/analyse/${id}/fiche-technique-libre`,
       ficheTechniqueLibre
     )
       .then((res) => {
@@ -74,7 +74,7 @@ const ReadAnalysePage = () => {
 
   const deleteFicheTechniqueLibre = (id_ftl) => {
     Axios.delete(
-      `http://localhost:3333/analyse/${id}/fiche-technique-libre/${id_ftl}`
+      `https://endagriapi.geomatick.com/analyse/${id}/fiche-technique-libre/${id_ftl}`
     )
       .then((res) => {
         addToast('La production a bien été supprimée', {

@@ -12,7 +12,7 @@ const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
   const [fichesTechniques, setFichesTechniques] = useState([]);
 
   useEffect(() => {
-    Axios(`http://localhost:3333/fiches`)
+    Axios(`https://endagriapi.geomatick.com/fiches`)
       .then((res) => {
         setFichesTechniques(res.data);
       })

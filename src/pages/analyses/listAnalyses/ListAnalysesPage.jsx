@@ -10,7 +10,7 @@ const ListAnalysesPage = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      Axios(`http://localhost:3333/analyses`)
+      Axios(`https://endagriapi.geomatick.com/analyses`)
         .then((res) => {
           setAnalyses(res.data);
         })

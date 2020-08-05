@@ -14,7 +14,7 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
 
   useEffect(() => {
     Axios(
-      `http://localhost:3333/analyse/${id}/fiche-technique-libre/${id_ftl}/produits`
+      `https://endagriapi.geomatick.com/analyse/${id}/fiche-technique-libre/${id_ftl}/produits`
     )
       .then((res) => {
         setProduits(res.data);

@@ -15,7 +15,9 @@ const VenteFormComponent = ({ postVente, id_production }) => {
   const [markets, setMarkets] = useState([]);
 
   useEffect(() => {
-    Axios(`http://localhost:3333/marches?id_production=${id_production}`)
+    Axios(
+      `https://endagriapi.geomatick.com/marches?id_production=${id_production}`
+    )
       .then((res) => {
         setMarkets(res.data);
       })
@@ -33,8 +35,10 @@ const VenteFormComponent = ({ postVente, id_production }) => {
         key: market.id,
         value: market.id,
         text:
-          market.libelle_produit + " - " +
-          market.type_marche + " - " +
+          market.libelle_produit +
+          ' - ' +
+          market.type_marche +
+          ' - ' +
           market.localisation +
           ' (' +
           market.unite +
