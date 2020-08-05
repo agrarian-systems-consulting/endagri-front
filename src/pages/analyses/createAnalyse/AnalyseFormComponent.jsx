@@ -38,7 +38,7 @@ const AnalyseFormComponent = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        Axios.post(`https://endagriapi.geomatick.com/analyse`, values)
+        Axios.post(`http://51.210.14.158:3333/analyse`, values)
           .then((res) => {
             addToast("L'analyse a bien été créée", {
               appearance: 'success',

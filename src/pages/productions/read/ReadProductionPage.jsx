@@ -42,9 +42,7 @@ const ReadProductionPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await Axios.get(
-        `https://endagriapi.geomatick.com/production/${id}`
-      );
+      const res = await Axios.get(`http://51.210.14.158:3333/production/${id}`);
       setProduction(res.data);
       setLoading(false);
     };
@@ -55,7 +53,7 @@ const ReadProductionPage = () => {
   const postProduit = (produit) => {
     produit.id_production = id;
 
-    Axios.post('https://endagriapi.geomatick.com/produit', produit).then(
+    Axios.post('http://51.210.14.158:3333/produit', produit).then(
       (res) => {
         produit.id = res.data.id;
 
@@ -93,7 +91,7 @@ const ReadProductionPage = () => {
 
     setProduction(updatedProduction);
 
-    Axios.delete(`https://endagriapi.geomatick.com/produit/${id_produit}`).then(
+    Axios.delete(`http://51.210.14.158:3333/produit/${id_produit}`).then(
       (res) => {
         addToast('Le produit a bien été supprimé', {
           appearance: 'success',

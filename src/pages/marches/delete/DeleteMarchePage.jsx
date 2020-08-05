@@ -37,7 +37,7 @@ const DeleteMarchePage = () => {
                 color='red'
                 floated='right'
                 onClick={() => {
-                  Axios.delete(`https://endagriapi.geomatick.com/marche/${id}`)
+                  Axios.delete(`http://51.210.14.158:3333/marche/${id}`)
                     .then(() => {
                       addToast('Le marché a bien été supprimé', {
                         appearance: 'success',

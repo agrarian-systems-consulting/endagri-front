@@ -39,7 +39,7 @@ const DeleteFichePage = () => {
                 floated='right'
                 color='red'
                 onClick={() => {
-                  Axios.delete(`https://endagriapi.geomatick.com/fiche/${id}`)
+                  Axios.delete(`http://51.210.14.158:3333/fiche/${id}`)
                     .then((res) => {
                       addToast('La fiche a bien été supprimée', {
                         appearance: 'success',

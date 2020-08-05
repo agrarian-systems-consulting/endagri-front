@@ -28,7 +28,7 @@ const FicheFormComponent = () => {
   const [productions, setProductions] = useState([]);
 
   useEffect(() => {
-    Axios(`https://endagriapi.geomatick.com/productions`)
+    Axios(`http://51.210.14.158:3333/productions`)
       .then((res) => {
         setProductions(res.data);
       })
@@ -72,7 +72,7 @@ const FicheFormComponent = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        Axios.post(`https://endagriapi.geomatick.com/fiche`, values)
+        Axios.post(`http://51.210.14.158:3333/fiche`, values)
           .then((res) => {
             addToast('La fiche a bien été créée', {
               appearance: 'success',
