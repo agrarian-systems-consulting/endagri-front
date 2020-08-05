@@ -8,7 +8,7 @@ const ListMarchesPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get('http://51.210.14.158:3333/marches');
+      const res = await axios.get('https://endagriapi.geomatick.com/marches');
       setMarches(res.data);
     };
     fetchData();

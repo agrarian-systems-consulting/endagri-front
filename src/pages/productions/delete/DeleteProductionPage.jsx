@@ -38,7 +38,9 @@ const DeleteProductionPage = () => {
                 floated='right'
                 color='red'
                 onClick={() => {
-                  Axios.delete(`http://51.210.14.158:3333/production/${id}`)
+                  Axios.delete(
+                    `https://endagriapi.geomatick.com/production/${id}`
+                  )
                     .then(() => {
                       addToast('La production a bien été supprimée', {
                         appearance: 'success',

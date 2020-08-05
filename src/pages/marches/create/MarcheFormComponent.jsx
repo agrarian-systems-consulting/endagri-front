@@ -19,7 +19,7 @@ const MarcheFormComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`http://51.210.14.158:3333/produits`);
+      const res = await axios.get(`https://endagriapi.geomatick.com/produits`);
 
       setProduits(res.data);
     };
@@ -73,7 +73,7 @@ const MarcheFormComponent = () => {
       // Handle form submit
       onSubmit={(values, { setSubmitting }) => {
         axios
-          .post(`http://51.210.14.158:3333/marche`, values)
+          .post(`https://endagriapi.geomatick.com/marche`, values)
           .then((res) => {
             console.log(res);
             addToast('Le marché a bien été créé', {

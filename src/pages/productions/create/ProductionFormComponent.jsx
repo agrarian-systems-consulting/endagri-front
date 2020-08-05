@@ -46,7 +46,7 @@ const ProductionFormComponent = () => {
       validationSchema={validationSchema}
       // Handle form submit
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        Axios.post(`http://51.210.14.158:3333/production`, values)
+        Axios.post(`https://endagriapi.geomatick.com/production`, values)
           .then((res) => {
             addToast('La production a bien été créée', {
               appearance: 'success',
