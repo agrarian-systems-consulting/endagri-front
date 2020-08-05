@@ -54,7 +54,7 @@ const ReadFluxMoisReelsParFichesLibres = () => {
             )}
           </Table.Body>
         </Table>
-        <pre>{JSON.stringify(flux, true, 2)}</pre>
+        {/* <pre>{JSON.stringify(flux, true, 2)}</pre> */}
       </Segment>
     </Fragment>
   );
