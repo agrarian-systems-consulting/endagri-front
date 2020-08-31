@@ -33,7 +33,7 @@ Le mode développement exécute le code en temps réel et rafraichit l'applicati
 ```
 yarn start
 ```
-_Attention_ : cette application est connectée directement au serveur cartographique en production.
+_Attention_ : cette application est connectée directement à l'API REST et à la base de données en production.
 
 ## Déploiement
 ```
