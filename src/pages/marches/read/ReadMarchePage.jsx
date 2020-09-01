@@ -76,28 +76,28 @@ const ReadMarchePage = () => {
                 <Table.Cell>
                   {prix_january && (
                     <Fragment>
-                      {formatMoney(prix_january)}/{unite}
+                      {formatMoney(prix_january, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>
                 <Table.Cell>
                   {prix_february && (
                     <Fragment>
-                      {formatMoney(prix_february)}/{unite}
+                      {formatMoney(prix_february, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>
                 <Table.Cell>
                   {prix_march && (
                     <Fragment>
-                      {formatMoney(prix_march)}/{unite}
+                      {formatMoney(prix_march, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>
                 <Table.Cell>
                   {prix_april && (
                     <Fragment>
-                      {formatMoney(prix_april)}/{unite}
+                      {formatMoney(prix_april, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>
@@ -116,28 +116,28 @@ const ReadMarchePage = () => {
                 <Table.Cell>
                   {prix_may && (
                     <Fragment>
-                      {formatMoney(prix_may)}/{unite}
+                      {formatMoney(prix_may, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>
                 <Table.Cell>
                   {prix_june && (
                     <Fragment>
-                      {formatMoney(prix_june)}/{unite}
+                      {formatMoney(prix_june, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>
                 <Table.Cell>
                   {prix_july && (
                     <Fragment>
-                      {formatMoney(prix_july)}/{unite}
+                      {formatMoney(prix_july, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>
                 <Table.Cell>
                   {prix_august && (
                     <Fragment>
-                      {formatMoney(prix_august)}/{unite}
+                      {formatMoney(prix_august, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>
@@ -156,28 +156,28 @@ const ReadMarchePage = () => {
                 <Table.Cell>
                   {prix_september && (
                     <Fragment>
-                      {formatMoney(prix_september)}/{unite}
+                      {formatMoney(prix_september, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>
                 <Table.Cell>
                   {prix_october && (
                     <Fragment>
-                      {formatMoney(prix_october)}/{unite}
+                      {formatMoney(prix_october, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>
                 <Table.Cell>
                   {prix_november && (
                     <Fragment>
-                      {formatMoney(prix_november)}/{unite}
+                      {formatMoney(prix_november, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>
                 <Table.Cell>
                   {prix_december && (
                     <Fragment>
-                      {formatMoney(prix_december)}/{unite}
+                      {formatMoney(prix_december, 2)}/{unite}
                     </Fragment>
                   )}
                 </Table.Cell>

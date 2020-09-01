@@ -12,7 +12,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
   const [fichesTechniques, setFichesTechniques] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => {
     Axios(`http://localhost:3333/fiches`)
@@ -49,7 +48,7 @@ const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
   return (
     <Formik
       initialValues={{
-        date_ini: format(new Date(), 'yyyy-MM-dd'),
+        date_ini: new Date(),
         coeff_surface_ou_nombre_animaux: 1,
         coeff_main_oeuvre_familiale: 0,
         coeff_ventes: [],
@@ -68,6 +67,7 @@ const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
         handleChange,
         handleSubmit,
         isSubmitting,
+        setFieldValue,
       }) => (
         <Form onSubmit={handleSubmit}>
           <SemanticField
@@ -90,16 +90,17 @@ const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
             type='number'
             step={0.01}
           />
-          <SemanticField
-            name='date_ini'
-            value=''
-            label='Date de semis ou mise bas'
-            component={Form.Input}
-          />
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-          />
+          <Form.Field>
+            <label>Date de semis ou mise bas</label>
+            <DatePicker
+              selected={values.date_ini}
+              dateFormat='dd/MM/yyyy'
+              className='form-control'
+              name='date_ini'
+              onChange={(date) => setFieldValue('date_ini', date)}
+            />
+          </Form.Field>
+
           <SemanticFloatField
             name='coeff_main_oeuvre_familiale'
             type='number'
