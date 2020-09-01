@@ -118,7 +118,7 @@ const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
             disabled={isSubmitting || !isValid || !dirty}
             loading={isSubmitting}
           >
-            Créer l'analyse
+            Ajouter cette production
           </Button>
           {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
         </Form>
