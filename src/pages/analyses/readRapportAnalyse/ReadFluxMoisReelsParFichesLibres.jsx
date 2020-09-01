@@ -11,7 +11,7 @@ const ReadFluxMoisReelsParFichesLibres = () => {
 
   useEffect(() => {
     Axios(
-      `https://endagriapi.geomatick.com/analyse/${id}/flux_mois_reels_par_fiches_libres`
+      `http://localhost:3333/analyse/${id}/flux_mois_reels_par_fiches_libres`
     ).then((res) => {
       setFlux(res.data);
     });

@@ -7,12 +7,15 @@ import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
   const [fichesTechniques, setFichesTechniques] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => {
-    Axios(`https://endagriapi.geomatick.com/fiches`)
+    Axios(`http://localhost:3333/fiches`)
       .then((res) => {
         setFichesTechniques(res.data);
       })
@@ -93,7 +96,10 @@ const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
             label='Date de semis ou mise bas'
             component={Form.Input}
           />
-
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+          />
           <SemanticFloatField
             name='coeff_main_oeuvre_familiale'
             type='number'

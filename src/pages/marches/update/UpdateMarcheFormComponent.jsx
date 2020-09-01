@@ -16,9 +16,7 @@ const UpdateMarcheFormComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(
-        `https://endagriapi.geomatick.com/marche/${id}`
-      );
+      const res = await axios.get(`http://localhost:3333/marche/${id}`);
       setMarche(res.data);
     };
 
@@ -32,7 +30,7 @@ const UpdateMarcheFormComponent = () => {
       // Handle form submit
       onSubmit={(values, { setSubmitting }) => {
         axios
-          .put(`https://endagriapi.geomatick.com/marche/${id}`, values)
+          .put(`http://localhost:3333/marche/${id}`, values)
           .then((res) => {
             addToast('Le marché a bien été mis à jour', {
               appearance: 'success',

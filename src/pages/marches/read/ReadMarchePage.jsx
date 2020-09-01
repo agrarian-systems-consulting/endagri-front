@@ -41,9 +41,7 @@ const ReadMarchePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(
-        `https://endagriapi.geomatick.com/marche/${id}`
-      );
+      const res = await axios.get(`http://localhost:3333/marche/${id}`);
       setMarche(res.data);
     };
     fetchData();

@@ -19,7 +19,7 @@ const MarcheFormComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`https://endagriapi.geomatick.com/produits`);
+      const res = await axios.get(`http://localhost:3333/produits`);
 
       setProduits(res.data);
     };
@@ -55,25 +55,25 @@ const MarcheFormComponent = () => {
         id_produit: null,
         localisation: '',
         type_marche: '',
-        prix_january: null,
-        prix_february: null,
-        prix_march: null,
-        prix_april: null,
-        prix_may: null,
-        prix_june: null,
-        prix_july: null,
-        prix_august: null,
-        prix_september: null,
-        prix_october: null,
-        prix_november: null,
-        prix_december: null,
+        prix_january: 0,
+        prix_february: 0,
+        prix_march: 0,
+        prix_april: 0,
+        prix_may: 0,
+        prix_june: 0,
+        prix_july: 0,
+        prix_august: 0,
+        prix_september: 0,
+        prix_october: 0,
+        prix_november: 0,
+        prix_december: 0,
       }}
       // Handle form validation
       validationSchema={validationSchema}
       // Handle form submit
       onSubmit={(values, { setSubmitting }) => {
         axios
-          .post(`https://endagriapi.geomatick.com/marche`, values)
+          .post(`http://localhost:3333/marche`, values)
           .then((res) => {
             console.log(res);
             addToast('Le marché a bien été créé', {

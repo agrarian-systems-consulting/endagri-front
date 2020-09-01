@@ -8,9 +8,7 @@ const ListProductionsPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(
-        'https://endagriapi.geomatick.com/productions'
-      );
+      const res = await axios.get('http://localhost:3333/productions');
       setProductions(res.data);
     };
 

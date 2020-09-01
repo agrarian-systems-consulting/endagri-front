@@ -9,7 +9,7 @@ const ListFichesPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await Axios.get(`https://endagriapi.geomatick.com/fiches`);
+      const res = await Axios.get(`http://localhost:3333/fiches`);
       setFiches(res.data);
       setLoading(false);
     };

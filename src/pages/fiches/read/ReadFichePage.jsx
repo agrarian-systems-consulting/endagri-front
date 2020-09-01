@@ -15,7 +15,7 @@ const ReadFichePage = () => {
   const [fiche, setFiche] = useState({});
 
   useEffect(() => {
-    Axios(`https://endagriapi.geomatick.com/fiche/${id}`)
+    Axios(`http://localhost:3333/fiche/${id}`)
       .then((res) => {
         setFiche(res.data);
       })
@@ -25,9 +25,7 @@ const ReadFichePage = () => {
   }, [id]);
 
   const deleteActivite = async (id_activite) => {
-    Axios.delete(
-      `https://endagriapi.geomatick.com/fiche/${id}/activite/${id_activite}`
-    )
+    Axios.delete(`http://localhost:3333/fiche/${id}/activite/${id_activite}`)
       .then((res) => {
         addToast("L'activité a bien été supprimée", {
           appearance: 'success',
@@ -58,10 +56,7 @@ const ReadFichePage = () => {
   };
 
   const postActivite = async (activite) => {
-    Axios.post(
-      `https://endagriapi.geomatick.com/fiche/${id}/activite`,
-      activite
-    )
+    Axios.post(`http://localhost:3333/fiche/${id}/activite`, activite)
       .then((res) => {
         addToast("L'activité a bien été ajoutée", {
           appearance: 'success',
@@ -88,9 +83,7 @@ const ReadFichePage = () => {
   };
 
   const deleteVente = async (id_vente) => {
-    Axios.delete(
-      `https://endagriapi.geomatick.com/fiche/${id}/vente/${id_vente}`
-    )
+    Axios.delete(`http://localhost:3333/fiche/${id}/vente/${id_vente}`)
       .then((res) => {
         addToast('La vente a bien été supprimée', {
           appearance: 'success',
@@ -118,7 +111,7 @@ const ReadFichePage = () => {
   };
 
   const postVente = async (vente) => {
-    Axios.post(`https://endagriapi.geomatick.com/fiche/${id}/vente`, vente)
+    Axios.post(`http://localhost:3333/fiche/${id}/vente`, vente)
       .then((res) => {
         addToast('La vente a bien été ajoutée', {
           appearance: 'success',
