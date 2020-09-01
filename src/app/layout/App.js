@@ -26,6 +26,7 @@ import DeleteMarchePage from '../../pages/marches/delete/DeleteMarchePage';
 import DeleteProductionPage from '../../pages/productions/delete/DeleteProductionPage';
 import ReadFicheLibrePage from '../../pages/analyses/readFicheLibre/ReadFicheLibrePage';
 import ReadFluxMoisReelsParFichesLibres from '../../pages/analyses/readRapportAnalyse/ReadFluxMoisReelsParFichesLibres';
+import AccueilPage from '../../pages/accueil/AccueilPage';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
       <Navbar />
       <Container className='main'>
         <Switch>
+          <Route exact path='/' component={AccueilPage} />
           <Route exact path='/analyses' component={ListAnalysesPage} />
           <Route exact path='/analyse/create' component={CreateAnalysePage} />
           <Route exact path='/analyse/:id' component={ReadAnalysePage} />

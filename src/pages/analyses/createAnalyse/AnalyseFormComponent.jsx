@@ -4,10 +4,13 @@ import { Formik } from 'formik';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Label } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticIntegerField from '../../../app/utils/forms/SemanticIntegerField';
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 const AnalyseFormComponent = () => {
   let history = useHistory();
@@ -24,15 +27,15 @@ const AnalyseFormComponent = () => {
   return (
     <Formik
       initialValues={{
+        startDate: new Date(),
         nom_utilisateur: '',
         nom_client: '',
         montant_tresorerie_initiale: 0,
         created: format(new Date(), 'yyyy-MM-dd'),
         modified: null,
-        date_debut_analyse: format(new Date(), 'yyyy-MM-dd'),
-        date_fin_analyse: format(
-          new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-          'yyyy-MM-dd'
+        date_debut_analyse: new Date(),
+        date_fin_analyse: new Date(
+          new Date().setFullYear(new Date().getFullYear() + 1)
         ),
         id_utilisateur: 1,
       }}
@@ -64,6 +67,7 @@ const AnalyseFormComponent = () => {
         handleChange,
         handleSubmit,
         isSubmitting,
+        setFieldValue,
       }) => (
         <Form onSubmit={handleSubmit}>
           <SemanticField
@@ -86,18 +90,27 @@ const AnalyseFormComponent = () => {
             component={Form.Input}
           />
           <Form.Group widths='equal'>
-            <SemanticField
-              name='date_debut_analyse'
-              value=''
-              label="Date de début d'analyse"
-              component={Form.Input}
-            />
-            <SemanticField
-              name='date_fin_analyse'
-              value=''
-              label="Date de fin d'analyse"
-              component={Form.Input}
-            />
+            <Form.Field>
+              <label>Date de début d'analyse</label>
+              <DatePicker
+                selected={values.date_debut_analyse}
+                dateFormat='dd/MM/yyyy'
+                className='form-control'
+                name='date_debut_analyse'
+                onChange={(date) => setFieldValue('date_debut_analyse', date)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Date de fin d'analyse</label>
+              <DatePicker
+                selected={values.date_fin_analyse}
+                locale='fr-FR'
+                dateFormat='dd/MM/yyyy'
+                className='form-control'
+                name='date_fin_analyse'
+                onChange={(date) => setFieldValue('date_fin_analyse', date)}
+              />{' '}
+            </Form.Field>
           </Form.Group>
 
           <Button
