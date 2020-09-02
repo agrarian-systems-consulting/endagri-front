@@ -55,7 +55,7 @@ const ReadProductionPage = () => {
   const postProduit = (produit) => {
     produit.id_production = id;
 
-    Axios.post('${process.env.REACT_APP_API_URI}/produit', produit).then(
+    Axios.post(`${process.env.REACT_APP_API_URI}/produit`, produit).then(
       (res) => {
         produit.id = res.data.id;
 

@@ -9,7 +9,7 @@ const ListProductionsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        '${process.env.REACT_APP_API_URI}/productions'
+        `${process.env.REACT_APP_API_URI}/productions`
       );
       setProductions(res.data);
     };
