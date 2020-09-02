@@ -15,13 +15,13 @@ const DepenseLibreFormComponent = ({ addDepenseLibre }) => {
   const validationSchema = Yup.object({
     montant: Yup.number().required('Le montant de la dépenseest obligatoire'),
     libelle: Yup.string().required('Le libellé de la dépense est obligatoire'),
-    date: Yup.string().required('La date de dépense est obligatoire'),
+    mois_reel: Yup.string().required('La date de dépense est obligatoire'),
   });
 
   return (
     <Formik
       initialValues={{
-        date: new Date(),
+        mois_reel: new Date(),
         libelle: '',
         montant: 0,
       }}
@@ -58,11 +58,12 @@ const DepenseLibreFormComponent = ({ addDepenseLibre }) => {
           <Form.Field>
             <label>Date de dépense</label>
             <DatePicker
-              selected={values.date_ini}
-              dateFormat='dd/MM/yyyy'
+              selected={values.mois_reel}
+              dateFormat='MM/yyyy'
               className='form-control'
-              name='date_ini'
-              onChange={(date) => setFieldValue('date_ini', date)}
+              name='mois_reel'
+              showMonthYearPicker
+              onChange={(date) => setFieldValue('mois_reel', date)}
             />
           </Form.Field>
 

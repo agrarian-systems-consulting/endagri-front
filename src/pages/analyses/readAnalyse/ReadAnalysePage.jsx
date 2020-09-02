@@ -16,6 +16,7 @@ import FicheLibreFormComponent from './FicheLibreFormComponent';
 import DepenseLibreFormComponent from './DepenseLibreFormComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
 import ProductionsComponent from './ProductionsComponent';
+import DepensesLibresComponent from './DepensesLibresComponent';
 
 const ReadAnalysePage = () => {
   const { id } = useParams();
@@ -106,7 +107,7 @@ const ReadAnalysePage = () => {
 
   const addDepenseLibre = (depenseLibre) => {
     Axios.post(
-      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense-libre`,
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre`,
       depenseLibre
     )
       .then((res) => {
@@ -128,6 +129,36 @@ const ReadAnalysePage = () => {
       .catch((err) => {
         console.log(err);
         addToast('Erreur lors de la création de la dépense', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      });
+  };
+
+  const deleteDepenseLibre = (id_depense_libre) => {
+    Axios.delete(
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre/${id_depense_libre}`
+    )
+      .then((res) => {
+        addToast('La dépense libre a bien été supprimée', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+
+        let updatedAnalyse = update(analyse, {
+          depenses_libres: {
+            $apply: (depenses_libres) =>
+              depenses_libres.filter((depense_libre) => {
+                return depense_libre.id !== id_depense_libre;
+              }),
+          },
+        });
+
+        setAnalyse(updatedAnalyse);
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast('Erreur lors de la suppression de la dépense libre', {
           appearance: 'error',
           autoDismiss: true,
         });
@@ -193,34 +224,48 @@ const ReadAnalysePage = () => {
           </Grid.Row>
           <Divider />
 
-          <Grid.Column width={16}>
-            <Header as='h5'>Dépenses libres</Header>
-            {isOpenDepenseLibreForm ? (
-              <Fragment>
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Header as='h5'>Dépenses libres</Header>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={10}>
+              <DepensesLibresComponent
+                depenses_libres={analyse.depenses_libres}
+                deleteDepenseLibre={deleteDepenseLibre}
+              />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={5}>
+              {isOpenDepenseLibreForm ? (
+                <Fragment>
+                  <Button
+                    onClick={() => {
+                      setIsOpenDepenseLibreForm(false);
+                    }}
+                  >
+                    Fermer{' '}
+                  </Button>
+                  <Segment>
+                    <DepenseLibreFormComponent
+                      addDepenseLibre={addDepenseLibre}
+                    />
+                  </Segment>
+                </Fragment>
+              ) : (
                 <Button
+                  color='teal'
                   onClick={() => {
-                    setIsOpenDepenseLibreForm(false);
+                    setIsOpenDepenseLibreForm(true);
                   }}
                 >
-                  Fermer{' '}
+                  Ajouter une dépense libre
                 </Button>
-                <Segment>
-                  <DepenseLibreFormComponent
-                    addDepenseLibre={addDepenseLibre}
-                  />
-                </Segment>
-              </Fragment>
-            ) : (
-              <Button
-                color='teal'
-                onClick={() => {
-                  setIsOpenDepenseLibreForm(true);
-                }}
-              >
-                Ajouter une dépense libre
-              </Button>
-            )}
-          </Grid.Column>
+              )}{' '}
+            </Grid.Column>
+          </Grid.Row>
         </Fragment>
       )}
       {/* <pre>{JSON.stringify(analyse, true, 2)}</pre> */}
