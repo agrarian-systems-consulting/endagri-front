@@ -10,7 +10,7 @@ const ListAnalysesPage = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      Axios(`http://localhost:3333/analyses`)
+      Axios(`${process.env.REACT_APP_API_URI}/analyses`)
         .then((res) => {
           setAnalyses(res.data);
         })

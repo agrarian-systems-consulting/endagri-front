@@ -37,7 +37,7 @@ const DeleteMarchePage = () => {
                 color='red'
                 floated='right'
                 onClick={() => {
-                  Axios.delete(`http://localhost:3333/marche/${id}`)
+                  Axios.delete(`${process.env.REACT_APP_API_URI}/marche/${id}`)
                     .then(() => {
                       addToast('Le marché a bien été supprimé', {
                         appearance: 'success',

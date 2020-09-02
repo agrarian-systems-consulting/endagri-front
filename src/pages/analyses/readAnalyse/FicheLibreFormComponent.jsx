@@ -14,7 +14,7 @@ const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
   const [fichesTechniques, setFichesTechniques] = useState([]);
 
   useEffect(() => {
-    Axios(`http://localhost:3333/fiches`)
+    Axios(`${process.env.REACT_APP_API_URI}/fiches`)
       .then((res) => {
         setFichesTechniques(res.data);
       })

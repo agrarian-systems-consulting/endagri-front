@@ -19,7 +19,7 @@ const MarcheFormComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`http://localhost:3333/produits`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URI}/produits`);
 
       setProduits(res.data);
     };
@@ -55,25 +55,25 @@ const MarcheFormComponent = () => {
         id_produit: null,
         localisation: '',
         type_marche: '',
-        prix_january: 0.00,
-        prix_february: 0.00,
-        prix_march: 0.00,
-        prix_april: 0.00,
-        prix_may: 0.00,
-        prix_june: 0.00,
-        prix_july: 0.00,
-        prix_august: 0.00,
-        prix_september: 0.00,
-        prix_october: 0.00,
-        prix_november: 0.00,
-        prix_december: 0.00,
+        prix_january: 0.0,
+        prix_february: 0.0,
+        prix_march: 0.0,
+        prix_april: 0.0,
+        prix_may: 0.0,
+        prix_june: 0.0,
+        prix_july: 0.0,
+        prix_august: 0.0,
+        prix_september: 0.0,
+        prix_october: 0.0,
+        prix_november: 0.0,
+        prix_december: 0.0,
       }}
       // Handle form validation
       validationSchema={validationSchema}
       // Handle form submit
       onSubmit={(values, { setSubmitting }) => {
         axios
-          .post(`http://localhost:3333/marche`, values)
+          .post(`${process.env.REACT_APP_API_URI}/marche`, values)
           .then((res) => {
             console.log(res);
             addToast('Le marché a bien été créé', {

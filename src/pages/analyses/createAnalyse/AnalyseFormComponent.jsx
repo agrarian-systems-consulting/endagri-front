@@ -41,7 +41,7 @@ const AnalyseFormComponent = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        Axios.post(`http://localhost:3333/analyse`, values)
+        Axios.post(`${process.env.REACT_APP_API_URI}/analyse`, values)
           .then((res) => {
             addToast("L'analyse a bien été créée", {
               appearance: 'success',

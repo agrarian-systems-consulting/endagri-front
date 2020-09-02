@@ -38,7 +38,9 @@ const DeleteProductionPage = () => {
                 floated='right'
                 color='red'
                 onClick={() => {
-                  Axios.delete(`http://localhost:3333/production/${id}`)
+                  Axios.delete(
+                    `${process.env.REACT_APP_API_URI}/production/${id}`
+                  )
                     .then(() => {
                       addToast('La production a bien été supprimée', {
                         appearance: 'success',

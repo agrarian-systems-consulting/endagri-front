@@ -9,7 +9,7 @@ const ListFichesPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await Axios.get(`http://localhost:3333/fiches`);
+      const res = await Axios.get(`${process.env.REACT_APP_API_URI}/fiches`);
       setFiches(res.data);
       setLoading(false);
     };

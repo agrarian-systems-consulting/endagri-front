@@ -14,7 +14,7 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
 
   useEffect(() => {
     Axios(
-      `http://localhost:3333/analyse/${id}/fiche-technique-libre/${id_ftl}/produits`
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre/${id_ftl}/produits`
     )
       .then((res) => {
         setProduits(res.data);

@@ -46,7 +46,7 @@ const ProductionFormComponent = () => {
       validationSchema={validationSchema}
       // Handle form submit
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        Axios.post(`http://localhost:3333/production`, values)
+        Axios.post(`${process.env.REACT_APP_API_URI}/production`, values)
           .then((res) => {
             addToast('La production a bien été créée', {
               appearance: 'success',

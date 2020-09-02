@@ -28,7 +28,7 @@ const FicheFormComponent = () => {
   const [productions, setProductions] = useState([]);
 
   useEffect(() => {
-    Axios(`http://localhost:3333/productions`)
+    Axios(`${process.env.REACT_APP_API_URI}/productions`)
       .then((res) => {
         setProductions(res.data);
       })
@@ -72,7 +72,7 @@ const FicheFormComponent = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        Axios.post(`http://localhost:3333/fiche`, values)
+        Axios.post(`${process.env.REACT_APP_API_URI}/fiche`, values)
           .then((res) => {
             addToast('La fiche a bien été créée', {
               appearance: 'success',

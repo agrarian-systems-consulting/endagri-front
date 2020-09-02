@@ -49,7 +49,7 @@ const DeleteAnalysePage = () => {
                 floated='right'
                 color='red'
                 onClick={() => {
-                  Axios.delete(`http://localhost:3333/analyse/${id}`)
+                  Axios.delete(`${process.env.REACT_APP_API_URI}/analyse/${id}`)
                     .then((res) => {
                       addToast("L'analyse a bien été supprimée", {
                         appearance: 'success',

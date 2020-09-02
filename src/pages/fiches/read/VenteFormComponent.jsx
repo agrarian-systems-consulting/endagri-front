@@ -15,7 +15,9 @@ const VenteFormComponent = ({ postVente, id_production }) => {
   const [markets, setMarkets] = useState([]);
 
   useEffect(() => {
-    Axios(`http://localhost:3333/marches?id_production=${id_production}`)
+    Axios(
+      `${process.env.REACT_APP_API_URI}/marches?id_production=${id_production}`
+    )
       .then((res) => {
         setMarkets(res.data);
       })

@@ -74,6 +74,7 @@ const AccueilPage = () => {
                         disabled={isSubmitting || !isValid || !dirty}
                         loading={isSubmitting}
                       />
+                      {process.env.API_URI}
                     </div>
 
                     {/* Uncomment following lines to debug form */}

@@ -13,6 +13,7 @@ import {
   Icon,
 } from 'semantic-ui-react';
 import FicheLibreFormComponent from './FicheLibreFormComponent';
+import DepenseLibreFormComponent from './DepenseLibreFormComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
 import ProductionsComponent from './ProductionsComponent';
 
@@ -26,10 +27,11 @@ const ReadAnalysePage = () => {
     isOpenFicheTechniqueLibreForm,
     setIsOpenFicheTechniqueLibreForm,
   ] = useState(false);
+  const [isOpenDepenseLibreForm, setIsOpenDepenseLibreForm] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      Axios.get(`http://localhost:3333/analyse/${id}`)
+      Axios.get(`${process.env.REACT_APP_API_URI}/analyse/${id}`)
         .then((res) => {
           setAnalyse(res.data);
           setLoading(false);
@@ -44,7 +46,7 @@ const ReadAnalysePage = () => {
 
   const addFicheTechniqueLibre = (ficheTechniqueLibre) => {
     Axios.post(
-      `http://localhost:3333/analyse/${id}/fiche-technique-libre`,
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre`,
       ficheTechniqueLibre
     )
       .then((res) => {
@@ -74,7 +76,7 @@ const ReadAnalysePage = () => {
 
   const deleteFicheTechniqueLibre = (id_ftl) => {
     Axios.delete(
-      `http://localhost:3333/analyse/${id}/fiche-technique-libre/${id_ftl}`
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre/${id_ftl}`
     )
       .then((res) => {
         addToast('La production a bien été supprimée', {
@@ -96,6 +98,36 @@ const ReadAnalysePage = () => {
       .catch((err) => {
         console.log(err);
         addToast('Erreur lors de la suppression de la production', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      });
+  };
+
+  const addDepenseLibre = (depenseLibre) => {
+    Axios.post(
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense-libre`,
+      depenseLibre
+    )
+      .then((res) => {
+        addToast('La dépense a bien été ajoutée', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+
+        let updatedAnalyse = update(analyse, {
+          depenses_libres: {
+            $push: [res.data],
+          },
+        });
+
+        setAnalyse(updatedAnalyse);
+
+        setIsOpenDepenseLibreForm(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast('Erreur lors de la création de la dépense', {
           appearance: 'error',
           autoDismiss: true,
         });
@@ -163,7 +195,31 @@ const ReadAnalysePage = () => {
 
           <Grid.Column width={16}>
             <Header as='h5'>Dépenses libres</Header>
-            <p>A faire</p>
+            {isOpenDepenseLibreForm ? (
+              <Fragment>
+                <Button
+                  onClick={() => {
+                    setIsOpenDepenseLibreForm(false);
+                  }}
+                >
+                  Fermer{' '}
+                </Button>
+                <Segment>
+                  <DepenseLibreFormComponent
+                    addDepenseLibre={addDepenseLibre}
+                  />
+                </Segment>
+              </Fragment>
+            ) : (
+              <Button
+                color='teal'
+                onClick={() => {
+                  setIsOpenDepenseLibreForm(true);
+                }}
+              >
+                Ajouter une dépense libre
+              </Button>
+            )}
           </Grid.Column>
         </Fragment>
       )}

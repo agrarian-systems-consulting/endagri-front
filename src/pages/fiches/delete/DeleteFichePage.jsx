@@ -39,7 +39,7 @@ const DeleteFichePage = () => {
                 floated='right'
                 color='red'
                 onClick={() => {
-                  Axios.delete(`http://localhost:3333/fiche/${id}`)
+                  Axios.delete(`${process.env.REACT_APP_API_URI}/fiche/${id}`)
                     .then((res) => {
                       addToast('La fiche a bien été supprimée', {
                         appearance: 'success',

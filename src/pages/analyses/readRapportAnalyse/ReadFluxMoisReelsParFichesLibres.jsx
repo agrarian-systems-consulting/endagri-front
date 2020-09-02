@@ -11,7 +11,7 @@ const ReadFluxMoisReelsParFichesLibres = () => {
 
   useEffect(() => {
     Axios(
-      `http://localhost:3333/analyse/${id}/flux_mois_reels_par_fiches_libres`
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/flux_mois_reels_par_fiches_libres`
     ).then((res) => {
       setFlux(res.data);
     });

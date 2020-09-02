@@ -8,7 +8,7 @@ const ListMarchesPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get('http://localhost:3333/marches');
+      const res = await axios.get('${process.env.REACT_APP_API_URI}/marches');
       setMarches(res.data);
     };
     fetchData();

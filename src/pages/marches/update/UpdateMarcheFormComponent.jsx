@@ -16,7 +16,9 @@ const UpdateMarcheFormComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`http://localhost:3333/marche/${id}`);
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URI}/marche/${id}`
+      );
       setMarche(res.data);
     };
 
@@ -30,7 +32,7 @@ const UpdateMarcheFormComponent = () => {
       // Handle form submit
       onSubmit={(values, { setSubmitting }) => {
         axios
-          .put(`http://localhost:3333/marche/${id}`, values)
+          .put(`${process.env.REACT_APP_API_URI}/marche/${id}`, values)
           .then((res) => {
             addToast('Le marché a bien été mis à jour', {
               appearance: 'success',
