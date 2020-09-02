@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Grid, Segment, Button, Form, Message } from 'semantic-ui-react';
+import { Grid, Segment, Button, Form, Message, Image } from 'semantic-ui-react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import SemanticField from '../../app/utils/forms/SemanticField';
@@ -88,6 +88,11 @@ const AccueilPage = () => {
               </Formik>
             </Segment>
           </Segment.Group>
+          <Image
+            src={process.env.PUBLIC_URL + '/logo.jpeg'}
+            size='small'
+            centered
+          />
         </Grid.Column>
       </Grid.Row>
     </Grid>

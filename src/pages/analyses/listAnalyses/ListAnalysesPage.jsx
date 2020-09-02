@@ -31,7 +31,7 @@ const ListAnalysesPage = () => {
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column width={16}>
+        <Grid.Column width={12}>
           <Table singleLine fixed>
             <Table.Header>
               <Table.Row>
@@ -41,7 +41,7 @@ const ListAnalysesPage = () => {
                 <Table.HeaderCell textAlign='center'>
                   Date de création
                 </Table.HeaderCell>
-                <Table.HeaderCell>Dernière modification</Table.HeaderCell>
+                {/* <Table.HeaderCell>Dernière modification</Table.HeaderCell> */}
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -60,7 +60,7 @@ const ListAnalysesPage = () => {
                           locale: fr,
                         })}
                       </Table.Cell>
-                      <Table.Cell>{modified}</Table.Cell>
+                      {/* <Table.Cell>{modified}</Table.Cell> */}
                     </Table.Row>
                   );
                 }

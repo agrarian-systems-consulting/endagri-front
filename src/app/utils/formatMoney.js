@@ -1,6 +1,6 @@
 const formatMoney = (
   amount,
-  decimalCount = 3,
+  decimalCount = 0,
   decimal = ',',
   thousands = ' ',
   currency = 'TND'
