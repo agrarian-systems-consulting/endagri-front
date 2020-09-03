@@ -3,6 +3,7 @@ import { Table, Transition, Button, Icon } from 'semantic-ui-react';
 import formatMoney from '../../../app/utils/formatMoney';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import capitalize from '../../../app/utils/capitalize';
 
 const DepensesLibresComponent = ({ depenses_libres, deleteDepenseLibre }) => {
   return (
@@ -28,11 +29,13 @@ const DepensesLibresComponent = ({ depenses_libres, deleteDepenseLibre }) => {
               depenses_libres.map(({ id, libelle, mois_reel, montant }) => {
                 return (
                   <Table.Row key={id}>
-                    <Table.Cell>{libelle}</Table.Cell>
+                    <Table.Cell>{capitalize(libelle)}</Table.Cell>
                     <Table.Cell textAlign='center'>
-                      {format(new Date(mois_reel), 'MMMM yyyy', {
-                        locale: fr,
-                      })}
+                      {capitalize(
+                        format(new Date(mois_reel), 'MMMM yyyy', {
+                          locale: fr,
+                        })
+                      )}
                     </Table.Cell>
                     <Table.Cell textAlign='center'>
                       {montant && formatMoney(montant)}

@@ -3,6 +3,8 @@ import { Grid, Segment, Header, List, Button } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import capitalize from '../../../app/utils/capitalize';
+import formatMoney from '../../../app/utils/formatMoney';
 
 const InformationsPrincipalesComponent = ({ info }) => {
   return (
@@ -15,10 +17,11 @@ const InformationsPrincipalesComponent = ({ info }) => {
           <Segment attached clearing>
             <List>
               <List.Item>
-                <b>Client </b> {info.nom_client}
+                <b>Client </b> {capitalize(info.nom_client)}
               </List.Item>
               <List.Item>
-                <b>Trésorerie initiale </b> {info.montant_tresorerie_initiale}
+                <b>Trésorerie initiale </b>{' '}
+                {formatMoney(info.montant_tresorerie_initiale)}
               </List.Item>
               <List.Item>
                 <b>Date de début d'analyse </b>
@@ -56,14 +59,7 @@ const InformationsPrincipalesComponent = ({ info }) => {
                   })}
               </List.Item>
               <List.Item>
-                <b>Dernière modification</b>{' '}
-                {info.modified &&
-                  format(new Date(info.modified), 'dd MMMM yyyy', {
-                    locale: fr,
-                  })}
-              </List.Item>
-              <List.Item>
-                <b>Auteur</b> {info.nom_utilisateur}
+                <b>Auteur</b> {capitalize(info.nom_utilisateur)}
               </List.Item>
             </List>
           </Segment>

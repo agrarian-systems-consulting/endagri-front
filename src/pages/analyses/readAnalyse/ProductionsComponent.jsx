@@ -11,6 +11,7 @@ import {
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { NavLink, useParams } from 'react-router-dom';
+import capitalize from '../../../app/utils/capitalize';
 const ProductionsComponent = ({ fichesLibres, deleteFicheTechniqueLibre }) => {
   const { id } = useParams();
   return (
@@ -24,7 +25,7 @@ const ProductionsComponent = ({ fichesLibres, deleteFicheTechniqueLibre }) => {
                   <Card key={fiche.id}>
                     <Card.Content>
                       <h5>
-                        {fiche.libelle_fiche_technique} (
+                        {capitalize(fiche.libelle_fiche_technique)} (
                         {new Intl.NumberFormat().format(
                           fiche.coeff_surface_ou_nombre_animaux
                         )}{' '}

@@ -27,7 +27,7 @@ const ReadFluxMoisReelsParFichesLibres = () => {
       </Segment>
       <Segment>
         <h5>Résumé</h5>
-        <Table fixed>
+        <Table fixed selectable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Mois</Table.HeaderCell>
