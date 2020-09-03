@@ -7,6 +7,7 @@ import { Breadcrumb, Button, Grid } from 'semantic-ui-react';
 import ActivitesComponent from './ActivitesComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
 import VentesComponent from './VentesComponent';
+import TableauRecapComponent from './TableauRecapComponent';
 
 const ReadFichePage = () => {
   let { id } = useParams();
@@ -171,6 +172,7 @@ const ReadFichePage = () => {
 
         <Grid.Column width={6}>
           <InformationsPrincipalesComponent fiche={fiche} />
+          <TableauRecapComponent fiche={fiche} />
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
