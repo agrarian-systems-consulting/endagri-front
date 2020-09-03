@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Breadcrumb, Button, Grid, Table, Icon } from 'semantic-ui-react';
+import capitalize from '../../../app/utils/capitalize';
 
 const ListMarchesPage = () => {
   const [marches, setMarches] = useState();
@@ -57,10 +58,12 @@ const ListMarchesPage = () => {
                         <Table.Cell>
                           <NavLink to={`/marche/${id}`}>Marché {id}</NavLink>
                         </Table.Cell>
-                        <Table.Cell>{libelle_production}</Table.Cell>
-                        <Table.Cell>{libelle_produit}</Table.Cell>
+                        <Table.Cell>
+                          {capitalize(libelle_production)}
+                        </Table.Cell>
+                        <Table.Cell>{capitalize(libelle_produit)}</Table.Cell>
                         <Table.Cell>{type_marche}</Table.Cell>
-                        <Table.Cell>{localisation}</Table.Cell>
+                        <Table.Cell>{capitalize(localisation)}</Table.Cell>
                         <Table.Cell textAlign='center'>
                           <Button
                             size='mini'

@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Grid, Breadcrumb, Table, Button, Icon } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import Axios from 'axios';
+import capitalize from '../../../app/utils/capitalize';
 
 const ListFichesPage = () => {
   const [fiches, setFiches] = useState([]);
@@ -60,9 +61,13 @@ const ListFichesPage = () => {
                             <NavLink to={`/fiche/${id}`}>Fiche {id}</NavLink>
                           </Table.Cell>
                           <Table.Cell>
-                            <NavLink to={`/fiche/${id}`}>{libelle}</NavLink>
+                            <NavLink to={`/fiche/${id}`}>
+                              {capitalize(libelle)}
+                            </NavLink>
                           </Table.Cell>
-                          <Table.Cell>{libelle_production}</Table.Cell>
+                          <Table.Cell>
+                            {capitalize(libelle_production)}
+                          </Table.Cell>
                           <Table.Cell>
                             <Button
                               size='mini'

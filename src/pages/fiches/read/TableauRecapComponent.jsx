@@ -7,9 +7,11 @@ const TableauRecapComponent = ({ fiche }) => {
     let total = 0;
     if (fiche.activites !== undefined) {
       fiche.activites.forEach((activite) => {
-        activite.depenses.forEach((depense) => {
-          total += depense.montant;
-        });
+        if (activite.depenses !== undefined) {
+          activite.depenses.forEach((depense) => {
+            total += depense.montant;
+          });
+        }
       });
     }
 

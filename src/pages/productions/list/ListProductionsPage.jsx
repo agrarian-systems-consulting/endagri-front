@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Breadcrumb, Button, Grid, Label, Table } from 'semantic-ui-react';
+import capitalize from '../../../app/utils/capitalize';
 
 const ListProductionsPage = () => {
   const [productions, setProductions] = useState([]);
@@ -55,40 +56,40 @@ const ListProductionsPage = () => {
                           'Culture annuelle': (
                             <Button
                               as={Link}
-                              size='mini'
+                              size='small'
                               to={`/production/${id}`}
                             >
-                              {libelle}
+                              {capitalize(libelle)}
                             </Button>
                           ),
                           'Culture pérenne': (
                             <Button
                               as={Link}
-                              size='mini'
+                              size='small'
                               to={`/production/${id}`}
                               color='blue'
                             >
-                              {libelle}
+                              {capitalize(libelle)}
                             </Button>
                           ),
                           'Elevage bovin laitier': (
                             <Button
                               as={Link}
-                              size='mini'
+                              size='small'
                               to={`/production/${id}`}
                               color='orange'
                             >
-                              {libelle}
+                              {capitalize(libelle)}
                             </Button>
                           ),
                           'Elevage ovin engraisseur': (
                             <Button
                               as={Link}
-                              size='mini'
+                              size='small'
                               to={`/production/${id}`}
                               color='yellow'
                             >
-                              {libelle}
+                              {capitalize(libelle)}
                             </Button>
                           ),
                           'Elevage ovin naisseur-engraisseur': (
@@ -98,7 +99,7 @@ const ListProductionsPage = () => {
                               to={`/production/${id}`}
                               color='violet'
                             >
-                              {libelle}
+                              {capitalize(libelle)}
                             </Button>
                           ),
                           'Elevage apicole': (
@@ -108,7 +109,7 @@ const ListProductionsPage = () => {
                               to={`/production/${id}`}
                               color='yellow'
                             >
-                              {libelle}
+                              {capitalize(libelle)}
                             </Button>
                           ),
                         }[type_production]
@@ -119,7 +120,7 @@ const ListProductionsPage = () => {
                       {produits.length > 0 &&
                         produits.map((p) => (
                           <Label basic key={p.id}>
-                            {p.libelle}
+                            {capitalize(p.libelle)}
                           </Label>
                         ))}
                     </Table.Cell>

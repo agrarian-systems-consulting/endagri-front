@@ -4,6 +4,7 @@ import { Breadcrumb, Button, Grid, Table } from 'semantic-ui-react';
 import Axios from 'axios';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import capitalize from '../../../app/utils/capitalize';
 
 const ListAnalysesPage = () => {
   const [analyses, setAnalyses] = useState([]);
@@ -52,8 +53,8 @@ const ListAnalysesPage = () => {
                       <Table.Cell>
                         <NavLink to={`/analyse/${id}`}>Analyse {id}</NavLink>
                       </Table.Cell>
-                      <Table.Cell>{nom_utilisateur}</Table.Cell>
-                      <Table.Cell>{nom_client}</Table.Cell>
+                      <Table.Cell>{capitalize(nom_utilisateur)}</Table.Cell>
+                      <Table.Cell>{capitalize(nom_client)}</Table.Cell>
                       <Table.Cell textAlign='center'>
                         {' '}
                         {format(new Date(created), 'dd MMMM yyyy', {

@@ -3,6 +3,7 @@ import { Button, Icon, Table, Transition } from 'semantic-ui-react';
 import formatMoney from '../../../app/utils/formatMoney';
 import getMois from '../../../app/utils/getMois';
 import ActiviteFormComponent from './ActiviteFormComponent.jsx';
+import capitalize from '../../../app/utils/capitalize';
 
 const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -30,7 +31,7 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
               activites.map(({ id, libelle, mois_relatif, mois, depenses }) => {
                 return (
                   <Table.Row key={id}>
-                    <Table.Cell>{libelle}</Table.Cell>
+                    <Table.Cell>{capitalize(libelle)}</Table.Cell>
                     <Table.Cell textAlign='center'>
                       {mois_relatif} {mois && getMois(mois)}
                     </Table.Cell>
