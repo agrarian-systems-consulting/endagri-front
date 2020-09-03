@@ -3,6 +3,8 @@ import { Segment, Table } from 'semantic-ui-react';
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 import FluxChartComponent from './FluxChartComponent';
+import formatMoney from '../../../app/utils/formatMoney';
+import parse from 'date-fns/parse';
 
 const ReadFluxMoisReelsParFichesLibres = () => {
   let { id } = useParams();
@@ -25,17 +27,14 @@ const ReadFluxMoisReelsParFichesLibres = () => {
       </Segment>
       <Segment>
         <h5>Résumé</h5>
-        <h4>Période d'analyse </h4> Récupérer la bonne valeur ici
-        <h4>Trésorerie initiale</h4> Récupérer la bonne valeur ici (exemple
-        analyse 1 = 1500 TND)
-        <Table>
+        <Table fixed>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Mois</Table.HeaderCell>
-              <Table.HeaderCell>Dépenses</Table.HeaderCell>
-              <Table.HeaderCell>Ventes</Table.HeaderCell>
-              <Table.HeaderCell>Solde</Table.HeaderCell>
-              <Table.HeaderCell>Trésorerie</Table.HeaderCell>
+              <Table.HeaderCell textAlign='right'>Dépenses</Table.HeaderCell>
+              <Table.HeaderCell textAlign='right'>Ventes</Table.HeaderCell>
+              <Table.HeaderCell textAlign='right'>Solde</Table.HeaderCell>
+              <Table.HeaderCell textAlign='right'>Trésorerie</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -44,10 +43,18 @@ const ReadFluxMoisReelsParFichesLibres = () => {
                 return (
                   <Table.Row>
                     <Table.Cell>{mois}</Table.Cell>
-                    <Table.Cell>{total_depenses}</Table.Cell>
-                    <Table.Cell>{total_ventes}</Table.Cell>
-                    <Table.Cell>{solde}</Table.Cell>
-                    <Table.Cell>{solde_cumule}</Table.Cell>
+                    <Table.Cell textAlign='right'>
+                      {formatMoney(total_depenses)}
+                    </Table.Cell>
+                    <Table.Cell textAlign='right'>
+                      {formatMoney(total_ventes)}
+                    </Table.Cell>
+                    <Table.Cell textAlign='right'>
+                      {formatMoney(solde)}
+                    </Table.Cell>
+                    <Table.Cell textAlign='right'>
+                      {formatMoney(solde_cumule)}
+                    </Table.Cell>
                   </Table.Row>
                 );
               }
