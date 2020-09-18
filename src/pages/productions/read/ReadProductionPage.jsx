@@ -15,6 +15,7 @@ import {
   Table,
 } from 'semantic-ui-react';
 import ProduitFormComponent from './ProduitFormComponent';
+import capitalize from '../../../app/utils/capitalize';
 
 const ReadProductionPage = () => {
   const { id } = useParams();
@@ -22,23 +23,7 @@ const ReadProductionPage = () => {
   const [loading, setLoading] = useState(true);
   const { addToast } = useToasts();
 
-  const [production, setProduction] = useState({
-    id: id,
-    libelle: 'Blé dur',
-    type_production: 'Culture annuelle',
-    produits: [
-      {
-        id: 1,
-        libelle: 'Paille de blé dur',
-        unite: 'tonne de matière sèche',
-      },
-      {
-        id: 2,
-        libelle: 'Grains de blé dur',
-        unite: 'quintal',
-      },
-    ],
-  });
+  const [production, setProduction] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -193,6 +178,7 @@ const ReadProductionPage = () => {
                     </Table.Body>
                   </Table>
                 )}
+                <pre>{JSON.stringify(production, true, 2)}</pre>
                 {isOpenForm ? (
                   <Button
                     onClick={() => {

@@ -30,7 +30,7 @@ const ProductionsComponent = ({ fichesLibres, deleteFicheTechniqueLibre }) => {
                           fiche.coeff_surface_ou_nombre_animaux
                         )}{' '}
                         ha)
-                      </h5>{' '}
+                      </h5>
                     </Card.Content>
                     <Card.Content>
                       <Label>{fiche.type_production}</Label>
