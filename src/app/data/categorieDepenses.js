@@ -12,7 +12,8 @@ const categorieDepenseOptions = [
   { key: '7', value: 'Foin', text: 'Foin' },
   { key: '8', value: 'Concentrés', text: 'Concentrés' },
   { key: '9', value: 'Irrigation', text: 'Irrigation' },
-  { key: '10', value: 'Divers', text: 'Divers' },
+  { key: '10', value: 'Semences', text: 'Semences' },
+  { key: '11', value: 'Divers', text: 'Divers' },
 ];
 
 export default categorieDepenseOptions;

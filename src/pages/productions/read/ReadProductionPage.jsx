@@ -178,7 +178,7 @@ const ReadProductionPage = () => {
                     </Table.Body>
                   </Table>
                 )}
-                <pre>{JSON.stringify(production, true, 2)}</pre>
+                {/* <pre>{JSON.stringify(production, true, 2)}</pre> */}
                 {isOpenForm ? (
                   <Button
                     onClick={() => {
