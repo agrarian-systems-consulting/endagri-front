@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Breadcrumb, Button, Grid, Label, Table } from 'semantic-ui-react';
 import _ from 'lodash';
+import authHeader from '../../../app/auth/auth-header';
 
 const ListProductionsPage = () => {
   const [productions, setProductions] = useState([]);
@@ -11,6 +12,7 @@ const ListProductionsPage = () => {
     const fetchData = async () => {
       const res = await axios.get(
         `${process.env.REACT_APP_API_URI}/productions`
+        , { headers: authHeader()}
       );
       setProductions(res.data);
     };
