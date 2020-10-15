@@ -76,11 +76,9 @@ const MarcheFormComponent = () => {
       // Handle form submit
       onSubmit={(values, { setSubmitting }) => {
         axios
-          .post(
-            `${process.env.REACT_APP_API_URI}/marche`,
-            { headers: authHeader() },
-            values
-          )
+          .post(`${process.env.REACT_APP_API_URI}/marche`, values, {
+            headers: authHeader(),
+          })
           .then((res) => {
             console.log(res);
             addToast('Le marché a bien été créé', {

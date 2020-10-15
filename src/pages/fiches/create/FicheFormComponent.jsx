@@ -75,11 +75,9 @@ const FicheFormComponent = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        Axios.post(
-          `${process.env.REACT_APP_API_URI}/fiche`,
-          { headers: authHeader() },
-          values
-        )
+        Axios.post(`${process.env.REACT_APP_API_URI}/fiche`, values, {
+          headers: authHeader(),
+        })
           .then((res) => {
             addToast('La fiche a bien été créée', {
               appearance: 'success',

@@ -51,8 +51,8 @@ const ReadAnalysePage = () => {
   const addFicheTechniqueLibre = (ficheTechniqueLibre) => {
     Axios.post(
       `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre`,
-      { headers: authHeader() },
-      ficheTechniqueLibre
+      ficheTechniqueLibre,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast('La production a bien été ajoutée', {
@@ -112,8 +112,9 @@ const ReadAnalysePage = () => {
 
   const addDepenseLibre = (depenseLibre) => {
     Axios.post(
-      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre`, { headers: authHeader()},
-      depenseLibre
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre`,
+      depenseLibre,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast('La dépense a bien été ajoutée', {
@@ -142,7 +143,8 @@ const ReadAnalysePage = () => {
 
   const deleteDepenseLibre = (id_depense_libre) => {
     Axios.delete(
-      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre/${id_depense_libre}`, { headers: authHeader()}
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre/${id_depense_libre}`,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast('La dépense libre a bien été supprimée', {

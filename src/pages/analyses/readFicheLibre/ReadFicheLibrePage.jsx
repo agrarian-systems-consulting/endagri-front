@@ -44,7 +44,8 @@ const ReadFicheLibrePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       Axios(
-        `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre/${id_ftl}`, { headers: authHeader()}
+        `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre/${id_ftl}`,
+        { headers: authHeader() }
       )
         .then((res) => {
           console.log(res.data);
@@ -60,7 +61,11 @@ const ReadFicheLibrePage = () => {
 
   const addCoeffDepense = (coeff_depense) => {
     coeff_depense.id_fiche_technique_libre = id_ftl;
-    Axios.post(`${process.env.REACT_APP_API_URI}/coeff_depense`, { headers: authHeader()}, coeff_depense)
+    Axios.post(
+      `${process.env.REACT_APP_API_URI}/coeff_depense`,
+      coeff_depense,
+      { headers: authHeader() }
+    )
       .then((res) => {
         addToast('Le coefficient a bien été ajouté', {
           appearance: 'success',
@@ -87,7 +92,9 @@ const ReadFicheLibrePage = () => {
   };
 
   const deleteCoeffDepense = (id) => {
-    Axios.delete(`${process.env.REACT_APP_API_URI}/coeff_depense/${id}`, { headers: authHeader()})
+    Axios.delete(`${process.env.REACT_APP_API_URI}/coeff_depense/${id}`, {
+      headers: authHeader(),
+    })
       .then((res) => {
         addToast('Le coefficient a bien été supprimé', {
           appearance: 'success',
@@ -116,7 +123,9 @@ const ReadFicheLibrePage = () => {
 
   const addCoeffVente = (coeff_vente) => {
     coeff_vente.id_fiche_technique_libre = id_ftl;
-    Axios.post(`${process.env.REACT_APP_API_URI}/coeff_vente`, { headers: authHeader()}, coeff_vente)
+    Axios.post(`${process.env.REACT_APP_API_URI}/coeff_vente`, coeff_vente, {
+      headers: authHeader(),
+    })
       .then((res) => {
         addToast('Le coefficient a bien été ajouté', {
           appearance: 'success',
@@ -144,7 +153,9 @@ const ReadFicheLibrePage = () => {
   };
 
   const deleteCoeffVente = (id) => {
-    Axios.delete(`${process.env.REACT_APP_API_URI}/coeff_vente/${id}`, { headers: authHeader()})
+    Axios.delete(`${process.env.REACT_APP_API_URI}/coeff_vente/${id}`, {
+      headers: authHeader(),
+    })
       .then((res) => {
         addToast('Le coefficient a bien été supprimé', {
           appearance: 'success',

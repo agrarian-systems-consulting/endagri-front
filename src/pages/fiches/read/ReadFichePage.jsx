@@ -30,7 +30,8 @@ const ReadFichePage = () => {
 
   const deleteActivite = async (id_activite) => {
     Axios.delete(
-      `${process.env.REACT_APP_API_URI}/fiche/${id}/activite/${id_activite}`, { headers: authHeader()}
+      `${process.env.REACT_APP_API_URI}/fiche/${id}/activite/${id_activite}`,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast("L'activité a bien été supprimée", {
@@ -63,8 +64,9 @@ const ReadFichePage = () => {
 
   const postActivite = async (activite) => {
     Axios.post(
-      `${process.env.REACT_APP_API_URI}/fiche/${id}/activite`, { headers: authHeader()},
-      activite
+      `${process.env.REACT_APP_API_URI}/fiche/${id}/activite`,
+      activite,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast("L'activité a bien été ajoutée", {
@@ -93,7 +95,8 @@ const ReadFichePage = () => {
 
   const deleteVente = async (id_vente) => {
     Axios.delete(
-      `${process.env.REACT_APP_API_URI}/fiche/${id}/vente/${id_vente}`, { headers: authHeader()}
+      `${process.env.REACT_APP_API_URI}/fiche/${id}/vente/${id_vente}`,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast('La vente a bien été supprimée', {
@@ -122,7 +125,9 @@ const ReadFichePage = () => {
   };
 
   const postVente = async (vente) => {
-    Axios.post(`${process.env.REACT_APP_API_URI}/fiche/${id}/vente`, { headers: authHeader()}, vente)
+    Axios.post(`${process.env.REACT_APP_API_URI}/fiche/${id}/vente`, vente, {
+      headers: authHeader(),
+    })
       .then((res) => {
         addToast('La vente a bien été ajoutée', {
           appearance: 'success',

@@ -47,7 +47,9 @@ const ProductionFormComponent = () => {
       validationSchema={validationSchema}
       // Handle form submit
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        Axios.post(`${process.env.REACT_APP_API_URI}/production`, { headers: authHeader()}, values)
+        Axios.post(`${process.env.REACT_APP_API_URI}/production`, values, {
+          headers: authHeader(),
+        })
           .then((res) => {
             addToast('La production a bien été créée', {
               appearance: 'success',
@@ -56,8 +58,8 @@ const ProductionFormComponent = () => {
             history.push(`/production/${res.data.id}`);
           })
           .catch((err) => {
-            console.log(err);
-            addToast('Erreur lors de la cration de la production ', {
+            console.error(err);
+            addToast('Erreur lors de la création de la production ', {
               appearance: 'error',
               autoDismiss: true,
             });

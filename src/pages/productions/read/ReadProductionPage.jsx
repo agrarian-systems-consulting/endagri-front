@@ -42,11 +42,9 @@ const ReadProductionPage = () => {
   const postProduit = (produit) => {
     produit.id_production = id;
 
-    Axios.post(
-      `${process.env.REACT_APP_API_URI}/produit`,
-      { headers: authHeader() },
-      produit
-    ).then(
+    Axios.post(`${process.env.REACT_APP_API_URI}/produit`, produit, {
+      headers: authHeader(),
+    }).then(
       (res) => {
         produit.id = res.data.id;
 
