@@ -15,7 +15,7 @@ const useUser = () => {
       })
         .then((response) => {
           if (response.data.accessToken) {
-            // TODO Ajouter Bearer ?
+            // TODO ? Ajouter Bearer
             localStorage.setItem('user', JSON.stringify(response.data));
             setUtilisateur(response.data);
           }
