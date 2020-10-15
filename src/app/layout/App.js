@@ -28,6 +28,7 @@ import ReadFicheLibrePage from '../../pages/analyses/readFicheLibre/ReadFicheLib
 import ReadFluxMoisReelsParFichesLibres from '../../pages/analyses/readRapportAnalyse/ReadFluxMoisReelsParFichesLibres';
 import AccueilPage from '../../pages/accueil/AccueilPage';
 import PrivateRoute from '../auth/PrivateRoute';
+import NotFound from '../../pages/ErrorPages/NotFound';
 
 function App() {
   return (
@@ -37,55 +38,92 @@ function App() {
         <Switch>
           <Route exact path='/' component={AccueilPage} />
           <PrivateRoute exact path='/analyses' component={ListAnalysesPage} />
-          <Route exact path='/analyse/create' component={CreateAnalysePage} />
-          <Route exact path='/analyse/:id' component={ReadAnalysePage} />
-          <Route
+          <PrivateRoute
+            exact
+            path='/analyse/create'
+            component={CreateAnalysePage}
+          />
+          <PrivateRoute exact path='/analyse/:id' component={ReadAnalysePage} />
+          <PrivateRoute
             exact
             path='/analyse/:id/flux_mois_reels_par_fiches_libres'
             component={ReadFluxMoisReelsParFichesLibres}
           />
-          <Route
+          <PrivateRoute
             exact
             path='/analyse/:id/fiche-technique-libre/:id_ftl'
             component={ReadFicheLibrePage}
           />
-          <Route
+          <PrivateRoute
             exact
             path='/analyse/:id/update'
             component={UpdateAnalysePage}
           />
-          <Route
+          <PrivateRoute
             exact
             path='/analyse/:id/delete'
             component={DeleteAnalysePage}
           />
-          <Route exact path='/fiches' component={ListFichesPage} />
-          <Route exact path='/fiche/create' component={CreateFichePage} />
-          <Route exact path='/fiche/:id' component={ReadFichePage} />
-          <Route exact path='/fiche/:id/update' component={UpdateFichePage} />
-          <Route exact path='/fiche/:id/delete' component={DeleteFichePage} />
-          <Route exact path='/marches' component={ListMarchesPage} />
-          <Route exact path='/marche/create' component={CreateMarchePage} />
-          <Route exact path='/marche/:id' component={ReadMarchePage} />
-          <Route exact path='/marche/:id/update' component={UpdateMarchePage} />
-          <Route exact path='/marche/:id/delete' component={DeleteMarchePage} />
-          <Route exact path='/productions' component={ListProductionsPage} />
-          <Route
+          <PrivateRoute exact path='/fiches' component={ListFichesPage} />
+          <PrivateRoute
+            exact
+            path='/fiche/create'
+            component={CreateFichePage}
+          />
+          <PrivateRoute exact path='/fiche/:id' component={ReadFichePage} />
+          <PrivateRoute
+            exact
+            path='/fiche/:id/update'
+            component={UpdateFichePage}
+          />
+          <PrivateRoute
+            exact
+            path='/fiche/:id/delete'
+            component={DeleteFichePage}
+          />
+          <PrivateRoute exact path='/marches' component={ListMarchesPage} />
+          <PrivateRoute
+            exact
+            path='/marche/create'
+            component={CreateMarchePage}
+          />
+          <PrivateRoute exact path='/marche/:id' component={ReadMarchePage} />
+          <PrivateRoute
+            exact
+            path='/marche/:id/update'
+            component={UpdateMarchePage}
+          />
+          <PrivateRoute
+            exact
+            path='/marche/:id/delete'
+            component={DeleteMarchePage}
+          />
+          <PrivateRoute
+            exact
+            path='/productions'
+            component={ListProductionsPage}
+          />
+          <PrivateRoute
             exact
             path='/production/create'
             component={CreateProductionPage}
           />
-          <Route exact path='/production/:id' component={ReadProductionPage} />
-          <Route
+          <PrivateRoute
+            exact
+            path='/production/:id'
+            component={ReadProductionPage}
+          />
+          <PrivateRoute
             exact
             path='/production/:id/update'
             component={UpdateProductionPage}
           />
-          <Route
+          <PrivateRoute
             exact
             path='/production/:id/delete'
             component={DeleteProductionPage}
           />
+          <PrivateRoute component={NotFound} />
         </Switch>
       </Container>
     </Fragment>
