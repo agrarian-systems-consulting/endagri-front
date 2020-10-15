@@ -8,6 +8,7 @@ import ActivitesComponent from './ActivitesComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
 import VentesComponent from './VentesComponent';
 import TableauRecapComponent from './TableauRecapComponent';
+import authHeader from '../../../app/auth/auth-header';
 
 const ReadFichePage = () => {
   let { id } = useParams();
@@ -16,7 +17,9 @@ const ReadFichePage = () => {
   const [fiche, setFiche] = useState({});
 
   useEffect(() => {
-    Axios(`${process.env.REACT_APP_API_URI}/fiche/${id}`)
+    Axios(`${process.env.REACT_APP_API_URI}/fiche/${id}`, {
+      headers: authHeader(),
+    })
       .then((res) => {
         setFiche(res.data);
       })
@@ -27,7 +30,7 @@ const ReadFichePage = () => {
 
   const deleteActivite = async (id_activite) => {
     Axios.delete(
-      `${process.env.REACT_APP_API_URI}/fiche/${id}/activite/${id_activite}`
+      `${process.env.REACT_APP_API_URI}/fiche/${id}/activite/${id_activite}`, { headers: authHeader()}
     )
       .then((res) => {
         addToast("L'activité a bien été supprimée", {
@@ -60,7 +63,7 @@ const ReadFichePage = () => {
 
   const postActivite = async (activite) => {
     Axios.post(
-      `${process.env.REACT_APP_API_URI}/fiche/${id}/activite`,
+      `${process.env.REACT_APP_API_URI}/fiche/${id}/activite`, { headers: authHeader()},
       activite
     )
       .then((res) => {
@@ -90,7 +93,7 @@ const ReadFichePage = () => {
 
   const deleteVente = async (id_vente) => {
     Axios.delete(
-      `${process.env.REACT_APP_API_URI}/fiche/${id}/vente/${id_vente}`
+      `${process.env.REACT_APP_API_URI}/fiche/${id}/vente/${id_vente}`, { headers: authHeader()}
     )
       .then((res) => {
         addToast('La vente a bien été supprimée', {
@@ -119,7 +122,7 @@ const ReadFichePage = () => {
   };
 
   const postVente = async (vente) => {
-    Axios.post(`${process.env.REACT_APP_API_URI}/fiche/${id}/vente`, vente)
+    Axios.post(`${process.env.REACT_APP_API_URI}/fiche/${id}/vente`, { headers: authHeader()}, vente)
       .then((res) => {
         addToast('La vente a bien été ajoutée', {
           appearance: 'success',

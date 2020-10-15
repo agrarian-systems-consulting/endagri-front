@@ -13,6 +13,7 @@ import formatMoney from '../../../app/utils/formatMoney';
 import { useEffect } from 'react';
 import axios from 'axios';
 import PricesChartComponent from './PricesChartComponent';
+import authHeader from '../../../app/auth/auth-header';
 
 const ReadMarchePage = () => {
   let { id } = useParams();
@@ -42,7 +43,7 @@ const ReadMarchePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/marche/${id}`
+        `${process.env.REACT_APP_API_URI}/marche/${id}`, { headers: authHeader()}
       );
       setMarche(res.data);
     };

@@ -5,6 +5,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
+import authHeader from '../../../app/auth/auth-header';
 import typeVenteOptions from '../../../app/data/typeVenteOptions';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
@@ -19,7 +20,9 @@ const MarcheFormComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`${process.env.REACT_APP_API_URI}/produits`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URI}/produits`, {
+        headers: authHeader(),
+      });
 
       setProduits(res.data);
     };
@@ -73,7 +76,11 @@ const MarcheFormComponent = () => {
       // Handle form submit
       onSubmit={(values, { setSubmitting }) => {
         axios
-          .post(`${process.env.REACT_APP_API_URI}/marche`, values)
+          .post(
+            `${process.env.REACT_APP_API_URI}/marche`,
+            { headers: authHeader() },
+            values
+          )
           .then((res) => {
             console.log(res);
             addToast('Le marché a bien été créé', {

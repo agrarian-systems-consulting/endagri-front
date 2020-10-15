@@ -17,6 +17,7 @@ import DepenseLibreFormComponent from './DepenseLibreFormComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
 import ProductionsComponent from './ProductionsComponent';
 import DepensesLibresComponent from './DepensesLibresComponent';
+import authHeader from '../../../app/auth/auth-header';
 
 const ReadAnalysePage = () => {
   const { id } = useParams();
@@ -32,7 +33,9 @@ const ReadAnalysePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      Axios.get(`${process.env.REACT_APP_API_URI}/analyse/${id}`)
+      Axios.get(`${process.env.REACT_APP_API_URI}/analyse/${id}`, {
+        headers: authHeader(),
+      })
         .then((res) => {
           setAnalyse(res.data);
           setLoading(false);
@@ -48,6 +51,7 @@ const ReadAnalysePage = () => {
   const addFicheTechniqueLibre = (ficheTechniqueLibre) => {
     Axios.post(
       `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre`,
+      { headers: authHeader() },
       ficheTechniqueLibre
     )
       .then((res) => {
@@ -77,7 +81,8 @@ const ReadAnalysePage = () => {
 
   const deleteFicheTechniqueLibre = (id_ftl) => {
     Axios.delete(
-      `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre/${id_ftl}`
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre/${id_ftl}`,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast('La production a bien été supprimée', {
@@ -107,7 +112,7 @@ const ReadAnalysePage = () => {
 
   const addDepenseLibre = (depenseLibre) => {
     Axios.post(
-      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre`,
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre`, { headers: authHeader()},
       depenseLibre
     )
       .then((res) => {
@@ -137,7 +142,7 @@ const ReadAnalysePage = () => {
 
   const deleteDepenseLibre = (id_depense_libre) => {
     Axios.delete(
-      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre/${id_depense_libre}`
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre/${id_depense_libre}`, { headers: authHeader()}
     )
       .then((res) => {
         addToast('La dépense libre a bien été supprimée', {

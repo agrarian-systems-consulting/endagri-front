@@ -5,6 +5,7 @@ import Axios from 'axios';
 import FluxChartComponent from './FluxChartComponent';
 import formatMoney from '../../../app/utils/formatMoney';
 import parse from 'date-fns/parse';
+import authHeader from '../../../app/auth/auth-header';
 
 const ReadFluxMoisReelsParFichesLibres = () => {
   let { id } = useParams();
@@ -13,7 +14,7 @@ const ReadFluxMoisReelsParFichesLibres = () => {
 
   useEffect(() => {
     Axios(
-      `${process.env.REACT_APP_API_URI}/analyse/${id}/flux_mois_reels_par_fiches_libres`
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/flux_mois_reels_par_fiches_libres`, { headers: authHeader()}
     ).then((res) => {
       setFlux(res.data);
     });

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Breadcrumb, Button, Grid, Table, Icon } from 'semantic-ui-react';
+import authHeader from '../../../app/auth/auth-header';
 import capitalize from '../../../app/utils/capitalize';
 
 const ListMarchesPage = () => {
@@ -9,7 +10,7 @@ const ListMarchesPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`${process.env.REACT_APP_API_URI}/marches`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URI}/marches`, { headers: authHeader()});
       setMarches(res.data);
     };
     fetchData();

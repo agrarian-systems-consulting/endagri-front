@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
+import authHeader from '../../../app/auth/auth-header';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 
 const typeProductionsOptions = [
@@ -46,7 +47,7 @@ const ProductionFormComponent = () => {
       validationSchema={validationSchema}
       // Handle form submit
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        Axios.post(`${process.env.REACT_APP_API_URI}/production`, values)
+        Axios.post(`${process.env.REACT_APP_API_URI}/production`, { headers: authHeader()}, values)
           .then((res) => {
             addToast('La production a bien été créée', {
               appearance: 'success',

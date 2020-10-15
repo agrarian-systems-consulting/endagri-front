@@ -3,6 +3,7 @@ import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Grid, Segment } from 'semantic-ui-react';
+import authHeader from '../../../app/auth/auth-header';
 
 const DeleteMarchePage = () => {
   const { addToast } = useToasts();
@@ -37,7 +38,7 @@ const DeleteMarchePage = () => {
                 color='red'
                 floated='right'
                 onClick={() => {
-                  Axios.delete(`${process.env.REACT_APP_API_URI}/marche/${id}`)
+                  Axios.delete(`${process.env.REACT_APP_API_URI}/marche/${id}`, { headers: authHeader()})
                     .then(() => {
                       addToast('Le marché a bien été supprimé', {
                         appearance: 'success',

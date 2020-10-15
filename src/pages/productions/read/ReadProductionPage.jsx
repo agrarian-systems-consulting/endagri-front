@@ -16,6 +16,7 @@ import {
 } from 'semantic-ui-react';
 import ProduitFormComponent from './ProduitFormComponent';
 import capitalize from '../../../app/utils/capitalize';
+import authHeader from '../../../app/auth/auth-header';
 
 const ReadProductionPage = () => {
   const { id } = useParams();
@@ -28,7 +29,8 @@ const ReadProductionPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await Axios.get(
-        `${process.env.REACT_APP_API_URI}/production/${id}`
+        `${process.env.REACT_APP_API_URI}/production/${id}`,
+        { headers: authHeader() }
       );
       setProduction(res.data);
       setLoading(false);
@@ -40,7 +42,11 @@ const ReadProductionPage = () => {
   const postProduit = (produit) => {
     produit.id_production = id;
 
-    Axios.post(`${process.env.REACT_APP_API_URI}/produit`, produit).then(
+    Axios.post(
+      `${process.env.REACT_APP_API_URI}/produit`,
+      { headers: authHeader() },
+      produit
+    ).then(
       (res) => {
         produit.id = res.data.id;
 
@@ -78,7 +84,9 @@ const ReadProductionPage = () => {
 
     setProduction(updatedProduction);
 
-    Axios.delete(`${process.env.REACT_APP_API_URI}/produit/${id_produit}`).then(
+    Axios.delete(`${process.env.REACT_APP_API_URI}/produit/${id_produit}`, {
+      headers: authHeader(),
+    }).then(
       (res) => {
         addToast('Le produit a bien été supprimé', {
           appearance: 'success',

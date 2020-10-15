@@ -4,6 +4,7 @@ import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 
 import Axios from 'axios';
+import authHeader from '../../../app/auth/auth-header';
 const DeleteAnalysePage = () => {
   let history = useHistory();
   const { addToast } = useToasts();
@@ -49,7 +50,10 @@ const DeleteAnalysePage = () => {
                 floated='right'
                 color='red'
                 onClick={() => {
-                  Axios.delete(`${process.env.REACT_APP_API_URI}/analyse/${id}`)
+                  Axios.delete(
+                    `${process.env.REACT_APP_API_URI}/analyse/${id}`,
+                    { headers: authHeader() }
+                  )
                     .then((res) => {
                       addToast("L'analyse a bien été supprimée", {
                         appearance: 'success',

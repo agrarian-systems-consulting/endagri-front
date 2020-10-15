@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Grid, Segment } from 'semantic-ui-react';
 import Axios from 'axios';
+import authHeader from '../../../app/auth/auth-header';
 
 const DeleteFichePage = () => {
   const { addToast } = useToasts();
@@ -23,8 +24,6 @@ const DeleteFichePage = () => {
               </p>
               <Button
                 onClick={() => {
-                  // TODO : Supprimer la fiche
-                  // await axios.delete
                   addToast("La fiche n'a pas été supprimée", {
                     appearance: 'info',
                     autoDismiss: true,
@@ -39,7 +38,9 @@ const DeleteFichePage = () => {
                 floated='right'
                 color='red'
                 onClick={() => {
-                  Axios.delete(`${process.env.REACT_APP_API_URI}/fiche/${id}`)
+                  Axios.delete(`${process.env.REACT_APP_API_URI}/fiche/${id}`, {
+                    headers: authHeader(),
+                  })
                     .then((res) => {
                       addToast('La fiche a bien été supprimée', {
                         appearance: 'success',

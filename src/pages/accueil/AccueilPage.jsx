@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import SemanticField from '../../app/utils/forms/SemanticField';
 import { useToasts } from 'react-toast-notifications';
-import authService from '../../app/auth/auth.service';
+import authService from '../../app/auth/old_auth.service';
 import Axios from 'axios';
 import useUser from '../../app/auth/useUser';
 

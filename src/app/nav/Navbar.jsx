@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useState } from 'react';
 import { Menu, Button, Dropdown } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import { useEffect } from 'react';
-import authService from '../../app/auth/auth.service';
+import authService from '../auth/old_auth.service';
 import { UserContext } from '../auth/UserContext';
 import useUser from '../auth/useUser';
 

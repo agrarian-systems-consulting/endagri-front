@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams, NavLink } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Form } from 'semantic-ui-react';
+import authHeader from '../../../app/auth/auth-header';
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
 
 const UpdateMarcheFormComponent = () => {
@@ -17,7 +18,7 @@ const UpdateMarcheFormComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/marche/${id}`
+        `${process.env.REACT_APP_API_URI}/marche/${id}`, { headers: authHeader()}
       );
       setMarche(res.data);
     };

@@ -7,6 +7,7 @@ import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
 import { useEffect } from 'react';
 import Axios from 'axios';
 import { useParams } from 'react-router-dom';
+import authHeader from '../../../app/auth/auth-header';
 
 const CoeffVenteFormComponent = ({ addCoeffVente }) => {
   const { id, id_ftl } = useParams();
@@ -14,7 +15,8 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
 
   useEffect(() => {
     Axios(
-      `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre/${id_ftl}/produits`
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre/${id_ftl}/produits`,
+      { headers: authHeader() }
     )
       .then((res) => {
         setProduits(res.data);

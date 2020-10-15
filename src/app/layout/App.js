@@ -27,7 +27,7 @@ import DeleteProductionPage from '../../pages/productions/delete/DeleteProductio
 import ReadFicheLibrePage from '../../pages/analyses/readFicheLibre/ReadFicheLibrePage';
 import ReadFluxMoisReelsParFichesLibres from '../../pages/analyses/readRapportAnalyse/ReadFluxMoisReelsParFichesLibres';
 import AccueilPage from '../../pages/accueil/AccueilPage';
-import PrivateRoute from '../auth/PrivateRoute';
+import PrivateRoute from '../nav/PrivateRoute';
 import NotFound from '../../pages/ErrorPages/NotFound';
 
 function App() {

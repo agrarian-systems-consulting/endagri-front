@@ -5,7 +5,7 @@
 // If not: they are redirected to the login page.
 import React, { Fragment } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import useUser from './useUser';
+import useUser from '../auth/useUser';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { isLoggedIn } = useUser();

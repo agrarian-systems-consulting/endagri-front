@@ -5,13 +5,16 @@ import Axios from 'axios';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import capitalize from '../../../app/utils/capitalize';
+import authHeader from '../../../app/auth/auth-header';
 
 const ListAnalysesPage = () => {
   const [analyses, setAnalyses] = useState([]);
 
   useEffect(() => {
     const fetchData = () => {
-      Axios(`${process.env.REACT_APP_API_URI}/analyses`)
+      Axios(`${process.env.REACT_APP_API_URI}/analyses`, {
+        headers: authHeader(),
+      })
         .then((res) => {
           setAnalyses(res.data);
         })

@@ -3,6 +3,7 @@ import { Grid, Breadcrumb, Table, Button, Icon } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import Axios from 'axios';
 import capitalize from '../../../app/utils/capitalize';
+import authHeader from '../../../app/auth/auth-header';
 
 const ListFichesPage = () => {
   const [fiches, setFiches] = useState([]);
@@ -10,7 +11,9 @@ const ListFichesPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await Axios.get(`${process.env.REACT_APP_API_URI}/fiches`);
+      const res = await Axios.get(`${process.env.REACT_APP_API_URI}/fiches`, {
+        headers: authHeader(),
+      });
       setFiches(res.data);
       setLoading(false);
     };

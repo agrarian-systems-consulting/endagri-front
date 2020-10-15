@@ -3,6 +3,7 @@ import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Grid, Segment } from 'semantic-ui-react';
+import authHeader from '../../../app/auth/auth-header';
 
 const DeleteProductionPage = () => {
   const { addToast } = useToasts();
@@ -39,7 +40,7 @@ const DeleteProductionPage = () => {
                 color='red'
                 onClick={() => {
                   Axios.delete(
-                    `${process.env.REACT_APP_API_URI}/production/${id}`
+                    `${process.env.REACT_APP_API_URI}/production/${id}`, { headers: authHeader()}
                   )
                     .then(() => {
                       addToast('La production a bien été supprimée', {
