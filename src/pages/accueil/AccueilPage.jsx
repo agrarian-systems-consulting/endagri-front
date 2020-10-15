@@ -6,12 +6,15 @@ import * as Yup from 'yup';
 import SemanticField from '../../app/utils/forms/SemanticField';
 import { useToasts } from 'react-toast-notifications';
 import authService from '../../app/auth/auth.service';
+import Axios from 'axios';
+import useUser from '../../app/auth/useUser';
 
 const AccueilPage = () => {
   //Hooks
   let history = useHistory();
   const { addToast } = useToasts();
   const [message, setMessage] = useState('');
+  const { loginUtilisateur } = useUser();
 
   // Form validation handled with Yup
   const validationSchema = Yup.object({
@@ -41,12 +44,14 @@ const AccueilPage = () => {
                 // Handle form validation
                 validationSchema={validationSchema}
                 // Handle form submit
-                onSubmit={(values, { setSubmitting, resetForm }) => {
+                onSubmit={(
+                  { matricule, password },
+                  { setSubmitting, resetForm }
+                ) => {
                   setSubmitting(true);
-                  // TODO : Authenticate
-                  authService
-                    .login(values.matricule, values.password)
-                    .then(() => {
+                  // Essayer d'authentifier l'utilisateur
+                  loginUtilisateur(matricule, password)
+                    .then((response) => {
                       // Petit toast pour montrer à l'utilisateur qu'il est bien connecté
                       addToast('Vous êtes connecté avec succès', {
                         appearance: 'success',
@@ -56,13 +61,7 @@ const AccueilPage = () => {
                       history.push('/analyses');
                     })
                     .catch((error) => {
-                      const resMessage =
-                        (error.response &&
-                          error.response.data &&
-                          error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-
+                      //TODO : Améliorer le message d'erreur avec l'API
                       setSubmitting(false);
                       setMessage("Erreur d'authentification");
                     });
