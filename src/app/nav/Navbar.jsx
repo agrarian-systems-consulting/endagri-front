@@ -14,9 +14,9 @@ const Navbar = () => {
       {!utilisateur.matricule ? (
         <Menu inverted fixed='top'>
           <Menu.Item name='Endagri' header as={NavLink} to='/' exact />
-          <Menu.Item position='right'>
+          {/* <Menu.Item position='right'>
             <Button basic inverted content='Se connecter' as={NavLink} to='/' />
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       ) : (
         <Menu inverted fixed='top'>
@@ -69,7 +69,7 @@ const Navbar = () => {
             </Menu.Item>
           )}
 
-          <Menu.Item position='right'>
+          {/* <Menu.Item position='right'>
             <Dropdown
               pointing='top right'
               text={`${utilisateur.matricule} - ${utilisateur.role}`}
@@ -90,6 +90,23 @@ const Navbar = () => {
                 />
               </Dropdown.Menu>
             </Dropdown>
+          </Menu.Item> */}
+          <Menu.Item
+            position='right'
+            icon='user'
+            name={`${utilisateur.matricule} - ${utilisateur.role}`}
+          />
+
+          <Menu.Item position='right'>
+            <Button
+              basic
+              inverted
+              icon='power'
+              content='Se déconnecter'
+              onClick={() => {
+                logoutUtilisateur();
+              }}
+            />
           </Menu.Item>
         </Menu>
       )}

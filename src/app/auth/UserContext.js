@@ -4,11 +4,11 @@ const UserContext = React.createContext([{}, () => {}]);
 
 const UserContextProvider = (props) => {
   const [utilisateur, setUtilisateur] = useState({
-    matricule: "1234",
+    matricule: null,
     role: null,
     accessToken: null,
   });
-  
+
   return (
     <UserContext.Provider value={[utilisateur, setUtilisateur]}>
       {props.children}

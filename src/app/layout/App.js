@@ -27,6 +27,7 @@ import DeleteProductionPage from '../../pages/productions/delete/DeleteProductio
 import ReadFicheLibrePage from '../../pages/analyses/readFicheLibre/ReadFicheLibrePage';
 import ReadFluxMoisReelsParFichesLibres from '../../pages/analyses/readRapportAnalyse/ReadFluxMoisReelsParFichesLibres';
 import AccueilPage from '../../pages/accueil/AccueilPage';
+import PrivateRoute from '../auth/PrivateRoute';
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
       <Container className='main'>
         <Switch>
           <Route exact path='/' component={AccueilPage} />
-          <Route exact path='/analyses' component={ListAnalysesPage} />
+          <PrivateRoute exact path='/analyses' component={ListAnalysesPage} />
           <Route exact path='/analyse/create' component={CreateAnalysePage} />
           <Route exact path='/analyse/:id' component={ReadAnalysePage} />
           <Route

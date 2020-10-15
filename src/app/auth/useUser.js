@@ -31,9 +31,14 @@ const useUser = () => {
     history.push('/');
   };
 
+  const isLoggedIn = () => {
+    return utilisateur.matricule;
+  };
+
   return {
     loginUtilisateur,
     logoutUtilisateur,
+    isLoggedIn,
     utilisateur,
   };
 };
