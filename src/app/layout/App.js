@@ -29,6 +29,9 @@ import ReadFluxMoisReelsParFichesLibres from '../../pages/analyses/readRapportAn
 import AccueilPage from '../../pages/accueil/AccueilPage';
 import PrivateRoute from '../nav/PrivateRoute';
 import NotFound from '../../pages/ErrorPages/NotFound';
+import ListUtilisateursPage from '../../pages/utilisateurs/listUtilisateurs/listUtilisateursPage';
+import DeleteUtilisateurPage from '../../pages/utilisateurs/deleteUtilisateur/deleteUtilisateur';
+import CreateUtilisateurPage from '../../pages/utilisateurs/createUtilisateur/createUtilisateurPage';
 
 function App() {
   return (
@@ -122,6 +125,21 @@ function App() {
             exact
             path='/production/:id/delete'
             component={DeleteProductionPage}
+          />
+          <PrivateRoute
+            exact
+            path='/utilisateurs'
+            component={ListUtilisateursPage}
+          />
+          <PrivateRoute
+            exact
+            path='/utilisateur/create'
+            component={CreateUtilisateurPage}
+          />
+          <PrivateRoute
+            exact
+            path='/utilisateur/:matricule/delete'
+            component={DeleteUtilisateurPage}
           />
           <PrivateRoute component={NotFound} />
         </Switch>
