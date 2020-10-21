@@ -83,16 +83,20 @@ const ListFichesPage = () => {
                             {capitalize(libelle_production)}
                           </Table.Cell>
                           <Table.Cell>
-                            <Button
-                              size='mini'
-                              icon
-                              basic
-                              circular
-                              as={NavLink}
-                              to={`/fiche/${id}/delete`}
-                            >
-                              <Icon name='trash' />
-                            </Button>
+                            {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+                              utilisateur.role
+                            ) && (
+                              <Button
+                                size='mini'
+                                icon
+                                basic
+                                circular
+                                as={NavLink}
+                                to={`/fiche/${id}/delete`}
+                              >
+                                <Icon name='trash' />
+                              </Button>
+                            )}
                           </Table.Cell>
                         </Table.Row>
                       );

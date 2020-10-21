@@ -18,11 +18,12 @@ import InformationsPrincipalesComponent from './InformationsPrincipalesComponent
 import ProductionsComponent from './ProductionsComponent';
 import DepensesLibresComponent from './DepensesLibresComponent';
 import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 
 const ReadAnalysePage = () => {
   const { id } = useParams();
   const { addToast } = useToasts();
-
+  const { utilisateur } = useUser();
   const [loading, setLoading] = useState(true);
   const [analyse, setAnalyse] = useState();
   const [
@@ -287,15 +288,18 @@ const ReadAnalysePage = () => {
           >
             <Icon name='file alternate' /> Analyser les flux de trésorerie
           </Button>
-
-          <Button
-            color='red'
-            floated='right'
-            as={NavLink}
-            to={`/analyse/${id}/delete`}
-          >
-            Supprimer l'analyse
-          </Button>
+          {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+            utilisateur.role
+          ) && (
+            <Button
+              color='red'
+              floated='right'
+              as={NavLink}
+              to={`/analyse/${id}/delete`}
+            >
+              Supprimer l'analyse
+            </Button>
+          )}
         </Grid.Column>
       </Grid.Row>
     </Grid>

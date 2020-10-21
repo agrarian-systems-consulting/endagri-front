@@ -28,14 +28,24 @@ const ListAnalysesPage = () => {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Column width={16}>
+        <Grid.Column width={12}>
           <Breadcrumb>
             <Breadcrumb.Section active>Analyses</Breadcrumb.Section>
           </Breadcrumb>
         </Grid.Column>
+        <Grid.Column width={4}>
+          <Button
+            color='teal'
+            floated='right'
+            as={NavLink}
+            to='/analyse/create'
+          >
+            Nouvelle analyse
+          </Button>
+        </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column width={12}>
+        <Grid.Column width={16}>
           <Table singleLine fixed>
             <Table.Header>
               <Table.Row>
@@ -71,13 +81,6 @@ const ListAnalysesPage = () => {
               )}
             </Table.Body>
           </Table>
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <Button color='teal' as={NavLink} to='/analyse/create'>
-            Nouvelle analyse
-          </Button>
         </Grid.Column>
       </Grid.Row>
     </Grid>

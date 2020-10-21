@@ -18,7 +18,11 @@ const AccueilPage = () => {
 
   // Form validation handled with Yup
   const validationSchema = Yup.object({
-    matricule: Yup.string().required("L'email est obligatoire"),
+    matricule: Yup.string()
+      .matches(/^P[0-9]{4}$/g, {
+        message: "Le format du matricule n'est pas correct",
+      })
+      .required('Le matricule est obligatoire'),
     password: Yup.string().required('Le mot de passe est obligatoire'),
   });
 
