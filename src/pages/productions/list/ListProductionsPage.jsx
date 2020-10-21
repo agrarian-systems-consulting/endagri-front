@@ -50,7 +50,7 @@ const ListProductionsPage = () => {
           <Table singleLine>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Code</Table.HeaderCell>
+                <Table.HeaderCell></Table.HeaderCell>
                 <Table.HeaderCell>Production</Table.HeaderCell>
                 <Table.HeaderCell>Produits associés</Table.HeaderCell>
               </Table.Row>
@@ -59,11 +59,7 @@ const ListProductionsPage = () => {
               {productions.map(({ id, libelle, type_production, produits }) => {
                 return (
                   <Table.Row key={id}>
-                    <Table.Cell>
-                      <Label ribbon color='teal'>
-                        {id}
-                      </Label>
-                    </Table.Cell>
+                    <Table.Cell>Production {id}</Table.Cell>
                     <Table.Cell>
                       {
                         {

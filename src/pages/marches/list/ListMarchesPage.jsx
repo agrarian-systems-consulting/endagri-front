@@ -3,14 +3,18 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Breadcrumb, Button, Grid, Table, Icon } from 'semantic-ui-react';
 import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 import capitalize from '../../../app/utils/capitalize';
 
 const ListMarchesPage = () => {
   const [marches, setMarches] = useState();
+  const { utilisateur } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`${process.env.REACT_APP_API_URI}/marches`, { headers: authHeader()});
+      const res = await axios.get(`${process.env.REACT_APP_API_URI}/marches`, {
+        headers: authHeader(),
+      });
       setMarches(res.data);
     };
     fetchData();
@@ -25,9 +29,18 @@ const ListMarchesPage = () => {
           </Breadcrumb>
         </Grid.Column>
         <Grid.Column width={4}>
-          <Button floated='right' color='teal' as={NavLink} to='/marche/create'>
-            Nouveau marché
-          </Button>
+          {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+            utilisateur.role
+          ) && (
+            <Button
+              floated='right'
+              color='teal'
+              as={NavLink}
+              to='/marche/create'
+            >
+              Nouveau marché
+            </Button>
+          )}
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
@@ -66,16 +79,20 @@ const ListMarchesPage = () => {
                         <Table.Cell>{type_marche}</Table.Cell>
                         <Table.Cell>{capitalize(localisation)}</Table.Cell>
                         <Table.Cell textAlign='center'>
-                          <Button
-                            size='mini'
-                            icon
-                            basic
-                            circular
-                            as={NavLink}
-                            to={`/marche/${id}/delete`}
-                          >
-                            <Icon name='trash' />
-                          </Button>
+                          {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+                            utilisateur.role
+                          ) && (
+                            <Button
+                              size='mini'
+                              icon
+                              basic
+                              circular
+                              as={NavLink}
+                              to={`/marche/${id}/delete`}
+                            >
+                              <Icon name='trash' />
+                            </Button>
+                          )}
                         </Table.Cell>
                       </Table.Row>
                     );
@@ -83,13 +100,6 @@ const ListMarchesPage = () => {
                 )}
             </Table.Body>
           </Table>
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <Button color='teal' as={NavLink} to='/marche/create'>
-            Nouveau marché
-          </Button>
         </Grid.Column>
       </Grid.Row>
     </Grid>
