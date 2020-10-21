@@ -44,12 +44,16 @@ const Navbar = () => {
           ].includes(utilisateur.role) && (
             <Menu.Item name='Marchés' as={NavLink} to='/marches' />
           )}
+
           {[
             'SUPER_ADMIN',
             'ADMINISTRATEUR_ENDAGRI',
             'AGRONOME_REGIONAL',
           ].includes(utilisateur.role) && (
             <Menu.Item name='Productions' as={NavLink} to='/productions' />
+          )}
+          {['SUPER_ADMIN'].includes(utilisateur.role) && (
+            <Menu.Item name='Utilisateurs' as={NavLink} to='/utilisateurs' />
           )}
           {[
             'SUPER_ADMIN',
