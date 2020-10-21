@@ -9,12 +9,14 @@ import InformationsPrincipalesComponent from './InformationsPrincipalesComponent
 import VentesComponent from './VentesComponent';
 import TableauRecapComponent from './TableauRecapComponent';
 import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 
 const ReadFichePage = () => {
   let { id } = useParams();
   const { addToast } = useToasts();
 
   const [fiche, setFiche] = useState({});
+  const { utilisateur } = useUser();
 
   useEffect(() => {
     Axios(`${process.env.REACT_APP_API_URI}/fiche/${id}`, {
@@ -191,19 +193,21 @@ const ReadFichePage = () => {
           id_production={fiche.id_production}
         />
       </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <Button
-            as={Link}
-            to={`/fiche/${fiche.id}/delete`}
-            floated='right'
-            negative
-            size='small'
-          >
-            Supprimer la fiche
-          </Button>
-        </Grid.Column>
-      </Grid.Row>
+      {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(utilisateur.role) && (
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <Button
+              as={Link}
+              to={`/fiche/${fiche.id}/delete`}
+              floated='right'
+              negative
+              size='small'
+            >
+              Supprimer la fiche
+            </Button>
+          </Grid.Column>
+        </Grid.Row>
+      )}
     </Grid>
   );
 };

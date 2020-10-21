@@ -4,9 +4,12 @@ import formatMoney from '../../../app/utils/formatMoney';
 import getMois from '../../../app/utils/getMois';
 import ActiviteFormComponent from './ActiviteFormComponent.jsx';
 import capitalize from '../../../app/utils/capitalize';
+import useUser from '../../../app/auth/useUser';
 
 const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const { utilisateur } = useUser();
+
   return (
     <Fragment>
       <h5>Activités</h5>
@@ -45,15 +48,19 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
                         )}
                     </Table.Cell>
                     <Table.Cell textAlign='center'>
-                      <Button
-                        size='mini'
-                        icon
-                        basic
-                        circular
-                        onClick={() => deleteActivite(id)}
-                      >
-                        <Icon name='trash' />
-                      </Button>
+                      {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+                        utilisateur.role
+                      ) && (
+                        <Button
+                          size='mini'
+                          icon
+                          basic
+                          circular
+                          onClick={() => deleteActivite(id)}
+                        >
+                          <Icon name='trash' />
+                        </Button>
+                      )}
                     </Table.Cell>
                   </Table.Row>
                 );
@@ -61,15 +68,19 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
           </Transition.Group>
         )}
       </Table>
-      {isFormOpen ? (
-        <Button onClick={() => setIsFormOpen(false)}>Annuler</Button>
-      ) : (
-        <Button color='blue' onClick={() => setIsFormOpen(true)}>
-          Ajouter une activité
-        </Button>
-      )}
+      {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(utilisateur.role) && (
+        <Fragment>
+          {isFormOpen ? (
+            <Button onClick={() => setIsFormOpen(false)}>Annuler</Button>
+          ) : (
+            <Button color='blue' onClick={() => setIsFormOpen(true)}>
+              Ajouter une activité
+            </Button>
+          )}
 
-      {isFormOpen && <ActiviteFormComponent postActivite={postActivite} />}
+          {isFormOpen && <ActiviteFormComponent postActivite={postActivite} />}
+        </Fragment>
+      )}
     </Fragment>
   );
 };

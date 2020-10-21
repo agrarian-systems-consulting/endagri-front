@@ -1,10 +1,12 @@
 import React, { useState, Fragment } from 'react';
 import { Grid, Table, Button, Icon, Transition } from 'semantic-ui-react';
+import useUser from '../../../app/auth/useUser';
 import getMois from '../../../app/utils/getMois';
 import CreateVenteComponent from './VenteFormComponent';
 
 const VentesComponent = ({ ventes, deleteVente, postVente, id_production }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const { utilisateur } = useUser();
 
   return (
     <Grid.Column width={16}>
@@ -81,15 +83,19 @@ const VentesComponent = ({ ventes, deleteVente, postVente, id_production }) => {
                         </Table.Cell>
 
                         <Table.Cell>
-                          <Button
-                            onClick={() => deleteVente(id)}
-                            size='mini'
-                            icon
-                            basic
-                            circular
-                          >
-                            <Icon name='trash' />
-                          </Button>
+                          {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+                            utilisateur.role
+                          ) && (
+                            <Button
+                              onClick={() => deleteVente(id)}
+                              size='mini'
+                              icon
+                              basic
+                              circular
+                            >
+                              <Icon name='trash' />
+                            </Button>
+                          )}
                         </Table.Cell>
                       </Table.Row>
                     );
@@ -99,19 +105,23 @@ const VentesComponent = ({ ventes, deleteVente, postVente, id_production }) => {
           )}
         </Transition.Group>
       </Table>
-      {isFormOpen ? (
-        <Button onClick={() => setIsFormOpen(false)}>Fermer</Button>
-      ) : (
-        <Button color='blue' onClick={() => setIsFormOpen(true)}>
-          Ajouter une vente
-        </Button>
-      )}
+      {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(utilisateur.role) && (
+        <Fragment>
+          {isFormOpen ? (
+            <Button onClick={() => setIsFormOpen(false)}>Fermer</Button>
+          ) : (
+            <Button color='blue' onClick={() => setIsFormOpen(true)}>
+              Ajouter une vente
+            </Button>
+          )}
 
-      {isFormOpen && (
-        <CreateVenteComponent
-          postVente={postVente}
-          id_production={id_production}
-        />
+          {isFormOpen && (
+            <CreateVenteComponent
+              postVente={postVente}
+              id_production={id_production}
+            />
+          )}
+        </Fragment>
       )}
     </Grid.Column>
   );

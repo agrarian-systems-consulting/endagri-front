@@ -4,10 +4,12 @@ import { NavLink } from 'react-router-dom';
 import Axios from 'axios';
 import capitalize from '../../../app/utils/capitalize';
 import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 
 const ListFichesPage = () => {
   const [fiches, setFiches] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { utilisateur } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,9 +31,18 @@ const ListFichesPage = () => {
           </Breadcrumb>
         </Grid.Column>
         <Grid.Column width={4}>
-          <Button floated='right' color='teal' as={NavLink} to='/fiche/create'>
-            Nouvelle fiche
-          </Button>
+          {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+            utilisateur.role
+          ) && (
+            <Button
+              floated='right'
+              color='teal'
+              as={NavLink}
+              to='/fiche/create'
+            >
+              Nouvelle fiche
+            </Button>
+          )}
         </Grid.Column>
       </Grid.Row>
       {loading ? (
@@ -89,13 +100,6 @@ const ListFichesPage = () => {
                   )}
                 </Table.Body>
               </Table>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column width={16}>
-              <Button color='teal' as={NavLink} to='/fiche/create'>
-                Nouvelle fiche
-              </Button>
             </Grid.Column>
           </Grid.Row>
         </Fragment>
