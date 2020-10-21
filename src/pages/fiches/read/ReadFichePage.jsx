@@ -8,15 +8,20 @@ import ActivitesComponent from './ActivitesComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
 import VentesComponent from './VentesComponent';
 import TableauRecapComponent from './TableauRecapComponent';
+import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 
 const ReadFichePage = () => {
   let { id } = useParams();
   const { addToast } = useToasts();
 
   const [fiche, setFiche] = useState({});
+  const { utilisateur } = useUser();
 
   useEffect(() => {
-    Axios(`${process.env.REACT_APP_API_URI}/fiche/${id}`)
+    Axios(`${process.env.REACT_APP_API_URI}/fiche/${id}`, {
+      headers: authHeader(),
+    })
       .then((res) => {
         setFiche(res.data);
       })
@@ -27,7 +32,8 @@ const ReadFichePage = () => {
 
   const deleteActivite = async (id_activite) => {
     Axios.delete(
-      `${process.env.REACT_APP_API_URI}/fiche/${id}/activite/${id_activite}`
+      `${process.env.REACT_APP_API_URI}/fiche/${id}/activite/${id_activite}`,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast("L'activité a bien été supprimée", {
@@ -61,7 +67,8 @@ const ReadFichePage = () => {
   const postActivite = async (activite) => {
     Axios.post(
       `${process.env.REACT_APP_API_URI}/fiche/${id}/activite`,
-      activite
+      activite,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast("L'activité a bien été ajoutée", {
@@ -90,7 +97,8 @@ const ReadFichePage = () => {
 
   const deleteVente = async (id_vente) => {
     Axios.delete(
-      `${process.env.REACT_APP_API_URI}/fiche/${id}/vente/${id_vente}`
+      `${process.env.REACT_APP_API_URI}/fiche/${id}/vente/${id_vente}`,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast('La vente a bien été supprimée', {
@@ -119,7 +127,9 @@ const ReadFichePage = () => {
   };
 
   const postVente = async (vente) => {
-    Axios.post(`${process.env.REACT_APP_API_URI}/fiche/${id}/vente`, vente)
+    Axios.post(`${process.env.REACT_APP_API_URI}/fiche/${id}/vente`, vente, {
+      headers: authHeader(),
+    })
       .then((res) => {
         addToast('La vente a bien été ajoutée', {
           appearance: 'success',
@@ -183,19 +193,21 @@ const ReadFichePage = () => {
           id_production={fiche.id_production}
         />
       </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <Button
-            as={Link}
-            to={`/fiche/${fiche.id}/delete`}
-            floated='right'
-            negative
-            size='small'
-          >
-            Supprimer la fiche
-          </Button>
-        </Grid.Column>
-      </Grid.Row>
+      {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(utilisateur.role) && (
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <Button
+              as={Link}
+              to={`/fiche/${fiche.id}/delete`}
+              floated='right'
+              negative
+              size='small'
+            >
+              Supprimer la fiche
+            </Button>
+          </Grid.Column>
+        </Grid.Row>
+      )}
     </Grid>
   );
 };

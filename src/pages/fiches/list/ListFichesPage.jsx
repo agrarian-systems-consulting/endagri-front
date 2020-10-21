@@ -3,14 +3,19 @@ import { Grid, Breadcrumb, Table, Button, Icon } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import Axios from 'axios';
 import capitalize from '../../../app/utils/capitalize';
+import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 
 const ListFichesPage = () => {
   const [fiches, setFiches] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { utilisateur } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await Axios.get(`${process.env.REACT_APP_API_URI}/fiches`);
+      const res = await Axios.get(`${process.env.REACT_APP_API_URI}/fiches`, {
+        headers: authHeader(),
+      });
       setFiches(res.data);
       setLoading(false);
     };
@@ -26,9 +31,18 @@ const ListFichesPage = () => {
           </Breadcrumb>
         </Grid.Column>
         <Grid.Column width={4}>
-          <Button floated='right' color='teal' as={NavLink} to='/fiche/create'>
-            Nouvelle fiche
-          </Button>
+          {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+            utilisateur.role
+          ) && (
+            <Button
+              floated='right'
+              color='teal'
+              as={NavLink}
+              to='/fiche/create'
+            >
+              Nouvelle fiche
+            </Button>
+          )}
         </Grid.Column>
       </Grid.Row>
       {loading ? (
@@ -69,16 +83,20 @@ const ListFichesPage = () => {
                             {capitalize(libelle_production)}
                           </Table.Cell>
                           <Table.Cell>
-                            <Button
-                              size='mini'
-                              icon
-                              basic
-                              circular
-                              as={NavLink}
-                              to={`/fiche/${id}/delete`}
-                            >
-                              <Icon name='trash' />
-                            </Button>
+                            {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+                              utilisateur.role
+                            ) && (
+                              <Button
+                                size='mini'
+                                icon
+                                basic
+                                circular
+                                as={NavLink}
+                                to={`/fiche/${id}/delete`}
+                              >
+                                <Icon name='trash' />
+                              </Button>
+                            )}
                           </Table.Cell>
                         </Table.Row>
                       );
@@ -86,13 +104,6 @@ const ListFichesPage = () => {
                   )}
                 </Table.Body>
               </Table>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column width={16}>
-              <Button color='teal' as={NavLink} to='/fiche/create'>
-                Nouvelle fiche
-              </Button>
             </Grid.Column>
           </Grid.Row>
         </Fragment>

@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Grid, Segment, Button, Form, Message, Image } from 'semantic-ui-react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import SemanticField from '../../app/utils/forms/SemanticField';
 import { useToasts } from 'react-toast-notifications';
+import authService from '../../app/auth/old_auth.service';
+import Axios from 'axios';
+import useUser from '../../app/auth/useUser';
 
 const AccueilPage = () => {
   //Hooks
   let history = useHistory();
   const { addToast } = useToasts();
+  const [message, setMessage] = useState('');
+  const { loginUtilisateur } = useUser();
 
   // Form validation handled with Yup
   const validationSchema = Yup.object({
-    email: Yup.string()
-      .email("L'email est invalide")
-      .required("L'email est obligatoire"),
+    matricule: Yup.string()
+      .matches(/^P[0-9]{4}$/g, {
+        message: "Le format du matricule n'est pas correct",
+      })
+      .required('Le matricule est obligatoire'),
     password: Yup.string().required('Le mot de passe est obligatoire'),
   });
 
@@ -28,23 +35,40 @@ const AccueilPage = () => {
               <h5>Connexion</h5>
             </Segment>
             <Segment attached='bottom'>
+              {message && (
+                <Message
+                  error
+                  header='Action Forbidden'
+                  content="Erreur d'authentification"
+                />
+              )}
               <Formik
                 // Initial values are mandatory in Formik
-                initialValues={{ email: '', password: '' }}
+                initialValues={{ matricule: '', password: '' }}
                 // Handle form validation
                 validationSchema={validationSchema}
                 // Handle form submit
-                onSubmit={(values, { setSubmitting, resetForm }) => {
+                onSubmit={(
+                  { matricule, password },
+                  { setSubmitting, resetForm }
+                ) => {
                   setSubmitting(true);
-                  // Authenticate with Firebase
-
-                  // Petit toast pour montrer à l'utilisateur qu'il est bien connecté
-                  addToast('Vous êtes connecté avec succès', {
-                    appearance: 'success',
-                    autoDismiss: true,
-                  });
-                  // If authenticated got to desired page
-                  history.push('/analyses');
+                  // Essayer d'authentifier l'utilisateur
+                  loginUtilisateur(matricule, password)
+                    .then((response) => {
+                      // Petit toast pour montrer à l'utilisateur qu'il est bien connecté
+                      addToast('Vous êtes connecté avec succès', {
+                        appearance: 'success',
+                        autoDismiss: true,
+                      });
+                      // If authenticated got to desired page
+                      history.push('/analyses');
+                    })
+                    .catch((error) => {
+                      //TODO : Améliorer le message d'erreur avec l'API
+                      setSubmitting(false);
+                      setMessage("Erreur d'authentification");
+                    });
                 }}
               >
                 {({
@@ -57,8 +81,8 @@ const AccueilPage = () => {
                 }) => (
                   <Form onSubmit={handleSubmit}>
                     <SemanticField
-                      label='Email'
-                      name='email'
+                      label='Matricule'
+                      name='matricule'
                       component={Form.Input}
                     />
                     <SemanticField

@@ -9,12 +9,13 @@ import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import authHeader from '../../../app/auth/auth-header';
 
 const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
   const [fichesTechniques, setFichesTechniques] = useState([]);
 
   useEffect(() => {
-    Axios(`${process.env.REACT_APP_API_URI}/fiches`)
+    Axios(`${process.env.REACT_APP_API_URI}/fiches`, { headers: authHeader() })
       .then((res) => {
         setFichesTechniques(res.data);
       })

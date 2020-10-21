@@ -5,13 +5,16 @@ import Axios from 'axios';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import capitalize from '../../../app/utils/capitalize';
+import authHeader from '../../../app/auth/auth-header';
 
 const ListAnalysesPage = () => {
   const [analyses, setAnalyses] = useState([]);
 
   useEffect(() => {
     const fetchData = () => {
-      Axios(`${process.env.REACT_APP_API_URI}/analyses`)
+      Axios(`${process.env.REACT_APP_API_URI}/analyses`, {
+        headers: authHeader(),
+      })
         .then((res) => {
           setAnalyses(res.data);
         })
@@ -25,14 +28,24 @@ const ListAnalysesPage = () => {
   return (
     <Grid>
       <Grid.Row>
-        <Grid.Column width={16}>
+        <Grid.Column width={12}>
           <Breadcrumb>
             <Breadcrumb.Section active>Analyses</Breadcrumb.Section>
           </Breadcrumb>
         </Grid.Column>
+        <Grid.Column width={4}>
+          <Button
+            color='teal'
+            floated='right'
+            as={NavLink}
+            to='/analyse/create'
+          >
+            Nouvelle analyse
+          </Button>
+        </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column width={12}>
+        <Grid.Column width={16}>
           <Table singleLine fixed>
             <Table.Header>
               <Table.Row>
@@ -68,13 +81,6 @@ const ListAnalysesPage = () => {
               )}
             </Table.Body>
           </Table>
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <Button color='teal' as={NavLink} to='/analyse/create'>
-            Nouvelle analyse
-          </Button>
         </Grid.Column>
       </Grid.Row>
     </Grid>

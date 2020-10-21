@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
+import authHeader from '../../../app/auth/auth-header';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 
 const monthsOptions = [
@@ -28,7 +29,9 @@ const FicheFormComponent = () => {
   const [productions, setProductions] = useState([]);
 
   useEffect(() => {
-    Axios(`${process.env.REACT_APP_API_URI}/productions`)
+    Axios(`${process.env.REACT_APP_API_URI}/productions`, {
+      headers: authHeader(),
+    })
       .then((res) => {
         setProductions(res.data);
       })
@@ -72,7 +75,9 @@ const FicheFormComponent = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        Axios.post(`${process.env.REACT_APP_API_URI}/fiche`, values)
+        Axios.post(`${process.env.REACT_APP_API_URI}/fiche`, values, {
+          headers: authHeader(),
+        })
           .then((res) => {
             addToast('La fiche a bien été créée', {
               appearance: 'success',

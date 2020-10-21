@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/layout/App';
@@ -6,17 +6,20 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
 import ScrollToTop from './app/nav/ScrollToTop';
+import { UserContextProvider } from './app/auth/UserContext';
 
 const rootEl = document.getElementById('root');
 
 let render = () => {
   ReactDOM.render(
-    <BrowserRouter>
-      <ToastProvider placement='bottom-right' autoDismissTimeout={2700}>
-        <ScrollToTop />
-        <App />
-      </ToastProvider>
-    </BrowserRouter>,
+    <UserContextProvider>
+      <BrowserRouter>
+        <ToastProvider placement='bottom-right' autoDismissTimeout={2700}>
+          <ScrollToTop />
+          <App />
+        </ToastProvider>
+      </BrowserRouter>
+    </UserContextProvider>,
     rootEl
   );
 };

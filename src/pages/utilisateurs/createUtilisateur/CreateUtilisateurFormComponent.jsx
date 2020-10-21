@@ -8,58 +8,60 @@ import * as Yup from 'yup';
 import authHeader from '../../../app/auth/auth-header';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 
-const typeProductionsOptions = [
-  { key: 1, value: 'Culture annuelle', text: 'Culture annuelle' },
-  { key: 2, value: 'Culture pérenne', text: 'Culture pérenne' },
-  { key: 3, value: 'Elevage bovin laitier', text: 'Elevage bovin laitier' },
+const rolesOptions = [
+  { key: 1, value: 'SUPER_ADMIN', text: 'SUPER_ADMIN' },
+  { key: 2, value: 'ADMINISTRATEUR_ENDAGRI', text: 'ADMINISTRATEUR_ENDAGRI' },
+  { key: 3, value: 'AGRONOME_REGIONAL', text: 'AGRONOME_REGIONAL' },
   {
     key: 4,
-    value: 'Elevage ovin engraisseur',
-    text: 'Elevage ovin engraisseur',
+    value: 'SUPERVISEUR_AGENCE',
+    text: 'SUPERVISEUR_AGENCE',
   },
   {
     key: 5,
-    value: 'Elevage ovin naisseur-engraisseur',
-    text: 'Elevage ovin naisseur-engraisseur',
+    value: 'GESTIONNAIRE_DE_PORTEFEUILLE',
+    text: 'GESTIONNAIRE_DE_PORTEFEUILLE',
   },
-  { key: 6, value: 'Elevage apicole', text: 'Elevage apicole' },
 ];
 
-const ProductionFormComponent = () => {
+const CreateUtilisateurFormComponent = () => {
   let history = useHistory();
   const { addToast } = useToasts();
 
   // Form validation handled with Yup
   const validationSchema = Yup.object({
-    libelle: Yup.string().required('Le nom du produit est obligatoire'),
-    type_production: Yup.string().required(
-      'Le type de production est obligatoire'
-    ),
+    matricule: Yup.string().required('Le nom du produit est obligatoire'),
+    role: Yup.string().required('Le type de production est obligatoire'),
   });
 
   return (
     <Formik
       initialValues={{
-        libelle: '',
-        type_production: '',
+        matricule: '',
+        role: '',
+        password: '',
       }}
       // Handle form validation
       validationSchema={validationSchema}
       // Handle form submit
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        Axios.post(`${process.env.REACT_APP_API_URI}/production`, values, {
-          headers: authHeader(),
-        })
+        Axios.post(
+          `${process.env.REACT_APP_API_URI}/utilisateur/create`,
+          values,
+          {
+            headers: authHeader(),
+          }
+        )
           .then((res) => {
-            addToast('La production a bien été créée', {
+            addToast("L'utilisateur a bien été créé", {
               appearance: 'success',
               autoDismiss: true,
             });
-            history.push(`/production/${res.data.id}`);
+            history.push(`/utilisateurs`);
           })
           .catch((err) => {
             console.error(err);
-            addToast('Erreur lors de la création de la production ', {
+            addToast("Erreur lors de la création de l'utilisateur", {
               appearance: 'error',
               autoDismiss: true,
             });
@@ -78,22 +80,28 @@ const ProductionFormComponent = () => {
       }) => (
         <Form onSubmit={handleSubmit}>
           <SemanticField
-            name='libelle'
+            name='matricule'
             value=''
-            label='Libellé'
+            label='Matricule'
+            component={Form.Input}
+          />
+          <SemanticField
+            name='password'
+            value=''
+            label='Mot de passe'
             component={Form.Input}
           />
 
           <SemanticField
-            name='type_production'
+            name='role'
             value=''
-            label='Type de production'
+            label='Role'
             component={Form.Dropdown}
             fluid
             search
             selection
             clearable
-            options={typeProductionsOptions}
+            options={rolesOptions}
             multiple={false}
           />
 
@@ -103,7 +111,7 @@ const ProductionFormComponent = () => {
             disabled={isSubmitting || !isValid || !dirty}
             loading={isSubmitting}
           >
-            Créer le produit
+            Créer l'utilisateur
           </Button>
           {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
         </Form>
@@ -112,4 +120,4 @@ const ProductionFormComponent = () => {
   );
 };
 
-export default ProductionFormComponent;
+export default CreateUtilisateurFormComponent;

@@ -1,14 +1,14 @@
-import Axios from 'axios';
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Grid, Segment } from 'semantic-ui-react';
+import Axios from 'axios';
 import authHeader from '../../../app/auth/auth-header';
 
-const DeleteProductionPage = () => {
+const DeleteUtilisateurPage = () => {
   const { addToast } = useToasts();
+  let { matricule } = useParams();
   let history = useHistory();
-  let { id } = useParams();
   return (
     <Grid>
       <Grid.Row>
@@ -16,19 +16,18 @@ const DeleteProductionPage = () => {
         <Grid.Column width={6}>
           <Segment.Group>
             <Segment attached='top'>
-              <h5>Supprimer une production</h5>
+              <h5>Supprimer un utilisateur</h5>
             </Segment>
             <Segment attached='bottom'>
-              <p>Cette action est irréversible.</p>
+              <p>
+                Cette action est irréversible, si vous cliquez sur supprimer.
+              </p>
               <Button
                 onClick={() => {
-                  addToast(
-                    "La production et ses produits n'ont pas été supprimés",
-                    {
-                      appearance: 'info',
-                      autoDismiss: true,
-                    }
-                  );
+                  addToast("L'utilisateur a été supprimé", {
+                    appearance: 'info',
+                    autoDismiss: true,
+                  });
 
                   history.goBack();
                 }}
@@ -40,27 +39,28 @@ const DeleteProductionPage = () => {
                 color='red'
                 onClick={() => {
                   Axios.delete(
-                    `${process.env.REACT_APP_API_URI}/production/${id}`, { headers: authHeader()}
+                    `${process.env.REACT_APP_API_URI}/utilisateur/${matricule}`,
+                    {
+                      headers: authHeader(),
+                    }
                   )
-                    .then(() => {
-                      addToast('La production a bien été supprimée', {
+                    .then((res) => {
+                      addToast("L'utilisateur a bien été supprimé", {
                         appearance: 'success',
                         autoDismiss: true,
                       });
 
-                      history.push(`/productions`);
+                      history.push(`/utilisateurs`);
                     })
                     .catch((err) => {
                       console.log(err);
                       addToast(
-                        'Erreur lors de la suppression de la production',
+                        "Problème lors de la suppression de l'utilisateur",
                         {
                           appearance: 'error',
                           autoDismiss: true,
                         }
                       );
-
-                      history.push(`/productions`);
                     });
                 }}
               >
@@ -74,4 +74,4 @@ const DeleteProductionPage = () => {
   );
 };
 
-export default DeleteProductionPage;
+export default DeleteUtilisateurPage;

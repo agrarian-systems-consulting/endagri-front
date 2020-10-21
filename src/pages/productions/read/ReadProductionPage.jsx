@@ -16,19 +16,23 @@ import {
 } from 'semantic-ui-react';
 import ProduitFormComponent from './ProduitFormComponent';
 import capitalize from '../../../app/utils/capitalize';
+import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 
 const ReadProductionPage = () => {
   const { id } = useParams();
   const [isOpenForm, setisOpenForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const { addToast } = useToasts();
+  const { utilisateur } = useUser();
 
   const [production, setProduction] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await Axios.get(
-        `${process.env.REACT_APP_API_URI}/production/${id}`
+        `${process.env.REACT_APP_API_URI}/production/${id}`,
+        { headers: authHeader() }
       );
       setProduction(res.data);
       setLoading(false);
@@ -40,7 +44,9 @@ const ReadProductionPage = () => {
   const postProduit = (produit) => {
     produit.id_production = id;
 
-    Axios.post(`${process.env.REACT_APP_API_URI}/produit`, produit).then(
+    Axios.post(`${process.env.REACT_APP_API_URI}/produit`, produit, {
+      headers: authHeader(),
+    }).then(
       (res) => {
         produit.id = res.data.id;
 
@@ -78,7 +84,9 @@ const ReadProductionPage = () => {
 
     setProduction(updatedProduction);
 
-    Axios.delete(`${process.env.REACT_APP_API_URI}/produit/${id_produit}`).then(
+    Axios.delete(`${process.env.REACT_APP_API_URI}/produit/${id_produit}`, {
+      headers: authHeader(),
+    }).then(
       (res) => {
         addToast('Le produit a bien été supprimé', {
           appearance: 'success',
@@ -159,17 +167,22 @@ const ReadProductionPage = () => {
                                 <Table.Cell>{produit.libelle}</Table.Cell>
                                 <Table.Cell>{produit.unite}</Table.Cell>
                                 <Table.Cell textAlign='center'>
-                                  <Button
-                                    size='mini'
-                                    icon
-                                    basic
-                                    circular
-                                    onClick={() => {
-                                      deleteProduit(produit.id);
-                                    }}
-                                  >
-                                    <Icon name='trash' />
-                                  </Button>
+                                  {[
+                                    'SUPER_ADMIN',
+                                    'ADMINISTRATEUR_ENDAGRI',
+                                  ].includes(utilisateur.role) && (
+                                    <Button
+                                      size='mini'
+                                      icon
+                                      basic
+                                      circular
+                                      onClick={() => {
+                                        deleteProduit(produit.id);
+                                      }}
+                                    >
+                                      <Icon name='trash' />
+                                    </Button>
+                                  )}
                                 </Table.Cell>
                               </Table.Row>
                             );
@@ -179,40 +192,51 @@ const ReadProductionPage = () => {
                   </Table>
                 )}
                 {/* <pre>{JSON.stringify(production, true, 2)}</pre> */}
-                {isOpenForm ? (
-                  <Button
-                    onClick={() => {
-                      setisOpenForm(false);
-                    }}
-                  >
-                    Annuler
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => {
-                      setisOpenForm(true);
-                    }}
-                    color='teal'
-                  >
-                    Ajouter un produit
-                  </Button>
-                )}
-
-                {isOpenForm ? (
+                {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+                  utilisateur.role
+                ) && (
                   <Fragment>
-                    <Divider />
-                    <ProduitFormComponent postProduit={postProduit} />
+                    {' '}
+                    {isOpenForm ? (
+                      <Button
+                        onClick={() => {
+                          setisOpenForm(false);
+                        }}
+                      >
+                        Annuler
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          setisOpenForm(true);
+                        }}
+                        color='teal'
+                      >
+                        Ajouter un produit
+                      </Button>
+                    )}
+                    {isOpenForm ? (
+                      <Fragment>
+                        <Divider />
+                        <ProduitFormComponent postProduit={postProduit} />
+                      </Fragment>
+                    ) : null}
                   </Fragment>
-                ) : null}
+                )}
               </Segment>
             </Segment.Group>
           )}
         </Grid.Column>
-        <Grid.Column width={6}>
-          <Button negative as={NavLink} to={`/production/${id}/delete`}>
-            Supprimer cette production
-          </Button>
-        </Grid.Column>
+        {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+          utilisateur.role
+        ) && (
+          <Grid.Column width={6}>
+            <Button negative as={NavLink} to={`/production/${id}/delete`}>
+              Supprimer cette production
+            </Button>
+            {<pre>{JSON.stringify(production, true, 2)}</pre>}
+          </Grid.Column>
+        )}
       </Grid.Row>
     </Grid>
   );

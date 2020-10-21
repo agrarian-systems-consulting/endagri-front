@@ -17,11 +17,13 @@ import DepenseLibreFormComponent from './DepenseLibreFormComponent';
 import InformationsPrincipalesComponent from './InformationsPrincipalesComponent';
 import ProductionsComponent from './ProductionsComponent';
 import DepensesLibresComponent from './DepensesLibresComponent';
+import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 
 const ReadAnalysePage = () => {
   const { id } = useParams();
   const { addToast } = useToasts();
-
+  const { utilisateur } = useUser();
   const [loading, setLoading] = useState(true);
   const [analyse, setAnalyse] = useState();
   const [
@@ -32,7 +34,9 @@ const ReadAnalysePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      Axios.get(`${process.env.REACT_APP_API_URI}/analyse/${id}`)
+      Axios.get(`${process.env.REACT_APP_API_URI}/analyse/${id}`, {
+        headers: authHeader(),
+      })
         .then((res) => {
           setAnalyse(res.data);
           setLoading(false);
@@ -48,7 +52,8 @@ const ReadAnalysePage = () => {
   const addFicheTechniqueLibre = (ficheTechniqueLibre) => {
     Axios.post(
       `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre`,
-      ficheTechniqueLibre
+      ficheTechniqueLibre,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast('La production a bien été ajoutée', {
@@ -77,7 +82,8 @@ const ReadAnalysePage = () => {
 
   const deleteFicheTechniqueLibre = (id_ftl) => {
     Axios.delete(
-      `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre/${id_ftl}`
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/fiche-technique-libre/${id_ftl}`,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast('La production a bien été supprimée', {
@@ -108,7 +114,8 @@ const ReadAnalysePage = () => {
   const addDepenseLibre = (depenseLibre) => {
     Axios.post(
       `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre`,
-      depenseLibre
+      depenseLibre,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast('La dépense a bien été ajoutée', {
@@ -137,7 +144,8 @@ const ReadAnalysePage = () => {
 
   const deleteDepenseLibre = (id_depense_libre) => {
     Axios.delete(
-      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre/${id_depense_libre}`
+      `${process.env.REACT_APP_API_URI}/analyse/${id}/depense_libre/${id_depense_libre}`,
+      { headers: authHeader() }
     )
       .then((res) => {
         addToast('La dépense libre a bien été supprimée', {
@@ -280,15 +288,18 @@ const ReadAnalysePage = () => {
           >
             <Icon name='file alternate' /> Analyser les flux de trésorerie
           </Button>
-
-          <Button
-            color='red'
-            floated='right'
-            as={NavLink}
-            to={`/analyse/${id}/delete`}
-          >
-            Supprimer l'analyse
-          </Button>
+          {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+            utilisateur.role
+          ) && (
+            <Button
+              color='red'
+              floated='right'
+              as={NavLink}
+              to={`/analyse/${id}/delete`}
+            >
+              Supprimer l'analyse
+            </Button>
+          )}
         </Grid.Column>
       </Grid.Row>
     </Grid>

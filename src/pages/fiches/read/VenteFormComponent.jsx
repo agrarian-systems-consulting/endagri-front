@@ -9,6 +9,7 @@ import monthsOptions from '../../../app/data/monthsOptions';
 import { useEffect } from 'react';
 import Axios from 'axios';
 import { NavLink } from 'react-router-dom';
+import authHeader from '../../../app/auth/auth-header';
 
 const VenteFormComponent = ({ postVente, id_production }) => {
   // Faire un get pour récupérer la liste des options en lien avec la production en cours
@@ -16,7 +17,7 @@ const VenteFormComponent = ({ postVente, id_production }) => {
 
   useEffect(() => {
     Axios(
-      `${process.env.REACT_APP_API_URI}/marches?id_production=${id_production}`
+      `${process.env.REACT_APP_API_URI}/marches?id_production=${id_production}`, { headers: authHeader()}
     )
       .then((res) => {
         setMarkets(res.data);

@@ -11,6 +11,7 @@ import SemanticIntegerField from '../../../app/utils/forms/SemanticIntegerField'
 import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import authHeader from '../../../app/auth/auth-header';
 
 const AnalyseFormComponent = () => {
   let history = useHistory();
@@ -41,7 +42,9 @@ const AnalyseFormComponent = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        Axios.post(`${process.env.REACT_APP_API_URI}/analyse`, values)
+        Axios.post(`${process.env.REACT_APP_API_URI}/analyse`, values, {
+          headers: authHeader(),
+        })
           .then((res) => {
             addToast("L'analyse a bien été créée", {
               appearance: 'success',

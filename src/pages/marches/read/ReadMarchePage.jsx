@@ -13,10 +13,12 @@ import formatMoney from '../../../app/utils/formatMoney';
 import { useEffect } from 'react';
 import axios from 'axios';
 import PricesChartComponent from './PricesChartComponent';
+import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 
 const ReadMarchePage = () => {
   let { id } = useParams();
-
+  const { utilisateur } = useUser();
   const [marche, setMarche] = useState({});
 
   const {
@@ -42,7 +44,8 @@ const ReadMarchePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/marche/${id}`
+        `${process.env.REACT_APP_API_URI}/marche/${id}`,
+        { headers: authHeader() }
       );
       setMarche(res.data);
     };
@@ -186,9 +189,13 @@ const ReadMarchePage = () => {
               </Table.Row>
             </Table.Body>
           </Table>
-          <Button color='blue' as={NavLink} to={`/marche/${id}/update`}>
-            Mettre les prix à jour
-          </Button>
+          {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+            utilisateur.role
+          ) && (
+            <Button color='blue' as={NavLink} to={`/marche/${id}/update`}>
+              Mettre les prix à jour
+            </Button>
+          )}
         </Grid.Column>
         <Grid.Column width={6}>
           <Segment.Group>
@@ -219,14 +226,18 @@ const ReadMarchePage = () => {
               {/* <Button>Modifier</Button> */}
             </Segment>
           </Segment.Group>
-          <Button
-            negative
-            floated='right'
-            as={Link}
-            to={`/marche/${id}/delete`}
-          >
-            Supprimer
-          </Button>
+          {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+            utilisateur.role
+          ) && (
+            <Button
+              negative
+              floated='right'
+              as={Link}
+              to={`/marche/${id}/delete`}
+            >
+              Supprimer
+            </Button>
+          )}
         </Grid.Column>
       </Grid.Row>
     </Grid>
