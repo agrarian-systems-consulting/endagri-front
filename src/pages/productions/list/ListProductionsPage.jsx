@@ -4,15 +4,17 @@ import { Link, NavLink } from 'react-router-dom';
 import { Breadcrumb, Button, Grid, Label, Table } from 'semantic-ui-react';
 import _ from 'lodash';
 import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 
 const ListProductionsPage = () => {
   const [productions, setProductions] = useState([]);
+  const { utilisateur } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/productions`
-        , { headers: authHeader()}
+        `${process.env.REACT_APP_API_URI}/productions`,
+        { headers: authHeader() }
       );
       setProductions(res.data);
     };
@@ -29,14 +31,18 @@ const ListProductionsPage = () => {
           </Breadcrumb>
         </Grid.Column>
         <Grid.Column width={4}>
-          <Button
-            floated='right'
-            color='teal'
-            as={NavLink}
-            to='/production/create'
-          >
-            Nouvelle production
-          </Button>
+          {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+            utilisateur.role
+          ) && (
+            <Button
+              floated='right'
+              color='teal'
+              as={NavLink}
+              to='/production/create'
+            >
+              Nouvelle production
+            </Button>
+          )}
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
@@ -44,6 +50,7 @@ const ListProductionsPage = () => {
           <Table singleLine>
             <Table.Header>
               <Table.Row>
+                <Table.HeaderCell>Code</Table.HeaderCell>
                 <Table.HeaderCell>Production</Table.HeaderCell>
                 <Table.HeaderCell>Produits associés</Table.HeaderCell>
               </Table.Row>
@@ -52,6 +59,11 @@ const ListProductionsPage = () => {
               {productions.map(({ id, libelle, type_production, produits }) => {
                 return (
                   <Table.Row key={id}>
+                    <Table.Cell>
+                      <Label ribbon color='teal'>
+                        {id}
+                      </Label>
+                    </Table.Cell>
                     <Table.Cell>
                       {
                         {
@@ -120,24 +132,20 @@ const ListProductionsPage = () => {
 
                     <Table.Cell>
                       {produits.length > 0 &&
-                        produits.map((p) => (
-                          <Label basic key={p.id}>
-                            {_.capitalize(p.libelle)}
-                          </Label>
-                        ))}
+                        produits.map(
+                          (p) =>
+                            p.id !== null && (
+                              <Label basic key={p.id}>
+                                {_.capitalize(p.libelle)}
+                              </Label>
+                            )
+                        )}
                     </Table.Cell>
                   </Table.Row>
                 );
               })}
             </Table.Body>
           </Table>
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <Button color='teal' as={NavLink} to='/production/create'>
-            Nouvelle production
-          </Button>
         </Grid.Column>
       </Grid.Row>
     </Grid>
