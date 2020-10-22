@@ -234,7 +234,7 @@ const ReadProductionPage = () => {
             <Button negative as={NavLink} to={`/production/${id}/delete`}>
               Supprimer cette production
             </Button>
-            {<pre>{JSON.stringify(production, true, 2)}</pre>}
+            {/* {<pre>{JSON.stringify(production, true, 2)}</pre>} */}
           </Grid.Column>
         )}
       </Grid.Row>
