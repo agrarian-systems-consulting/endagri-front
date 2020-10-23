@@ -7,7 +7,6 @@ import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
 
 const CoeffDepenseFormComponent = ({ addCoeffDepense }) => {
   const categorieDepenseOptions = [
-    { key: '3', value: 'Engrais', text: 'Engrais' },
     { key: '4', value: 'Fumier', text: 'Fumier' },
     { key: '5', value: 'Paille', text: 'Paille' },
     { key: '6', value: 'Foin', text: 'Foin' },
