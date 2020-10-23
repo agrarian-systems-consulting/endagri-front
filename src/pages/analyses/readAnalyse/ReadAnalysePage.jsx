@@ -182,7 +182,7 @@ const ReadAnalysePage = () => {
               <NavLink to='/analyses'>Analyses</NavLink>
             </Breadcrumb.Section>
             <Breadcrumb.Divider />
-            <Breadcrumb.Section active>Analyse 1</Breadcrumb.Section>
+            <Breadcrumb.Section active>Analyse {id}</Breadcrumb.Section>
           </Breadcrumb>
         </Grid.Column>
       </Grid.Row>
