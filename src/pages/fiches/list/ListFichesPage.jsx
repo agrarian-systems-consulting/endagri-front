@@ -5,6 +5,7 @@ import Axios from 'axios';
 import capitalize from '../../../app/utils/capitalize';
 import authHeader from '../../../app/auth/auth-header';
 import useUser from '../../../app/auth/useUser';
+import _ from 'lodash';
 
 const ListFichesPage = () => {
   const [fiches, setFiches] = useState([]);
@@ -16,7 +17,12 @@ const ListFichesPage = () => {
       const res = await Axios.get(`${process.env.REACT_APP_API_URI}/fiches`, {
         headers: authHeader(),
       });
-      setFiches(res.data);
+
+      console.log(res.data);
+      // Trier les fiches par numéro de fiche
+      const fichesOrdered = _.orderBy(res.data, ['id'], ['asc']);
+
+      setFiches(fichesOrdered);
       setLoading(false);
     };
     fetchData();
