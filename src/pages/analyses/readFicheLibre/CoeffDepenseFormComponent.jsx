@@ -12,6 +12,7 @@ const CoeffDepenseFormComponent = ({ addCoeffDepense }) => {
     { key: '5', value: 'Paille', text: 'Paille' },
     { key: '6', value: 'Foin', text: 'Foin' },
     { key: '7', value: 'Concentrés', text: 'Concentrés' },
+    { key: '8', value: 'Semences', text: 'Semences' },
   ];
 
   // Form validation handled with Yup
