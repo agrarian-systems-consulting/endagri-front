@@ -242,10 +242,10 @@ const ReadAnalysePage = () => {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-              <DepensesLibresComponent
-                depenses_libres={analyse.depenses_libres}
-                deleteDepenseLibre={deleteDepenseLibre}
-              />
+            <DepensesLibresComponent
+              depenses_libres={analyse.depenses_libres}
+              deleteDepenseLibre={deleteDepenseLibre}
+            />
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={5}>
@@ -281,25 +281,25 @@ const ReadAnalysePage = () => {
       {/* <pre>{JSON.stringify(analyse, true, 2)}</pre> */}
       <Grid.Row>
         <Grid.Column width={16}>
-          <Button
-            as={NavLink}
-            color='blue'
-            icon
-            to={`/analyse/${id}/flux_mois_reels_par_fiches_libres`}
-          >
-            <Icon name='file alternate' /> Rapport d'analyse de trésorerie
-          </Button>
           {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
             utilisateur.role
           ) && (
-            <Button
-              color='red'
-              floated='right'
-              as={NavLink}
-              to={`/analyse/${id}/delete`}
-            >
-              Supprimer l'analyse
-            </Button>
+            <Fragment>
+              <Divider horizontal>
+                <Header as='h4'>
+                  <Icon name='setting' />
+                  Zone administrateur
+                </Header>
+              </Divider>
+              <Button
+                color='red'
+                floated='right'
+                as={NavLink}
+                to={`/analyse/${id}/delete`}
+              >
+                Supprimer l'analyse
+              </Button>
+            </Fragment>
           )}
         </Grid.Column>
       </Grid.Row>

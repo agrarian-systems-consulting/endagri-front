@@ -27,7 +27,7 @@ const CulturesComponent = ({
       )}
       {fichesLibres.length > 0 && (
         <Grid.Column width={16}>
-          <Table>
+          <Table fixed>
             <Table.Header>
               <Table.Row textAlign='center'>
                 <Table.HeaderCell textAlign='left'>Culture</Table.HeaderCell>

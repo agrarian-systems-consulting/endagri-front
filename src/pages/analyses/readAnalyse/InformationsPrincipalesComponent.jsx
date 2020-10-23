@@ -61,7 +61,7 @@ const InformationsPrincipalesComponent = ({ info }) => {
             </Table>
           </Segment>
         </Segment.Group>
-        <Button as={NavLink} to={`/analyse/1/update`} color='teal'>
+        <Button as={NavLink} to={`/analyse/${info.id}/update`} color='teal'>
           Modifier
         </Button>
       </Grid.Column>
@@ -106,8 +106,17 @@ const InformationsPrincipalesComponent = ({ info }) => {
                 </Table.Row>
               </Table.Body>
             </Table>
+          
           </Segment>
         </Segment.Group>
+        <Button
+            as={NavLink}
+            color='blue'
+            icon
+            to={`/analyse/${info.id}/flux_mois_reels_par_fiches_libres`}
+          >
+            <Icon name='file alternate' /> Rapport d'analyse de trésorerie
+          </Button>
       </Grid.Column>
     </Grid.Row>
   );
