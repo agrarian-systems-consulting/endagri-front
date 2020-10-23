@@ -17,7 +17,7 @@ const FluxChartComponent = ({ data }) => {
   data.map((d) => (d.total_depenses = d.total_depenses * -1));
 
   return (
-    <ResponsiveContainer width='100%' height={400}>
+    <ResponsiveContainer width='100%' height={500}>
       <ComposedChart
         barCategoryGap={10}
         data={chartData}

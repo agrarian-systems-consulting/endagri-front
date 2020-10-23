@@ -19,6 +19,7 @@ const ReadFluxMoisReelsParFichesLibres = () => {
   let { id } = useParams();
 
   const [flux, setFlux] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [view, setView] = useState('chart');
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const ReadFluxMoisReelsParFichesLibres = () => {
       { headers: authHeader() }
     ).then((res) => {
       setFlux(res.data);
+      setIsLoading(false);
     });
   }, []);
 
@@ -66,18 +68,20 @@ const ReadFluxMoisReelsParFichesLibres = () => {
         </Grid.Column>
       </Grid.Row>
       {view === 'chart' && (
-        <Grid.Row>
-          <Grid.Column width={16}>
-            <Segment.Group>
-              <Segment attached='top'>
-                <h4>Graphe des flux de trésorerie</h4>
-              </Segment>
-              <Segment attached='bottom'>
-                <FluxChartComponent data={flux} />
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-        </Grid.Row>
+        <Fragment>
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Segment.Group>
+                <Segment attached='top'>
+                  <h4>Graphe des flux de trésorerie</h4>
+                </Segment>
+                <Segment attached='bottom'>
+                  <FluxChartComponent data={flux} />
+                </Segment>
+              </Segment.Group>
+            </Grid.Column>
+          </Grid.Row>
+        </Fragment>
       )}
       {view === 'table' && (
         <Grid.Row>
