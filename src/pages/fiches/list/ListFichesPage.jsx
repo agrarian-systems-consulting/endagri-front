@@ -18,9 +18,8 @@ const ListFichesPage = () => {
         headers: authHeader(),
       });
 
-      console.log(res.data);
-      // Trier les fiches par numéro de fiche
-      const fichesOrdered = _.orderBy(res.data, ['id'], ['asc']);
+      // Trier les fiches par ordre alphabétique
+      const fichesOrdered = _.orderBy(res.data, ['libelle'], ['asc']);
 
       setFiches(fichesOrdered);
       setLoading(false);
