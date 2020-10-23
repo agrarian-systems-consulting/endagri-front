@@ -22,7 +22,7 @@ const InformationsPrincipalesComponent = ({ info }) => {
           <Segment attached='top' clearing>
             <Header as='h4'>Paramètres</Header>
           </Segment>
-          <Segment attached clearing>
+          <Segment attached='bottom' clearing>
             <Table basic='very'>
               <Table.Body>
                 <Table.Row>
@@ -61,7 +61,7 @@ const InformationsPrincipalesComponent = ({ info }) => {
             </Table>
           </Segment>
         </Segment.Group>
-        <Button as={NavLink} to={`/analyse/1/update`} floated='right'>
+        <Button as={NavLink} to={`/analyse/1/update`} color='teal'>
           Modifier
         </Button>
       </Grid.Column>
