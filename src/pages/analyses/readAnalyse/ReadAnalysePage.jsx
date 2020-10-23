@@ -191,12 +191,7 @@ const ReadAnalysePage = () => {
       ) : (
         <Fragment>
           <InformationsPrincipalesComponent info={analyse} />
-          <Divider />
-          <Grid.Row>
-            <Grid.Column width={16}>
-              <Header as='h5'>Productions</Header>
-            </Grid.Column>
-          </Grid.Row>
+
           <ProductionsComponent
             fichesLibres={analyse.fiches_techniques_libres}
             deleteFicheTechniqueLibre={deleteFicheTechniqueLibre}
@@ -230,7 +225,6 @@ const ReadAnalysePage = () => {
               )}
             </Grid.Column>
           </Grid.Row>
-          <Divider />
 
           <Grid.Row>
             <Grid.Column width={16}>
@@ -279,14 +273,13 @@ const ReadAnalysePage = () => {
       {/* <pre>{JSON.stringify(analyse, true, 2)}</pre> */}
       <Grid.Row>
         <Grid.Column width={16}>
-          <Divider />
           <Button
             as={NavLink}
             color='blue'
             icon
             to={`/analyse/${id}/flux_mois_reels_par_fiches_libres`}
           >
-            <Icon name='file alternate' /> Analyser les flux de trésorerie
+            <Icon name='file alternate' /> Rapport d'analyse de trésorerie
           </Button>
           {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
             utilisateur.role
