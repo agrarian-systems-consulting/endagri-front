@@ -191,7 +191,12 @@ const ReadAnalysePage = () => {
       ) : (
         <Fragment>
           <InformationsPrincipalesComponent info={analyse} />
-
+          <Divider horizontal>
+            <Header as='h4'>
+              <Icon name='leaf' />
+              Productions
+            </Header>
+          </Divider>
           <ProductionsComponent
             fichesLibres={analyse.fiches_techniques_libres}
             deleteFicheTechniqueLibre={deleteFicheTechniqueLibre}
@@ -225,19 +230,22 @@ const ReadAnalysePage = () => {
               )}
             </Grid.Column>
           </Grid.Row>
-
+          <Divider horizontal>
+            <Header as='h4'>
+              <Icon name='money' />
+              Dépenses libres
+            </Header>
+          </Divider>
           <Grid.Row>
             <Grid.Column width={16}>
               <Header as='h5'>Dépenses libres</Header>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Column width={10}>
               <DepensesLibresComponent
                 depenses_libres={analyse.depenses_libres}
                 deleteDepenseLibre={deleteDepenseLibre}
               />
-            </Grid.Column>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={5}>
