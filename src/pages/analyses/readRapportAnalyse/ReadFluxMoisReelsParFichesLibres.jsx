@@ -41,7 +41,13 @@ const ReadFluxMoisReelsParFichesLibres = () => {
               <NavLink to='/analyses'>Analyses</NavLink>
             </Breadcrumb.Section>
             <Breadcrumb.Divider />
-            <Breadcrumb.Section active>Analyse {id}</Breadcrumb.Section>
+            <Breadcrumb.Section>
+              <NavLink to={`/analyse/${id}`}>Analyse {id}</NavLink>
+            </Breadcrumb.Section>
+            <Breadcrumb.Divider />
+            <Breadcrumb.Section active>
+              Rapport d'analyse de trésorerie
+            </Breadcrumb.Section>
           </Breadcrumb>
         </Grid.Column>
       </Grid.Row>
