@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   Bar,
   BarChart,
@@ -11,12 +11,14 @@ import {
   Line,
   ComposedChart,
 } from 'recharts';
+import { Loader } from 'semantic-ui-react';
 
 const FluxMensuelsChartComponent = ({ data }) => {
   // Créer un tableau des dépenses en valeurs négatives // Attention : ici on mutate directement le state, on pourrait faire mieux.
   const chartData = (donnees) => {
     let chart_data = donnees;
     chart_data.map((d) => (d.total_depenses_neg = d.total_depenses * -1));
+
     return chart_data;
   };
 
@@ -60,6 +62,7 @@ const FluxMensuelsChartComponent = ({ data }) => {
           />
         </ComposedChart>
       </ResponsiveContainer>
+
       {/* <pre>{JSON.stringify(data, true, 2)}</pre> */}
     </Fragment>
   );

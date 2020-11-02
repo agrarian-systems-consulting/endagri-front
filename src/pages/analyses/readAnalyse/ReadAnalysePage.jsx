@@ -11,6 +11,7 @@ import {
   Header,
   Segment,
   Icon,
+  Message,
 } from 'semantic-ui-react';
 import FicheLibreFormComponent from './FicheLibreFormComponent';
 import DepenseLibreFormComponent from './DepenseLibreFormComponent';
@@ -187,7 +188,7 @@ const ReadAnalysePage = () => {
         </Grid.Column>
       </Grid.Row>
       {loading ? (
-        <Fragment>Chargement en cours...</Fragment>
+        <Message>Chargement en cours...</Message>
       ) : (
         <Fragment>
           <InformationsPrincipalesComponent info={analyse} />

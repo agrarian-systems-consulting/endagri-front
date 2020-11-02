@@ -469,7 +469,10 @@ const ReadFicheLibrePage = () => {
                                 {coeff.coeff_autoconsommation * 100} %
                               </Table.Cell>
                               <Table.Cell textAlign='center'>
-                                {coeff.coeff_rendement * 100} % du rdt. moyen
+                                {parseFloat(
+                                  coeff.coeff_rendement * 100
+                                ).toFixed(0)}{' '}
+                                % du rdt. moyen
                               </Table.Cell>
                               <Table.Cell textAlign='center'>
                                 <Button
@@ -520,7 +523,7 @@ const ReadFicheLibrePage = () => {
                     </Button>
                   )}
 
-                  <pre>values = {JSON.stringify(coeff_ventes, null, 2)}</pre>
+                  {/* <pre>values = {JSON.stringify(coeff_ventes, null, 2)}</pre> */}
                 </Segment>
               </Segment.Group>
             </Fragment>
