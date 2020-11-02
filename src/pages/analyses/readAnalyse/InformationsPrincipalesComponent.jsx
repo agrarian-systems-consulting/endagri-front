@@ -104,19 +104,33 @@ const InformationsPrincipalesComponent = ({ info }) => {
                       })}
                   </Table.Cell>
                 </Table.Row>
+                {info.modified && (
+                  <Table.Row>
+                    <Table.Cell>
+                      {' '}
+                      <b>Date de dernière modification</b>{' '}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {' '}
+                      {info.modified &&
+                        format(new Date(info.modified), 'dd MMMM yyyy', {
+                          locale: fr,
+                        })}
+                    </Table.Cell>
+                  </Table.Row>
+                )}
               </Table.Body>
             </Table>
-          
           </Segment>
         </Segment.Group>
         <Button
-            as={NavLink}
-            color='blue'
-            icon
-            to={`/analyse/${info.id}/flux_mois_reels_par_fiches_libres`}
-          >
-            <Icon name='file alternate' /> Rapport d'analyse de trésorerie
-          </Button>
+          as={NavLink}
+          color='blue'
+          icon
+          to={`/analyse/${info.id}/flux_mois_reels_par_fiches_libres`}
+        >
+          <Icon name='file alternate' /> Rapport d'analyse de trésorerie
+        </Button>
       </Grid.Column>
     </Grid.Row>
   );

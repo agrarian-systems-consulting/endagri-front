@@ -279,7 +279,7 @@ const ReadAnalysePage = () => {
           </Grid.Row>
         </Fragment>
       )}
-      {/* <pre>{JSON.stringify(analyse, true, 2)}</pre> */}
+      <pre>{JSON.stringify(analyse, true, 2)}</pre>
       <Grid.Row>
         <Grid.Column width={16}>
           {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(

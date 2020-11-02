@@ -1,8 +1,12 @@
 import React from 'react';
 import { Button, Form, Grid, Segment, Breadcrumb } from 'semantic-ui-react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useParams, useHistory } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
+import UpdateAnalyseFormComponent from './UpdateAnalyseFormComponent';
 
 const UpdateAnalysePage = () => {
+  const { id } = useParams();
+
   return (
     <Grid>
       <Grid.Row>
@@ -13,7 +17,7 @@ const UpdateAnalysePage = () => {
             </Breadcrumb.Section>
             <Breadcrumb.Divider />
             <Breadcrumb.Section>
-              <NavLink to='/analyse/1'>Analyse 1</NavLink>
+              <NavLink to={`/analyse/${id}`}>Analyse {id}</NavLink>
             </Breadcrumb.Section>
             <Breadcrumb.Divider />
             <Breadcrumb.Section active>
@@ -26,37 +30,10 @@ const UpdateAnalysePage = () => {
         <Grid.Column width={16}>
           <Segment.Group>
             <Segment attached='top'>
-              <h5>Modifier les informations principales d'une analyse</h5>
+              <h5>Créer une nouvelle analyse</h5>
             </Segment>
             <Segment attached='bottom'>
-              <Form>
-                <Form.Field>
-                  <label>Nom utilisateur</label>
-                  <input placeholder='nom_utilisateur' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Nom client</label>
-                  <input placeholder='nom_client' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Montant de trésorerie initiale</label>
-                  <input placeholder='montant_tresorerie_initiale' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Date de début d'analyse</label>
-                  <input placeholder='date_debut_analyse' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Date de fin d'analyse</label>
-                  <input placeholder='date_fin_analyse' />
-                </Form.Field>
-                <Button as={Link} to={`/analyse/1`}>
-                  Annuler
-                </Button>
-                <Button type='submit' color='teal'>
-                  Modifier l'analyse
-                </Button>
-              </Form>
+              <UpdateAnalyseFormComponent />
             </Segment>
           </Segment.Group>
         </Grid.Column>

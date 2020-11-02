@@ -1,23 +1,27 @@
 import Axios from 'axios';
 import { format } from 'date-fns';
 import { Formik } from 'formik';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Button, Form, Label } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticIntegerField from '../../../app/utils/forms/SemanticIntegerField';
 import DatePicker from 'react-datepicker';
-
+import _ from 'lodash';
 import 'react-datepicker/dist/react-datepicker.css';
 import authHeader from '../../../app/auth/auth-header';
+import { useState } from 'react';
 import useUser from '../../../app/auth/useUser';
 
-const AnalyseFormComponent = () => {
+const UpdateAnalyseFormComponent = () => {
   let history = useHistory();
   const { addToast } = useToasts();
+  let { id } = useParams();
   const { utilisateur } = useUser();
+
+  const [analyse, setAnalyse] = useState({});
 
   // Form validation handled with Yup
   const validationSchema = Yup.object({
@@ -27,14 +31,27 @@ const AnalyseFormComponent = () => {
     nom_client: Yup.string().required("Le nom de l'auteur est obligatoire"),
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await Axios.get(
+        `${process.env.REACT_APP_API_URI}/analyse/${id}`,
+        { headers: authHeader() }
+      );
+
+      setAnalyse(
+        _.omit(res.data, ['depenses_libres', 'fiches_techniques_libres'])
+      );
+    };
+
+    fetchData();
+  }, [id]);
+
   return (
     <Formik
+      enableReinitialize={true}
       initialValues={{
-        nom_utilisateur: utilisateur.matricule,
-        nom_client: '',
-        montant_tresorerie_initiale: 0,
-        created: new Date(),
-        modified: null,
+        ...analyse,
+        modified: new Date(),
         date_debut_analyse: new Date(),
         date_fin_analyse: new Date(
           new Date().setFullYear(new Date().getFullYear() + 1)
@@ -42,11 +59,11 @@ const AnalyseFormComponent = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        Axios.post(`${process.env.REACT_APP_API_URI}/analyse`, values, {
+        Axios.put(`${process.env.REACT_APP_API_URI}/analyse/${id}`, values, {
           headers: authHeader(),
         })
           .then((res) => {
-            addToast("L'analyse a bien été créée", {
+            addToast("L'analyse a bien été modifiée", {
               appearance: 'success',
               autoDismiss: true,
             });
@@ -54,11 +71,11 @@ const AnalyseFormComponent = () => {
           })
           .catch((err) => {
             console.log(err);
-            addToast("Erreur lors de la création de l'analyse", {
+            addToast("Erreur lors de la modificiation de l'analyse", {
               appearance: 'error',
               autoDismiss: true,
             });
-            history.push(`/analyses`);
+            history.push(`/analyse/${id}`);
           });
       }}
     >
@@ -73,7 +90,14 @@ const AnalyseFormComponent = () => {
         setFieldValue,
       }) => (
         <Form onSubmit={handleSubmit}>
-
+          {utilisateur.role === 'SUPER_ADMIN' && (
+            <SemanticField
+              name='nom_utilisateur'
+              value=''
+              label="Matricule de l'auteur de l'analyse"
+              component={Form.Input}
+            />
+          )}
           <SemanticField
             name='nom_client'
             value=''
@@ -89,7 +113,7 @@ const AnalyseFormComponent = () => {
           />
           <Form.Group widths='equal'>
             <Form.Field>
-              <label>Date de début d'analyse</label>
+              <label>Nouvelle date de début d'analyse</label>
               <DatePicker
                 selected={values.date_debut_analyse}
                 dateFormat='dd/MM/yyyy'
@@ -99,7 +123,7 @@ const AnalyseFormComponent = () => {
               />
             </Form.Field>
             <Form.Field>
-              <label>Date de fin d'analyse</label>
+              <label>Nouvelle date de fin d'analyse</label>
               <DatePicker
                 selected={values.date_fin_analyse}
                 locale='fr-FR'
@@ -110,20 +134,23 @@ const AnalyseFormComponent = () => {
               />{' '}
             </Form.Field>
           </Form.Group>
-
           <Button
             type='submit'
             color='blue'
-            disabled={isSubmitting || !isValid || !dirty}
+            disabled={isSubmitting || !isValid}
             loading={isSubmitting}
           >
-            Créer l'analyse
+            Mettre à jour l'analyse
           </Button>
-          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
+          <Button as={NavLink} exact to={`/analyse/${id}`}>
+            Annuler
+          </Button>
+          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre>
+          <pre>analyse = {JSON.stringify(analyse, null, 2)}</pre> */}
         </Form>
       )}
     </Formik>
   );
 };
 
-export default AnalyseFormComponent;
+export default UpdateAnalyseFormComponent;
