@@ -1,5 +1,13 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Grid, Breadcrumb, Table, Button, Icon } from 'semantic-ui-react';
+import {
+  Grid,
+  Breadcrumb,
+  Table,
+  Button,
+  Icon,
+  Menu,
+  Input,
+} from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import Axios from 'axios';
 import capitalize from '../../../app/utils/capitalize';
@@ -11,6 +19,49 @@ const ListFichesPage = () => {
   const [fiches, setFiches] = useState([]);
   const [loading, setLoading] = useState(true);
   const { utilisateur } = useUser();
+  // Filter Projects hooks
+  const [search, setSearch] = useState('');
+  const [filterCategory, setFilterCategory] = useState('');
+
+  const filterCategories = [
+    'Culture annuelle',
+    'Culture pérenne',
+    'Elevage bovin laitier',
+    'Elevage ovin engraisseur',
+    'Elevage ovin naisseur-engraisseur',
+    'Elevage apicole',
+  ];
+
+  // Method to filter projects
+  const filteredFiches = () => {
+    // Spread previous state
+    let filteredFiches = [...fiches];
+
+    // Filter with search bar value
+    if (search !== '') {
+      filteredFiches = filteredFiches.filter(
+        (project) =>
+          project.libelle.toLowerCase().includes(search.toLowerCase()) ||
+          project.libelle_production
+            .toLowerCase()
+            .includes(search.toLowerCase())
+      );
+    }
+
+    // Filter with selected category
+    if (filterCategory !== '') {
+      filteredFiches = filteredFiches.filter(
+        (project) =>
+          project.type_production &&
+          project.type_production
+            .replace(/,/g, ' ')
+            .toLowerCase()
+            .includes(filterCategory.toLowerCase())
+      );
+    }
+
+    return filteredFiches;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,7 +106,44 @@ const ListFichesPage = () => {
       ) : (
         <Fragment>
           <Grid.Row>
-            <Grid.Column width={16}>
+            <Grid.Column width={4}>
+              <Menu vertical fluid>
+                <Menu.Item>
+                  <Input
+                    placeholder='Libellé de la fiche...'
+                    className='icon'
+                    icon='search'
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </Menu.Item>
+                <Menu.Item
+                  active={filterCategory === ''}
+                  onClick={(e) => {
+                    setFilterCategory('');
+                    setSearch('');
+                  }}
+                >
+                  Toutes les fiches
+                  {filterCategory === '' && <Icon name='filter' />}
+                </Menu.Item>
+
+                {filterCategories.map((category, index) => {
+                  return (
+                    <Menu.Item
+                      key={index}
+                      active={filterCategory === category}
+                      onClick={(e) => {
+                        setFilterCategory(category);
+                      }}
+                    >
+                      {category}
+                      {filterCategory === category && <Icon name='filter' />}
+                    </Menu.Item>
+                  );
+                })}
+              </Menu>
+            </Grid.Column>
+            <Grid.Column width={12}>
               <Table singleLine>
                 <Table.Header>
                   <Table.Row>
@@ -66,7 +154,7 @@ const ListFichesPage = () => {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  {fiches.map(
+                  {filteredFiches().map(
                     ({
                       id,
                       libelle_production,
@@ -111,6 +199,7 @@ const ListFichesPage = () => {
               </Table>
             </Grid.Column>
           </Grid.Row>
+          {/* <pre>{JSON.stringify(fiches, true, 2)}</pre> */}
         </Fragment>
       )}
     </Grid>

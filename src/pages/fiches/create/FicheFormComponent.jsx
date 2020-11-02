@@ -6,6 +6,7 @@ import { useToasts } from 'react-toast-notifications';
 import { Button, Form } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 
 const monthsOptions = [
@@ -27,7 +28,7 @@ const FicheFormComponent = () => {
   let history = useHistory();
   const { addToast } = useToasts();
   const [productions, setProductions] = useState([]);
-
+  const { utilisateur } = useUser();
   useEffect(() => {
     Axios(`${process.env.REACT_APP_API_URI}/productions`, {
       headers: authHeader(),
@@ -71,7 +72,7 @@ const FicheFormComponent = () => {
         commentaire: null,
         ini_debut: null,
         ini_fin: null,
-        id_utilisateur: 1,
+        id_utilisateur: utilisateur.matricule,
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
