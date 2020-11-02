@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
-import React, { useState } from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import React, { Fragment, useState } from 'react';
+import { Button, Form, Message } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
@@ -40,6 +40,15 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
     });
 
     return options;
+  };
+
+  // Retourne le rendement moyen pour le produit sélectionné
+  const getRendement = (valeur) => {
+    const selectedProduct = produits.filter(
+      (prod) => prod.id_marche === valeur
+    );
+
+    return selectedProduct[0];
   };
 
   // Form validation handled with Yup
@@ -113,7 +122,54 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
             max='1.5'
             step={0.01}
           />
-
+          {values.libelle_categorie && (
+            <Fragment>
+              <Message>
+                <b>Rendement calculé</b>{' '}
+                {parseFloat(
+                  getRendement(values.libelle_categorie).rendement *
+                    values.coeff_rendement
+                ).toFixed(2)}{' '}
+                <br />
+              </Message>
+              {getRendement(values.libelle_categorie).rendement *
+                values.coeff_rendement >
+                getRendement(values.libelle_categorie).rendement_max && (
+                <Message color='yellow'>
+                  <Message.Header>Attention</Message.Header>
+                  Vous avez dépassé la limite maximale conseillée, une
+                  notification sera faite de ce dépassement dans l'analyse
+                </Message>
+              )}
+              {getRendement(values.libelle_categorie).rendement *
+                values.coeff_rendement <
+                getRendement(values.libelle_categorie).rendement_min && (
+                <Message color='yellow'>
+                  <Message.Header>Attention</Message.Header>
+                  Vous avez dépassé la limite minimale conseillée, une
+                  notification sera faite de ce dépassement dans l'analyse
+                </Message>
+              )}
+            </Fragment>
+          )}
+          {values.libelle_categorie && (
+            <Message info>
+              <b>Rendement minimum</b>{' '}
+              {parseFloat(
+                getRendement(values.libelle_categorie).rendement_min
+              ).toFixed(2)}{' '}
+              <br />
+              <b>Rendement moyen</b>{' '}
+              {parseFloat(
+                getRendement(values.libelle_categorie).rendement
+              ).toFixed(2)}
+              <br />
+              <b>Rendement maximum</b>{' '}
+              {parseFloat(
+                getRendement(values.libelle_categorie).rendement_max
+              ).toFixed(2)}
+            </Message>
+          )}
           <Button
             type='submit'
             color='blue'
@@ -122,7 +178,16 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
           >
             Ajouter
           </Button>
-          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
+          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre>
+          <pre>
+            values.libelle_categorie ={' '}
+            {JSON.stringify(values.libelle_categorie, null, 2)}
+          </pre>
+          <pre>produits = {JSON.stringify(produits, null, 2)}</pre>
+          <pre>
+            getRendement ={' '}
+            {JSON.stringify(getRendement(values.libelle_categorie), null, 2)}
+          </pre> */}
         </Form>
       )}
     </Formik>
