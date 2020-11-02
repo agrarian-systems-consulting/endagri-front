@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   Bar,
   BarChart,
@@ -13,52 +13,55 @@ import {
 } from 'recharts';
 
 const FluxMensuelsChartComponent = ({ data }) => {
-  const chartData = data;
-  data.map((d) => (d.total_depenses = d.total_depenses * -1));
+  // Créer un tableau des dépenses en valeurs négatives // Attention : ici on mutate directement le state, on pourrait faire mieux.
+  const chartData = (donnees) => {
+    let chart_data = donnees;
+    chart_data.map((d) => (d.total_depenses_neg = d.total_depenses * -1));
+    return chart_data;
+  };
 
   return (
-    <ResponsiveContainer width='100%' height={500}>
-      <ComposedChart
-        barCategoryGap={1}
-        data={chartData}
-        margin={{
-          top: 20,
-          right: 20,
-          bottom: 20,
-          left: 20,
-        }}
-        
-      >
-        <CartesianGrid strokeDasharray='3 3' />
-        <XAxis dataKey='mois' />
-        <YAxis
-          yAxisId='left'
-          label={{
-            value: 'Ventes et Dépenses',
-            angle: -90,
-            position: 'insideLeft',
+    <Fragment>
+      <ResponsiveContainer width='100%' height={500}>
+        <ComposedChart
+          barCategoryGap={1}
+          data={chartData(data)}
+          margin={{
+            top: 20,
+            right: 20,
+            bottom: 20,
+            left: 20,
           }}
-        />
-
-        <Tooltip />
-        <Legend />
-
-        <Bar
-          yAxisId='left'
-          dataKey='total_depenses'
-          fill='#F47560'
-          name='Dépenses'
-          
-        />
-        <Bar
-          yAxisId='left'
-          dataKey='total_ventes'
-          fill='#F1E059'
-          name='Ventes'
-        />
-      </ComposedChart>
-      {/* <pre>{JSON.stringify(chartData, true, 2)}</pre> */}
-    </ResponsiveContainer>
+        >
+          `
+          <CartesianGrid strokeDasharray='3 3' />
+          <XAxis dataKey='mois' />
+          <YAxis
+            yAxisId='left'
+            label={{
+              value: 'Ventes et Dépenses',
+              angle: -90,
+              position: 'insideLeft',
+            }}
+          />
+          <Tooltip />
+          <Legend />
+          <Bar
+            yAxisId='left'
+            dataKey='total_depenses_neg'
+            fill='#F47560'
+            name='Dépenses'
+          />
+          <Bar
+            yAxisId='left'
+            dataKey='total_ventes'
+            fill='#F1E059'
+            name='Ventes'
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
+      {/* <pre>{JSON.stringify(data, true, 2)}</pre> */}
+    </Fragment>
   );
 };
 

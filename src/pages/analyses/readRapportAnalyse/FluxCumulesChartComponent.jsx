@@ -14,7 +14,6 @@ import {
 
 const FluxCumulesChartComponent = ({ data }) => {
   const chartData = data;
-  data.map((d) => (d.total_depenses = d.total_depenses * -1));
 
   return (
     <ResponsiveContainer width='100%' height={500}>

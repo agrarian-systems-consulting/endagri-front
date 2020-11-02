@@ -138,7 +138,7 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
                 <Message color='yellow'>
                   <Message.Header>Attention</Message.Header>
                   Vous avez dépassé la limite maximale conseillée, une
-                  notification sera faite de ce dépassement dans l'analyse
+                  notification sera faite de ce dépassement dans l'analyse.
                 </Message>
               )}
               {getRendement(values.libelle_categorie).rendement *
@@ -147,7 +147,7 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
                 <Message color='yellow'>
                   <Message.Header>Attention</Message.Header>
                   Vous avez dépassé la limite minimale conseillée, une
-                  notification sera faite de ce dépassement dans l'analyse
+                  notification sera faite de ce dépassement dans l'analyse.
                 </Message>
               )}
             </Fragment>

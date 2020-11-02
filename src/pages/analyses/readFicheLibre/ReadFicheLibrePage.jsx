@@ -520,7 +520,7 @@ const ReadFicheLibrePage = () => {
                     </Button>
                   )}
 
-                  {/* <pre>values = {JSON.stringify(coeff_ventes, null, 2)}</pre> */}
+                  <pre>values = {JSON.stringify(coeff_ventes, null, 2)}</pre>
                 </Segment>
               </Segment.Group>
             </Fragment>
