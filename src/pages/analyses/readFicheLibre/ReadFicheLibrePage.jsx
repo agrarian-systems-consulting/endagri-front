@@ -132,7 +132,8 @@ const ReadFicheLibrePage = () => {
           autoDismiss: true,
         });
 
-        console.log(res.data);
+        console.log('Réponse :' + res.data);
+
         let updatedFicheLibre = update(ficheLibre, {
           coeff_ventes: {
             $push: [res.data],
@@ -141,7 +142,7 @@ const ReadFicheLibrePage = () => {
 
         setFicheLibre(updatedFicheLibre);
 
-        setIsOpenCoeffDepenseForm(false);
+        setIsOpenCoeffVenteForm(false);
       })
       .catch((err) => {
         console.log(err);
@@ -441,9 +442,9 @@ const ReadFicheLibrePage = () => {
                       <Table.Header>
                         <Table.Row>
                           <Table.HeaderCell>Catégorie</Table.HeaderCell>
-                          <Table.HeaderCell textAlign='center'>
+                          {/* <Table.HeaderCell textAlign='center'>
                             Part utilisée sur l'exploitation
-                          </Table.HeaderCell>
+                          </Table.HeaderCell> */}
                           <Table.HeaderCell textAlign='center'>
                             Part autoconsommée
                           </Table.HeaderCell>
@@ -458,12 +459,12 @@ const ReadFicheLibrePage = () => {
                           return (
                             <Table.Row key={coeff.id}>
                               <Table.Cell>
-                                {coeff.libelle_produit} - {coeff.type_marche} -{' '}
+                                {coeff.libelle} - {coeff.type_marche} -{' '}
                                 {coeff.localisation}
                               </Table.Cell>
-                              <Table.Cell textAlign='center'>
+                              {/* <Table.Cell textAlign='center'>
                                 {coeff.coeff_intraconsommation * 100} %
-                              </Table.Cell>
+                              </Table.Cell> */}
                               <Table.Cell textAlign='center'>
                                 {coeff.coeff_autoconsommation * 100} %
                               </Table.Cell>
@@ -518,6 +519,8 @@ const ReadFicheLibrePage = () => {
                       Ajouter
                     </Button>
                   )}
+
+                  <pre>values = {JSON.stringify(coeff_ventes, null, 2)}</pre>
                 </Segment>
               </Segment.Group>
             </Fragment>

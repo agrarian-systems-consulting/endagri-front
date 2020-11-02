@@ -22,7 +22,7 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
         setProduits(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.err(err);
       });
   }, [id, id_ftl]);
 
@@ -45,7 +45,7 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
   // Form validation handled with Yup
   const validationSchema = Yup.object({
     libelle_categorie: Yup.string().required('Ce champs est obligatoire'),
-    coeff_intraconsommation: Yup.number().required('Ce champs est obligatoire'),
+    // coeff_intraconsommation: Yup.number().required('Ce champs est obligatoire'),
   });
 
   return (
@@ -83,7 +83,7 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
             clearable
             options={categoriesProduitsOptions()}
           />
-          <SemanticFloatField
+          {/* <SemanticFloatField
             name='coeff_intraconsommation'
             value=''
             label="Part utilisée sur l'exploitation (pour d'autres cultures ou élevages)"
@@ -92,7 +92,7 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
             min='0'
             max='1'
             step={0.01}
-          />
+          /> */}
           <SemanticFloatField
             name='coeff_autoconsommation'
             value=''
@@ -122,7 +122,7 @@ const CoeffVenteFormComponent = ({ addCoeffVente }) => {
           >
             Ajouter
           </Button>
-          <pre>values = {JSON.stringify(values, null, 2)}</pre>
+          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
         </Form>
       )}
     </Formik>
