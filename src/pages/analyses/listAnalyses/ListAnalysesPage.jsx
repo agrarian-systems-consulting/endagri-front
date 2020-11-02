@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Breadcrumb, Button, Grid, Message, Table } from 'semantic-ui-react';
+import {
+  Breadcrumb,
+  Button,
+  Grid,
+  Icon,
+  Input,
+  Menu,
+  Message,
+  Table,
+} from 'semantic-ui-react';
 import Axios from 'axios';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import capitalize from '../../../app/utils/capitalize';
 import authHeader from '../../../app/auth/auth-header';
+import useUser from '../../../app/auth/useUser';
 
 const ListAnalysesPage = () => {
   const [analyses, setAnalyses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [authored, setAuthored] = useState(true);
+  const { utilisateur } = useUser();
   useEffect(() => {
     const fetchData = () => {
       Axios(`${process.env.REACT_APP_API_URI}/analyses`, {
@@ -25,6 +38,35 @@ const ListAnalysesPage = () => {
     };
     fetchData();
   }, []);
+
+  // Methode pour filtrer les analyses
+  const filteredAnalyses = () => {
+    // Spread previous state
+    let filteredAnalyses = [...analyses];
+
+    // Filter with search bar value
+    if (search !== '') {
+      filteredAnalyses = filteredAnalyses.filter(
+        (project) =>
+          project.nom_utilisateur
+            .toLowerCase()
+            .includes(search.toLowerCase()) ||
+          project.nom_client.toLowerCase().includes(search.toLowerCase()) ||
+          project.id == search.toLowerCase()
+      );
+    }
+
+    // Filter with category
+    if (authored) {
+      filteredAnalyses = filteredAnalyses.filter(
+        (project) =>
+          project.nom_utilisateur.toLowerCase() ==
+          utilisateur.matricule.toLowerCase()
+      );
+    }
+
+    return filteredAnalyses;
+  };
 
   return (
     <Grid>
@@ -49,7 +91,40 @@ const ListAnalysesPage = () => {
         <Message>Chargement en cours</Message>
       ) : (
         <Grid.Row>
-          <Grid.Column width={16}>
+          <Grid.Column width={4}>
+            <Menu vertical fluid>
+              <Menu.Item>
+                <Input
+                  placeholder='Recherche...'
+                  className='icon'
+                  icon='search'
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </Menu.Item>
+              <Menu.Item
+                active={!authored}
+                onClick={(e) => {
+                  setAuthored(false);
+                  setSearch('');
+                }}
+              >
+                Toutes les analyses
+                {!authored && <Icon name='filter' />}
+              </Menu.Item>
+              <Menu.Item
+                active={authored}
+                onClick={(e) => {
+                  setAuthored(true);
+                  setSearch('');
+                }}
+              >
+                Mes analyses
+                {authored && <Icon name='filter' />}
+              </Menu.Item>
+            </Menu>
+          </Grid.Column>
+
+          <Grid.Column width={12}>
             <Table singleLine fixed>
               <Table.Header>
                 <Table.Row>
@@ -63,7 +138,7 @@ const ListAnalysesPage = () => {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {analyses.map(
+                {filteredAnalyses().map(
                   ({ id, nom_utilisateur, nom_client, created, modified }) => {
                     return (
                       <Table.Row key={id}>

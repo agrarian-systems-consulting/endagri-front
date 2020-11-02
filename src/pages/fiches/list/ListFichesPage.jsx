@@ -19,7 +19,6 @@ const ListFichesPage = () => {
   const [fiches, setFiches] = useState([]);
   const [loading, setLoading] = useState(true);
   const { utilisateur } = useUser();
-  // Filter Projects hooks
   const [search, setSearch] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
 
