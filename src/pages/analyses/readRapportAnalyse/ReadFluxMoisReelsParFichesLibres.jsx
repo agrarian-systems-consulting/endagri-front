@@ -9,11 +9,12 @@ import {
 } from 'semantic-ui-react';
 import { NavLink, useParams } from 'react-router-dom';
 import Axios from 'axios';
-import FluxChartComponent from './FluxChartComponent';
+import FluxMensuelsChartComponent from './FluxMensuelsChartComponent';
 import formatMoney from '../../../app/utils/formatMoney';
 import parse from 'date-fns/parse';
 import authHeader from '../../../app/auth/auth-header';
 import FluxTableComponent from './FluxTableComponent';
+import FluxCumulesChartComponent from './FluxCumulesChartComponent';
 
 const ReadFluxMoisReelsParFichesLibres = () => {
   let { id } = useParams();
@@ -76,13 +77,23 @@ const ReadFluxMoisReelsParFichesLibres = () => {
       {view === 'chart' && (
         <Fragment>
           <Grid.Row>
-            <Grid.Column width={16}>
+            <Grid.Column width={8}>
               <Segment.Group>
                 <Segment attached='top'>
-                  <h4>Graphe des flux de trésorerie</h4>
+                  <h4>Ventes et Dépenses mensuelles</h4>
                 </Segment>
                 <Segment attached='bottom'>
-                  <FluxChartComponent data={flux} />
+                  <FluxMensuelsChartComponent data={flux} />
+                </Segment>
+              </Segment.Group>
+            </Grid.Column>
+            <Grid.Column width={8}>
+              <Segment.Group>
+                <Segment attached='top'>
+                  <h4>Trésorerie</h4>
+                </Segment>
+                <Segment attached='bottom'>
+                  <FluxCumulesChartComponent data={flux} />
                 </Segment>
               </Segment.Group>
             </Grid.Column>

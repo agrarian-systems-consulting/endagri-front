@@ -12,14 +12,14 @@ import {
   ComposedChart,
 } from 'recharts';
 
-const FluxChartComponent = ({ data }) => {
+const FluxMensuelsChartComponent = ({ data }) => {
   const chartData = data;
   data.map((d) => (d.total_depenses = d.total_depenses * -1));
 
   return (
     <ResponsiveContainer width='100%' height={500}>
       <ComposedChart
-        barCategoryGap={10}
+        barCategoryGap={1}
         data={chartData}
         margin={{
           top: 20,
@@ -27,6 +27,7 @@ const FluxChartComponent = ({ data }) => {
           bottom: 20,
           left: 20,
         }}
+        
       >
         <CartesianGrid strokeDasharray='3 3' />
         <XAxis dataKey='mois' />
@@ -38,15 +39,7 @@ const FluxChartComponent = ({ data }) => {
             position: 'insideLeft',
           }}
         />
-        <YAxis
-          yAxisId='right'
-          orientation='right'
-          label={{
-            value: 'Trésorerie',
-            angle: 90,
-            position: 'insideRight',
-          }}
-        />
+
         <Tooltip />
         <Legend />
 
@@ -55,6 +48,7 @@ const FluxChartComponent = ({ data }) => {
           dataKey='total_depenses'
           fill='#F47560'
           name='Dépenses'
+          
         />
         <Bar
           yAxisId='left'
@@ -62,18 +56,10 @@ const FluxChartComponent = ({ data }) => {
           fill='#F1E059'
           name='Ventes'
         />
-        <Line
-          yAxisId='right'
-          ype='monotone'
-          dataKey='solde_cumule'
-          stroke='#97E3D4'
-          strokeWidth={2}
-          name='Solde cumulé'
-        />
       </ComposedChart>
       {/* <pre>{JSON.stringify(chartData, true, 2)}</pre> */}
     </ResponsiveContainer>
   );
 };
 
-export default FluxChartComponent;
+export default FluxMensuelsChartComponent;
