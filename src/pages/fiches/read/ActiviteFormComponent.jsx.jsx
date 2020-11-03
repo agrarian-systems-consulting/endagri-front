@@ -19,6 +19,7 @@ const ActiviteForm = ({ postActivite }) => {
         initialValues={{
           libelle: '',
           mois: null,
+          annee: '0',
           mois_relatif: null,
           depenses: [],
         }}
@@ -51,6 +52,7 @@ const ActiviteForm = ({ postActivite }) => {
               component={Form.Input}
             />
             <SemanticIntegerField
+              disabled={values.mois}
               name='mois_relatif'
               value=''
               label='Mois relatif'
@@ -58,6 +60,7 @@ const ActiviteForm = ({ postActivite }) => {
               type='number'
             />
             <SemanticField
+              disabled={values.mois_relatif}
               name='mois'
               value=''
               label='Mois calendaire'
@@ -69,6 +72,24 @@ const ActiviteForm = ({ postActivite }) => {
               clearable
               options={monthsOptions}
             />
+            {values.mois && (
+              <SemanticField
+                name='annee'
+                value='1'
+                label='Année'
+                component={Form.Dropdown}
+                placeholder='Choisir une année'
+                fluid
+                search
+                selection
+                clearable
+                options={[
+                  { key: '0', value: '0', text: 'Année N' },
+                  { key: '1', value: '1', text: 'Année N+1' },
+                ]}
+              />
+            )}
+
             <Form.Field>
               <label>Dépenses</label>
             </Form.Field>
