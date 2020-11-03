@@ -31,40 +31,47 @@ const ActivitesComponent = ({ activites, deleteActivite, postActivite }) => {
         ) : (
           <Transition.Group as={Table.Body}>
             {activites &&
-              activites.map(({ id, libelle, mois_relatif, mois, depenses }) => {
-                return (
-                  <Table.Row key={id}>
-                    <Table.Cell>{capitalize(libelle)}</Table.Cell>
-                    <Table.Cell textAlign='center'>
-                      {mois_relatif} {mois && getMois(mois)}
-                    </Table.Cell>
-                    <Table.Cell textAlign='center'>
-                      {depenses &&
-                        formatMoney(
-                          depenses.reduce(
-                            (acc, { montant }) => acc + montant,
-                            0
-                          )
+              activites.map(
+                ({ id, libelle, mois_relatif, mois, depenses, annee }) => {
+                  return (
+                    <Table.Row key={id}>
+                      <Table.Cell>{capitalize(libelle)}</Table.Cell>
+                      <Table.Cell textAlign='center'>
+                        {mois_relatif}{' '}
+                        {mois && (
+                          <Fragment>
+                            {getMois(mois)} {annee == '1' ? '(n+1)' : ''}
+                          </Fragment>
                         )}
-                    </Table.Cell>
-                    <Table.Cell textAlign='center'>
-                      {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
-                        utilisateur.role
-                      ) && (
-                        <Button
-                          size='mini'
-                          icon
-                          basic
-                          circular
-                          onClick={() => deleteActivite(id)}
-                        >
-                          <Icon name='trash' />
-                        </Button>
-                      )}
-                    </Table.Cell>
-                  </Table.Row>
-                );
-              })}
+                      </Table.Cell>
+                      <Table.Cell textAlign='center'>
+                        {depenses &&
+                          formatMoney(
+                            depenses.reduce(
+                              (acc, { montant }) => acc + montant,
+                              0
+                            )
+                          )}
+                      </Table.Cell>
+                      <Table.Cell textAlign='center'>
+                        {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
+                          utilisateur.role
+                        ) && (
+                          <Button
+                            size='mini'
+                            icon
+                            basic
+                            circular
+                            onClick={() => deleteActivite(id)}
+                          >
+                            <Icon name='trash' />
+                          </Button>
+                        )}
+                      </Table.Cell>
+                    </Table.Row>
+                  );
+                }
+              )}
           </Transition.Group>
         )}
       </Table>
