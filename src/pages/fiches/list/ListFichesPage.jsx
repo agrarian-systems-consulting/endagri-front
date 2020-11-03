@@ -50,9 +50,9 @@ const ListFichesPage = () => {
     // Filter with selected category
     if (filterCategory !== '') {
       filteredFiches = filteredFiches.filter(
-        (project) =>
-          project.type_production &&
-          project.type_production
+        (fiche) =>
+          fiche.type_production &&
+          fiche.type_production
             .replace(/,/g, ' ')
             .toLowerCase()
             .includes(filterCategory.toLowerCase())
@@ -133,6 +133,7 @@ const ListFichesPage = () => {
                       active={filterCategory === category}
                       onClick={(e) => {
                         setFilterCategory(category);
+                        setSearch('');
                       }}
                     >
                       {category}
