@@ -112,25 +112,62 @@ const FicheLibreFormComponent = ({ addFicheTechniqueLibre }) => {
           />
           {values.id_fiche_technique && (
             <Fragment>
-              <SemanticFloatField
-                name='coeff_surface_ou_nombre_animaux'
-                value=''
-                label="Surface en hectares ou nombre d'animaux"
-                component={Form.Input}
-                type='number'
-                step={0.01}
-              />
-              <Form.Field>
-                <label>Date de semis ou mise bas</label>
-                <DatePicker
-                  selected={values.date_ini}
-                  dateFormat='dd/MM/yyyy'
-                  className='form-control'
-                  name='date_ini'
-                  filterDate={isWithinInterval}
-                  onChange={(date) => setFieldValue('date_ini', date)}
-                />
-              </Form.Field>
+              {[
+                'Elevage bovin laitier',
+                'Elevage ovin engraisseur',
+                'Elevage apicole',
+                'Elevage ovin naisseur-engraisseur',
+              ].includes(
+                getSelectedFiche(values.id_fiche_technique).type_production
+              ) && (
+                <Fragment>
+                  <SemanticFloatField
+                    name='coeff_surface_ou_nombre_animaux'
+                    value=''
+                    label="Nombre d'animaux"
+                    component={Form.Input}
+                    type='number'
+                    step={0.1}
+                  />
+                  <Form.Field>
+                    <label>Date de mise bas</label>
+                    <DatePicker
+                      selected={values.date_ini}
+                      dateFormat='dd/MM/yyyy'
+                      className='form-control'
+                      name='date_ini'
+                      filterDate={isWithinInterval}
+                      onChange={(date) => setFieldValue('date_ini', date)}
+                    />
+                  </Form.Field>
+                </Fragment>
+              )}
+              {['Culture annuelle', 'Culture pérenne'].includes(
+                getSelectedFiche(values.id_fiche_technique).type_production
+              ) && (
+                <Fragment>
+                  <SemanticFloatField
+                    name='coeff_surface_ou_nombre_animaux'
+                    value=''
+                    label='Surface en hectares'
+                    component={Form.Input}
+                    type='number'
+                    step={0.01}
+                  />
+                  <Form.Field>
+                    <label>Date de semis ou plantation</label>
+                    <DatePicker
+                      selected={values.date_ini}
+                      dateFormat='dd/MM/yyyy'
+                      className='form-control'
+                      name='date_ini'
+                      filterDate={isWithinInterval}
+                      onChange={(date) => setFieldValue('date_ini', date)}
+                    />
+                  </Form.Field>
+                </Fragment>
+              )}
+
               <Message info>
                 {' '}
                 Période de démarrage possible de{' '}
