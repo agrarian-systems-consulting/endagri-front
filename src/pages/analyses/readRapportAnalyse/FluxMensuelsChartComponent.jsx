@@ -37,7 +37,7 @@ const FluxMensuelsChartComponent = ({ data }) => {
         >
           `
           <CartesianGrid strokeDasharray='3 3' />
-          <XAxis dataKey='mois' />
+          <XAxis dataKey='mois' angle={-45} textAnchor='end' height={70} />
           <YAxis
             yAxisId='left'
             label={{

@@ -24,7 +24,7 @@ const DeleteUtilisateurPage = () => {
               </p>
               <Button
                 onClick={() => {
-                  addToast("L'utilisateur a été supprimé", {
+                  addToast("L'utilisateur n'a pas été supprimé", {
                     appearance: 'info',
                     autoDismiss: true,
                   });
