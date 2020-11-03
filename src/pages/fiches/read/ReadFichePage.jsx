@@ -172,7 +172,7 @@ const ReadFichePage = () => {
       </Grid.Row>
 
       <Grid.Row>
-        <Grid.Column width={10}>
+        <Grid.Column width={9}>
           <ActivitesComponent
             deleteActivite={deleteActivite}
             postActivite={postActivite}
@@ -181,7 +181,7 @@ const ReadFichePage = () => {
           {/* <pre>{JSON.stringify(fiche.activites, true, 2)}</pre> */}
         </Grid.Column>
 
-        <Grid.Column width={6}>
+        <Grid.Column width={7}>
           <InformationsPrincipalesComponent fiche={fiche} />
           <TableauRecapComponent fiche={fiche} />
         </Grid.Column>
