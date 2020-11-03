@@ -17,7 +17,8 @@ const VenteFormComponent = ({ postVente, id_production }) => {
 
   useEffect(() => {
     Axios(
-      `${process.env.REACT_APP_API_URI}/marches?id_production=${id_production}`, { headers: authHeader()}
+      `${process.env.REACT_APP_API_URI}/marches?id_production=${id_production}`,
+      { headers: authHeader() }
     )
       .then((res) => {
         setMarkets(res.data);
@@ -81,6 +82,7 @@ const VenteFormComponent = ({ postVente, id_production }) => {
             rendement: null,
             rendement_min: null,
             rendement_max: null,
+            annee: '0',
           }}
           // Handle form validation
           validationSchema={validationSchema}
@@ -114,27 +116,44 @@ const VenteFormComponent = ({ postVente, id_production }) => {
                 clearable
                 options={marketOptions()}
               />
-              <Form.Group widths='equal'>
-                <SemanticIntegerField
-                  name='mois_relatif'
-                  value=''
-                  label='Mois relatif'
-                  component={Form.Input}
-                  type='number'
-                />
+              <SemanticIntegerField
+                disabled={values.mois}
+                name='mois_relatif'
+                value=''
+                label='Mois relatif'
+                component={Form.Input}
+                type='number'
+              />
+              <SemanticField
+                disabled={values.mois_relatif}
+                name='mois'
+                value=''
+                label='Mois calendaire'
+                component={Form.Dropdown}
+                placeholder='Choisir un mois'
+                fluid
+                search
+                selection
+                clearable
+                options={monthsOptions}
+              />
+              {values.mois && (
                 <SemanticField
-                  name='mois'
-                  value=''
-                  label='Mois calendaire'
+                  name='annee'
+                  value='1'
+                  label='Année'
                   component={Form.Dropdown}
-                  placeholder='Choisir un mois'
+                  placeholder='Choisir une année'
                   fluid
                   search
                   selection
                   clearable
-                  options={monthsOptions}
+                  options={[
+                    { key: '0', value: '0', text: 'Année N' },
+                    { key: '1', value: '1', text: 'Année N+1' },
+                  ]}
                 />
-              </Form.Group>
+              )}
               <Form.Group widths='equal'>
                 <SemanticFloatField
                   name='rendement_min'

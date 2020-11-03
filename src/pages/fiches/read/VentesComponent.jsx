@@ -50,6 +50,7 @@ const VentesComponent = ({ ventes, deleteVente, postVente, id_production }) => {
                     rendement_max,
                     mois_relatif,
                     mois,
+                    annee,
                   }) => {
                     return (
                       <Table.Row key={id}>
@@ -65,7 +66,12 @@ const VentesComponent = ({ ventes, deleteVente, postVente, id_production }) => {
                           )}
                         </Table.Cell>
                         <Table.Cell textAlign='center'>
-                          {mois_relatif} {mois && getMois(mois)}
+                          {mois_relatif}{' '}
+                          {mois && (
+                            <Fragment>
+                              {getMois(mois)} {annee == '1' ? '(n+1)' : ''}
+                            </Fragment>
+                          )}
                         </Table.Cell>
                         <Table.Cell textAlign='center'>
                           {rendement_min &&

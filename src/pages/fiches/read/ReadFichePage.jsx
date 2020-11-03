@@ -179,6 +179,7 @@ const ReadFichePage = () => {
             activites={fiche.activites}
           />
           {/* <pre>{JSON.stringify(fiche.activites, true, 2)}</pre> */}
+          {/* <pre>{JSON.stringify(fiche.ventes, true, 2)}</pre> */}
         </Grid.Column>
 
         <Grid.Column width={7}>
