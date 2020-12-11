@@ -18,7 +18,8 @@ const UpdateMarcheFormComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URI}/marche/${id}`, { headers: authHeader()}
+        `${process.env.REACT_APP_API_URI}/marche/${id}`,
+        { headers: authHeader() }
       );
       setMarche(res.data);
     };
@@ -33,7 +34,9 @@ const UpdateMarcheFormComponent = () => {
       // Handle form submit
       onSubmit={(values, { setSubmitting }) => {
         axios
-          .put(`${process.env.REACT_APP_API_URI}/marche/${id}`, values)
+          .put(`${process.env.REACT_APP_API_URI}/marche/${id}`, values, {
+            headers: authHeader(),
+          })
           .then((res) => {
             addToast('Le marché a bien été mis à jour', {
               appearance: 'success',
@@ -174,9 +177,9 @@ const UpdateMarcheFormComponent = () => {
             disabled={isSubmitting || !isValid || !dirty}
             loading={isSubmitting}
           >
-            Metre à jour les prix du marché
+            Mettre à jour les prix du marché
           </Button>
-          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
+          <pre>values = {JSON.stringify(values, null, 2)}</pre>
         </Form>
       )}
     </Formik>
