@@ -41,6 +41,8 @@ const Navbar = () => {
             'SUPER_ADMIN',
             'ADMINISTRATEUR_ENDAGRI',
             'AGRONOME_REGIONAL',
+            'SUPERVISEUR_AGENCE',
+            'GESTIONNAIRE_DE_PORTEFEUILLE',
           ].includes(utilisateur.role) && (
             <Menu.Item name='Marchés' as={NavLink} to='/marches' />
           )}
