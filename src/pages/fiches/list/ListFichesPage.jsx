@@ -146,7 +146,7 @@ const ListFichesPage = () => {
             </Grid.Column>
             <Grid.Column width={12}>
               {filteredFiches().length === 0 ? (
-                <Message>Aucune analyse</Message>
+                <Message>Aucune fiche</Message>
               ) : (
                 <Table singleLine>
                   <Table.Header>
