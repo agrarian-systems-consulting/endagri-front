@@ -179,7 +179,7 @@ const UpdateMarcheFormComponent = () => {
           >
             Mettre à jour les prix du marché
           </Button>
-          <pre>values = {JSON.stringify(values, null, 2)}</pre>
+          {/* <pre>values = {JSON.stringify(values, null, 2)}</pre> */}
         </Form>
       )}
     </Formik>

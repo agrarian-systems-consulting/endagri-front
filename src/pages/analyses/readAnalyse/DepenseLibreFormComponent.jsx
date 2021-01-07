@@ -9,11 +9,14 @@ import SemanticField from '../../../app/utils/forms/SemanticField';
 import SemanticFloatField from '../../../app/utils/forms/SemanticFloatField';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import SemanticIntegerField from '../../../app/utils/forms/SemanticIntegerField';
 
 const DepenseLibreFormComponent = ({ addDepenseLibre }) => {
   // Form validation handled with Yup
   const validationSchema = Yup.object({
-    montant: Yup.number().required('Le montant de la dépenseest obligatoire'),
+    montant: Yup.number()
+      .positive()
+      .required('Le montant de la dépense est obligatoire'),
     libelle: Yup.string().required('Le libellé de la dépense est obligatoire'),
     mois_reel: Yup.string().required('La date de dépense est obligatoire'),
   });
@@ -47,13 +50,12 @@ const DepenseLibreFormComponent = ({ addDepenseLibre }) => {
             label='Libellé de la dépense'
             component={Form.Input}
           />
-          <SemanticFloatField
+          <SemanticIntegerField
             name='montant'
             value={0}
             label='Montant de la dépense'
             component={Form.Input}
             type='number'
-            step={0.01}
           />
           <Form.Field>
             <label>Date de dépense</label>
