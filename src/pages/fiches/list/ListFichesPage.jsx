@@ -144,59 +144,64 @@ const ListFichesPage = () => {
               </Menu>
             </Grid.Column>
             <Grid.Column width={12}>
-              <Table singleLine>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell></Table.HeaderCell>
-                    <Table.HeaderCell>Libellé</Table.HeaderCell>
-                    <Table.HeaderCell>Production</Table.HeaderCell>
-                    <Table.HeaderCell></Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {filteredFiches().map(
-                    ({
-                      id,
-                      libelle_production,
-                      libelle,
-                      created,
-                      modified,
-                    }) => {
-                      return (
-                        <Table.Row key={id}>
-                          <Table.Cell>
-                            <NavLink to={`/fiche/${id}`}>Fiche {id}</NavLink>
-                          </Table.Cell>
-                          <Table.Cell>
-                            <NavLink to={`/fiche/${id}`}>
-                              {capitalize(libelle)}
-                            </NavLink>
-                          </Table.Cell>
-                          <Table.Cell>
-                            {capitalize(libelle_production)}
-                          </Table.Cell>
-                          <Table.Cell>
-                            {['SUPER_ADMIN', 'ADMINISTRATEUR_ENDAGRI'].includes(
-                              utilisateur.role
-                            ) && (
-                              <Button
-                                size='mini'
-                                icon
-                                basic
-                                circular
-                                as={NavLink}
-                                to={`/fiche/${id}/delete`}
-                              >
-                                <Icon name='trash' />
-                              </Button>
-                            )}
-                          </Table.Cell>
-                        </Table.Row>
-                      );
-                    }
-                  )}
-                </Table.Body>
-              </Table>
+              {filteredFiches().length === 0 ? (
+                <Message>Aucune analyse</Message>
+              ) : (
+                <Table singleLine>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell></Table.HeaderCell>
+                      <Table.HeaderCell>Libellé</Table.HeaderCell>
+                      <Table.HeaderCell>Production</Table.HeaderCell>
+                      <Table.HeaderCell></Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {filteredFiches().map(
+                      ({
+                        id,
+                        libelle_production,
+                        libelle,
+                        created,
+                        modified,
+                      }) => {
+                        return (
+                          <Table.Row key={id}>
+                            <Table.Cell>
+                              <NavLink to={`/fiche/${id}`}>Fiche {id}</NavLink>
+                            </Table.Cell>
+                            <Table.Cell>
+                              <NavLink to={`/fiche/${id}`}>
+                                {capitalize(libelle)}
+                              </NavLink>
+                            </Table.Cell>
+                            <Table.Cell>
+                              {capitalize(libelle_production)}
+                            </Table.Cell>
+                            <Table.Cell>
+                              {[
+                                'SUPER_ADMIN',
+                                'ADMINISTRATEUR_ENDAGRI',
+                              ].includes(utilisateur.role) && (
+                                <Button
+                                  size='mini'
+                                  icon
+                                  basic
+                                  circular
+                                  as={NavLink}
+                                  to={`/fiche/${id}/delete`}
+                                >
+                                  <Icon name='trash' />
+                                </Button>
+                              )}
+                            </Table.Cell>
+                          </Table.Row>
+                        );
+                      }
+                    )}
+                  </Table.Body>
+                </Table>
+              )}
             </Grid.Column>
           </Grid.Row>
           {/* <pre>{JSON.stringify(fiches, true, 2)}</pre> */}
