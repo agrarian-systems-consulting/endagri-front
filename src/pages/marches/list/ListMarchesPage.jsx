@@ -1,13 +1,20 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Breadcrumb, Button, Grid, Table, Icon } from 'semantic-ui-react';
+import {
+  Breadcrumb,
+  Button,
+  Grid,
+  Table,
+  Icon,
+  Message,
+} from 'semantic-ui-react';
 import authHeader from '../../../app/auth/auth-header';
 import useUser from '../../../app/auth/useUser';
 import capitalize from '../../../app/utils/capitalize';
 
 const ListMarchesPage = () => {
-  const [marches, setMarches] = useState();
+  const [marches, setMarches] = useState([]);
   const { utilisateur } = useUser();
 
   useEffect(() => {
@@ -45,20 +52,22 @@ const ListMarchesPage = () => {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={16}>
-          <Table singleLine>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell></Table.HeaderCell>
-                <Table.HeaderCell>Production</Table.HeaderCell>
-                <Table.HeaderCell>Produit</Table.HeaderCell>
-                <Table.HeaderCell>Type de vente</Table.HeaderCell>
-                <Table.HeaderCell>Localisation</Table.HeaderCell>
-                <Table.HeaderCell></Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {marches &&
-                marches.map(
+          {marches.length === 0 ? (
+            <Message>Aucun marché pour le moment</Message>
+          ) : (
+            <Table singleLine>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell></Table.HeaderCell>
+                  <Table.HeaderCell>Production</Table.HeaderCell>
+                  <Table.HeaderCell>Produit</Table.HeaderCell>
+                  <Table.HeaderCell>Type de vente</Table.HeaderCell>
+                  <Table.HeaderCell>Localisation</Table.HeaderCell>
+                  <Table.HeaderCell></Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {marches.map(
                   ({
                     id,
                     libelle_production,
@@ -98,8 +107,9 @@ const ListMarchesPage = () => {
                     );
                   }
                 )}
-            </Table.Body>
-          </Table>
+              </Table.Body>
+            </Table>
+          )}
         </Grid.Column>
       </Grid.Row>
     </Grid>
