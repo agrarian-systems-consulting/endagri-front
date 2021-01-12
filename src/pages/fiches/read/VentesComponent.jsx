@@ -75,16 +75,16 @@ const VentesComponent = ({ ventes, deleteVente, postVente, id_production }) => {
                         </Table.Cell>
                         <Table.Cell textAlign='center'>
                           {rendement_min &&
-                            parseInt(rendement_min, 10).toFixed(2)}{' '}
+                            parseFloat(rendement_min, 10).toFixed(2)}{' '}
                           {rendement_min && unite}
                         </Table.Cell>
                         <Table.Cell textAlign='center'>
-                          {rendement && parseInt(rendement, 10).toFixed(2)}{' '}
+                          {rendement && parseFloat(rendement, 10).toFixed(2)}{' '}
                           {rendement && unite}
                         </Table.Cell>
                         <Table.Cell textAlign='center'>
                           {rendement_max &&
-                            parseInt(rendement_max, 10).toFixed(2)}{' '}
+                            parseFloat(rendement_max, 10).toFixed(2)}{' '}
                           {rendement_max && unite}
                         </Table.Cell>
 
