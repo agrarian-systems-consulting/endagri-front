@@ -14,9 +14,7 @@ import SemanticIntegerField from '../../../app/utils/forms/SemanticIntegerField'
 const DepenseLibreFormComponent = ({ addDepenseLibre }) => {
   // Form validation handled with Yup
   const validationSchema = Yup.object({
-    montant: Yup.number()
-      .positive()
-      .required('Le montant de la dépense est obligatoire'),
+    montant: Yup.number().required('Le montant de la dépense est obligatoire'),
     libelle: Yup.string().required('Le libellé de la dépense est obligatoire'),
     mois_reel: Yup.string().required('La date de dépense est obligatoire'),
   });
